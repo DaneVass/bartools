@@ -13,7 +13,7 @@
 #' @export
 #' @examples
 #' data(test.counts)
-#' proportionalBubbleplot(test.counts, orderSample = "T0-1")
+#' plotOrderedBubble(test.counts, orderSample = "T0-1")
 
 plotOrderedBubble <- function(counts.obj,
                               labels = T,

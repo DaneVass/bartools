@@ -19,9 +19,9 @@
 #' @export
 #'
 #' @examples
-#' test.fq <- system.file("extdata", "test_extract.fastq.gz", package = "barista")
+#' test.fq <- system.file("extdata", "test_extract.fastq.gz", package = "bartools")
 #' extractBarcodeReads(infile = test.fq, barcode_pattern = "ACTG")
-#' test.bam <- system.file("extdata", "test_extract_anno.bam", package = "barista")
+#' test.bam <- system.file("extdata", "test_extract_anno.bam", package = "bartools")
 #' extractBarcodeReads(infile = test.bam, barcode_pattern = "ACTG")
 
 extractBarcodeReads <- function(infile,
@@ -40,7 +40,7 @@ extractBarcodeReads <- function(infile,
     if (endsWith(infile, ".bam")) {
         message(paste("Input file: ", infile))
         message("Format is BAM.")
-        out <- barista::extractBAM(infile, barcode_pattern = barcode_pattern,
+        out <- bartools::extractBAM(infile, barcode_pattern = barcode_pattern,
                                     constant = constant, yieldSize = yieldSize, outfile = outfile)
     }
 
@@ -50,7 +50,7 @@ extractBarcodeReads <- function(infile,
         message(paste("Input file: ", infile))
         message("Format is FASTQ.")
 
-        out <- barista::extractFASTQ(fastq = infile, barcode_pattern = barcode_pattern,
+        out <- bartools::extractFASTQ(fastq = infile, barcode_pattern = barcode_pattern,
                                       constant = constant, outfile = outfile, block_size = yieldSize,
                                       verbose = verbose, overwrite = overwrite)
 

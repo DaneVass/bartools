@@ -15,8 +15,8 @@
 #' barcode sequence mapped to the lintraceR DNA barcode ID.
 #' @export
 #' @examples
-#' load(system.file("extdata", "test_map.rda", package = "barista"))
-#' test.ref <- system.file("extdata", "barcode_lib_reference_test.fasta", package = "barista")
+#' load(system.file("extdata", "test_map.rda", package = "bartools"))
+#' test.ref <- system.file("extdata", "barcode_lib_reference_test.fasta", package = "bartools")
 #' mapBarcodeReads(reads = test.map, reference_fasta = test.ref, outdir = tempdir(), prefix = "map")
 
 mapBarcodeReads <- function(reads, bowtie_index = NULL, mismatches = 2, threads = 4,
@@ -107,7 +107,7 @@ mapBarcodeReads <- function(reads, bowtie_index = NULL, mismatches = 2, threads 
     }
 
     # generate raw counts
-    counts <- barista::countBarcodeReads(bam = bamFile2, bam_index = index, outdir = outdir, prefix = prefix)
+    counts <- bartools::countBarcodeReads(bam = bamFile2, bam_index = index, outdir = outdir, prefix = prefix)
 
     # remove bamfile
     close(bamFile2)
