@@ -1,0 +1,110 @@
+---
+title: "bartools: preprocessing datasets "
+author: "Dane Vassiliadis"
+output: 
+  rmarkdown::html_document:
+    toc: true
+    number_sections: true
+    toc_depth: 3
+    highlight: tango 
+date: June 27, 2019
+vignette: >
+  %\VignetteIndexEntry{bartools-preprocessing}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Getting started
+The `bartools` package is optimised for use with SPLINTR lineage barcode libraries (ref) however the functions within can be adapted to any DNA barcoding methodology that utiilses random DNA barcodes.
+
+### The reference barcode library
+In the current version, `bartools` assumes that any barcoding experiment uses a known reference library of barcodes. Since DNA barcodes are generally introduced into cells using viral vectors, the plasmid pool used to generate the barcode virus represents the reference set of barcodes that can be present in an experiment. The primary step in any barcoding analysis is to determine what barcodes are present in this reference pool and at what proportion.
+
+In the case of SPLINTR, barcodes take the following form:
+```
+tgaccatgtacgattgactaNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWtgctaatgcgtactg
+```
+
+where lower case sequence represents upstream and downstream constant regions that are critical for accurately retrieving barcodes from the genomic DNA of cells.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Load the bartools library 
+```{r setup}
+library(bartools)
+```
+
+## A simple analysis
+Here we will follow the analysis of an example experiment to understand the basic functions of bartools. Say we have a population of cells growing in culture. These cells were transduced with a lentiviral vector encoding an mCHERRY fluorescent protein and a downstream barcode in the 3' UTR possessing the following structure:
+
+```
+tgaccatgtacgattgactaNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWtgctaatgcgtactg
+```
+
+Two days after transduction, two sets of 5000 mCHERRY positive cells were sorted using flow cytometry into separate wells and resuspended in culture media. Genomic DNA from the cells was harvested 1 week following transduction and barcode regions were specifically amplified using PCR and sequenced for 75 cycles on an Illumina NextSeq 550 resulting in single ended fastq files containing barcoded reads. 
+
+### barcode pre-processing
+Barcode information can be extracted from raw fastq files and summarised into a table of counts per barcode as follows
+
+Firstly we define the expected barcode pattern and the upstream and downstream constant regions that flank true barcodes. And then extract reads containing this barcode pattern using the `extractbartoolseads` function
+```{r, eval=FALSE}
+pattern <- "([ACTG][ACTG][GC][AT][GC][ACTG][ACTG][AT][GC][AT]){3,6}"
+fastq <- system.file("extdata", "test_extract_75bp_single-end.fastq.gz", package = "bartools", mustWork = T)
+constant <- toupper("tgaccatgtacgattgacta")
+test.extract <- bartools::extractbartoolseads(infile = fastq, 
+                              barcode_pattern = pattern,
+                              constant = constant, 
+                              yieldSize = 1e6)
+test.extract
+```
+
+Following barcode extraction we make use of previously generated library of reference barcodes and map our extracted sequences to this reference using `mapbartoolseads`. True barcodes will align without mismatches. reads containing sequencing errors or false barcode sequences that snuck through the extraction step will be filtered out here. 
+```{r, eval=FALSE}
+test.map <- bartools::mapbartoolseads(reads = test.extract,
+                                      bowtie_index = "../data/bowtie/index",
+                                      mismatches = 1,
+                                      threads = 1,
+                                      prefix = "test_map")
+test.map
+
+```
+
+If a bowtie reference has not yet been generated we can specify `reference_fasta` in place of `bowtie_index` and it will be generated for us
+```{r, eval=FALSE}
+reference.fa <- system.file("extdata", "barcode_lib_reference_test.fasta", package = "bartools", mustWork = T)
+test.map <- bartools::mapBarcodeReads(reads = test.extract,
+                                      bowtie_index = NULL,
+                                      reference_fasta = reference.fa,
+                                      mismatches = 1,
+                                      threads = 2,
+                                      prefix = "test_map")
+test.map
+```
+
+`mapBarcodeReads` takes the liberty of counting the number of occurrences of each barcode for us and saving the output in a file. 
+We can easily load and examine the final count data here.
+```{r, eval=FALSE}
+test.counts <- utils::read.delim("./test_map_counts.csv", header = T, sep = ",", row.names = 1)
+test.counts %>% tibble::rownames_to_column() %>% dplyr::arrange(dplyr::desc(mapped))
+```
+
+### Alternative pre-processing workflow using BARtab
+For large numbers of samples it can be cumbersome and time consuming to process raw count data within R as shown above. It is more efficient to process these samples and generate count tables using a pipeline that can be distributed across HPC infrastructure
+
+We have developed BARtab, a Nextflow (ref) pipeline for the preprocessing of DNA barcoding datasets from bulk and single-cell experiments. 
+The pipeline and associated running instructions can be found at `<insert link to barcode-seq pipeline>`  
+
+```{bash, eval=FALSE}
+# ToDo
+# example running snakemake barcode-seq workflow
+
+```
+
+
+
+
