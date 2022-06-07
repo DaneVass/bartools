@@ -40,7 +40,7 @@ barcode sequence mapped to the lintraceR DNA barcode ID.
 Map reads containing a lintraceR DNA barcode to a barcode reference library/fasta and return CellID:lintracer barcode ID annotations
 }
 \examples{
-load(system.file("extdata", "test_map.rda", package = "barista"))
-test.ref <- system.file("extdata", "barcode_lib_reference_test.fasta", package = "barista")
+load(system.file("extdata", "test_map.rda", package = "bartools"))
+test.ref <- system.file("extdata", "barcode_lib_reference_test.fasta", package = "bartools")
 mapBarcodeReads(reads = test.map, reference_fasta = test.ref, outdir = tempdir(), prefix = "map")
 }

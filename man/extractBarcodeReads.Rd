@@ -42,8 +42,8 @@ barcode sequence and lintraceR DNA barcode ID.
 Identify and extract reads containing DNA barcodes from a FASTQ or BAM alignment file
 }
 \examples{
-test.fq <- system.file("extdata", "test_extract.fastq.gz", package = "barista")
+test.fq <- system.file("extdata", "test_extract.fastq.gz", package = "bartools")
 extractBarcodeReads(infile = test.fq, barcode_pattern = "ACTG")
-test.bam <- system.file("extdata", "test_extract_anno.bam", package = "barista")
+test.bam <- system.file("extdata", "test_extract_anno.bam", package = "bartools")
 extractBarcodeReads(infile = test.bam, barcode_pattern = "ACTG")
 }

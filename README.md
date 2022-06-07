@@ -1,31 +1,31 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# barista
+# Bartools
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-barista is an R-based toolkit for the analysis of synthetic barcodes in
+bartools is an R-based toolkit for the analysis of synthetic barcodes in
 the genome and transcriptome
 
 ## Installation
 
-You can install the development version of barista from
+You can install the development version of bartools from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("DaneVass/barista",  dependencies = TRUE)
+devtools::install_github("DaneVass/bartools",  dependencies = TRUE)
 ```
 
 ## Examples
 
-`barista` can preprocess, normalise and visualise all types of synthetic
+`bartools` can preprocess, normalise and visualise all types of synthetic
 barcode count data.
 
 ``` r
-library(barista)
+library(bartools)
 library(ggplot2)
 
 data("test.counts")

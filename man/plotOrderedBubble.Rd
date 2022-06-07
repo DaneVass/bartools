@@ -34,5 +34,5 @@ Generate ordered proportional bubbleplots from raw count object with barcodes la
 }
 \examples{
 data(test.counts)
-proportionalBubbleplot(test.counts, orderSample = "T0-1")
+plotOrderedBubble(test.counts, orderSample = "T0-1")
 }
