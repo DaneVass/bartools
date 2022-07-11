@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   preprocessing: preprocessing.html
   quickstart: quickstart.html
-last_built: 2022-07-11T23:30Z
+last_built: 2022-07-11T23:36Z
 urls:
   reference: https://danevass.github.io/bartools/reference
   article: https://danevass.github.io/bartools/articles
