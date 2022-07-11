@@ -1,8 +1,8 @@
-pandoc: 2.14.2
-pkgdown: 2.0.2
+pandoc: 2.17.1.1
+pkgdown: 2.0.5
 pkgdown_sha: ~
 articles:
   preprocessing: preprocessing.html
   quickstart: quickstart.html
-last_built: 2022-03-17T02:13Z
+last_built: 2022-07-11T23:11Z
 

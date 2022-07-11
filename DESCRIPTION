@@ -41,3 +41,4 @@ Depends:
     R (>= 3.5),
     edgeR,
     ggplot2
+URL: https://danevass.github.io/bartools/

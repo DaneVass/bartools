@@ -1,4 +1,4 @@
 library(testthat)
-library(barista)
+library(bartools)
 
-test_check("barista")
+test_check("bartools")
