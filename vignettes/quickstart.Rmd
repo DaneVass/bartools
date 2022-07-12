@@ -56,7 +56,7 @@ To follow along with this vignette the raw counts tables and sample metadata can
 ### Generating a DGEList object from sample counts and metadata
 Counts objects defined above can be specified in a sample metadata sheet as shown below. This is the easiest way to generate a `DGEList` object containing the count information and metadata of interest for a set of barcode sequencing samples. 
 
-```{r, include=FALSE}
+```{r}
 samplesheet <- read.csv(system.file("extdata", "test_sampletable.csv", package = "bartools", mustWork = T), header = T, stringsAsFactors = F)
 samplesheet
 ```
@@ -69,6 +69,7 @@ dge <- edgeR::readDGE(files = samplesheet, group = samplesheet$treatment, labels
 This results in the creation of a DGEList object containing counts and metadata information for each sample
 ```{r}
 data(test.dge)
+test.dge
 ```
 
 ## Data QC and Normalisation
@@ -169,13 +170,12 @@ Sometimes a visual depiction of the data is most suitable. Here barcodes/tags ar
 ```{r}
 plotBarcodeBubble(dge.filtered.collapsed$counts, proportion.cutoff = 10, labels = T)
 ```
+
 Bubbleplots can also be ordered according to a particular sample which can help with visual representation of large vs small clones. 
 ```{r}
 plotOrderedBubble(dge.filtered.collapsed$counts, proportion.cutoff = 10, labels = T, orderSample = "T0", colorDominant = T)
 plotOrderedBubble(dge.filtered.collapsed$counts, proportion.cutoff = 10, labels = T, orderSample = "T0", colorDominant = F)
 ```
-
-
 
 ### Barcode Plot
 Alternatively, we can focus in on the most abundant barcodes within a set of samples to more easily observe how these change in frequency over the course of an experiment.  
@@ -187,7 +187,7 @@ plotBarcodeHistogram(dge.filtered.collapsed$counts, sample = dge.filtered.collap
 ### Timeseries Plots  
 For timecourse experiments it is useful to visualise the kinetics of barcode diversity changes over time
 ```{r}
-plotBarcodeTimeseries(dge.filtered.collapsed$counts[,dge.filtered.collapsed$samples$Treatment %in% c("T0", "T0b", "High_dose")])
+plotBarcodeTimeseries(dge.filtered.collapsed$counts[,c(1:10)])
 
 ```
 
@@ -195,15 +195,14 @@ plotBarcodeTimeseries(dge.filtered.collapsed$counts[,dge.filtered.collapsed$samp
 A global level PCA analysis is a good way to get a high level understanding of the similarities and differences between samples. 
 ```{r}
 plotBarcodePCA(dge.filtered.collapsed, intgroup = "Treatment")
-plotBarcodePCA(dge.filtered.collapsed, intgroup = "Days.post.transplant")
-plotBarcodePCA(dge.filtered.collapsed[,dge.filtered.collapsed$samples$Treatment %in% c("Vehicle","High_dose")], 
+plotBarcodePCA(dge.filtered.collapsed[,dge.filtered.collapsed$samples$Treatment %in% c("T0","Vehicle","High_dose")], 
                intgroup = "Treatment")
 ```
 
 ### Heatmaps
 ```{r}
 plotBarcodeHeatmap(dge.filtered.collapsed$counts[,dge.filtered.collapsed$samples$Treatment %in% c("T0", "Vehicle","High_dose")], 
-                   N = 10)
+N = 5)
 ```
 
 ## Analysing composition and Diversity

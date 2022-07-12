@@ -47,5 +47,5 @@ Lineplot of the barcode abundances in two different experimental settings
 \examples{
 data(test.dge)
 plotAbundanceLines(dge = test.dge, condition = test.dge$samples$group,
-condition_names = c("T0","T0b"), plot_type = 'counts', title = 'test')
+condition_names = c("T0","10_High_dose"), plot_type = 'counts', title = 'test')
 }

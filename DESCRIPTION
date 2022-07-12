@@ -16,7 +16,6 @@ Suggests:
 Imports: 
     data.table,
     ComplexHeatmap,
-    RColorBrewer,
     vegan,
     ineq,
     Rbowtie,
@@ -25,17 +24,12 @@ Imports:
     seqinr,
     stringr,
     scales,
-    BiocGenerics,
-    assertthat,
     ggpubr,
-    matrixStats,
     plyr,
     dplyr,
     reshape2,
-    limma,
-    viridis,
-    magrittr
-RoxygenNote: 7.1.2
+    limma
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 Depends:
     R (>= 3.5),

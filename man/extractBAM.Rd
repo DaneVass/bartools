@@ -26,8 +26,8 @@ Up to two constant regions can be set e.g. c("ACTG","TACG")}
 \item{outfile}{Optional. path to save parsed reads as output file}
 }
 \value{
-Returns a data-frame containing the read ID, the 10X cell ID, 10X umi, lintraceR DNA
-barcode sequence and lintraceR DNA barcode ID.
+Returns a data-frame containing the read ID, the 10X cell ID, 10X umi,
+barcode DNA sequence and barcode ID.
 }
 \description{
 Barcode extraction function for BAM alignment files

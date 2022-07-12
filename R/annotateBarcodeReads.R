@@ -9,9 +9,8 @@
 #' @param barcoded.cells dataframe a dataframe with cell id and barcode id as columns
 #'
 #'
-#' @return Returns a data-frame containing the the 10X cell ID and the lintraceR DNA barcode ID.
+#' @return Returns a data-frame containing the the 10X cell ID and the DNA barcode ID.
 #'
-#' @import magrittr
 #' @export
 #'
 
@@ -40,13 +39,13 @@ annotateBarcodeReads <- function(all.cells, barcoded.cells){
   print(nrow(anno.final))
 
   print("Total cells with barcode:")
-  print(nrow(anno.final %>% dplyr::filter(anno.final$barcode != "not.detected")))
+  print(nrow(anno.final[which(anno.final$barcode != "not.detected"),]))
 
   print("Total cells without barcode:")
-  print(nrow(anno.final %>% dplyr::filter(anno.final$barcode == "not.detected")))
+  print(nrow(anno.final[which(anno.final$barcode == "not.detected"),]))
 
   print("Percentage of cells with annotated barcode:")
-  print(nrow(anno.final %>% dplyr::filter(anno.final$barcode != "not.detected"))/nrow(anno.final)*100)
+  print(nrow(anno.final[which(anno.final$barcode != "not.detected"),])/nrow(anno.final)*100)
 
   print("Number of unique barcodes:")
   print(length(unique(anno.final$barcode)))

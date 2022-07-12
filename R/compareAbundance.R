@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' data(test.dge)
-#' compareAbundance(test.dge, test.dge$samples$group, c("T0","T0b"))
+#' compareAbundance(test.dge, test.dge$samples$group, c("T0","10_High_dose"))
 
 
 compareAbundance <- function(counts, condition, condition_names){

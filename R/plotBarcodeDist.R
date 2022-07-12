@@ -41,9 +41,9 @@ plotBarcodeDistance <- function(counts,
 
   # Create a ggheatmap
   name <- paste(name, "-", method)
-  ggheatmap <- ggplot2::ggplot(melted_dist, ggplot2::aes(melted_dist$Var2, melted_dist$Var1, fill = melted_dist$value)) +
+  ggheatmap <- ggplot2::ggplot(melted_dist, ggplot2::aes(`Var2`, `Var1`, fill = `value`)) +
     ggplot2::geom_tile(color = "white") +
-    viridis::scale_fill_viridis(option = "inferno") +
+    ggplot2::scale_fill_viridis_c(option = "magma") +
     ggplot2::theme_bw() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 1, size = 6, hjust = 1),
                    axis.text.y = ggplot2::element_text(size = 6)) +
@@ -96,9 +96,9 @@ plotBarcodeCorrelation <- function(counts,
 
   # Create a ggheatmap
   name <- paste(name, "-", method)
-  ggheatmap <- ggplot2::ggplot(melted_cormat, ggplot2::aes(melted_cormat$Var2, melted_cormat$Var1, fill = melted_cormat$value)) +
+  ggheatmap <- ggplot2::ggplot(melted_cormat, ggplot2::aes(`Var2`, `Var1`, fill = `value`)) +
     ggplot2::geom_tile(color = "white") +
-    viridis::scale_fill_viridis() +
+    ggplot2::scale_fill_viridis_c() +
     ggplot2::theme_bw() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 1, size = 6, hjust = 1),
                    axis.text.y = ggplot2::element_text(size = 6)) +

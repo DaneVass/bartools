@@ -19,8 +19,7 @@
 #'
 #' @examples
 #' data(test.counts)
-#' plotBarcodeCumSum(counts = test.counts, sample1 = 'T0-1', samples = c('T0-1','T0b-1'))
-
+#' plotBarcodeCumSum(counts = test.counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
 plotBarcodeCumSum <- function(counts, sample1 = NULL, samples = NULL) {
 
   var1 <- counts[,sample1]
@@ -30,7 +29,7 @@ plotBarcodeCumSum <- function(counts, sample1 = NULL, samples = NULL) {
        xlab = paste('Cumulative sum abundance of ',sample1,sep=''), ylab= 'Cumulative sum abundance',
        xlim = c(0,1), ylim = c(0,1),
        main= paste('Cumulative abundance ranked by ',sample1,sep='') )
-  cols <- ggpubr::get_palette("npg", length(samples))
+  cols <- colors.npg[1:length(samples)]
   i = 1
   for (s in samples){
     var2 <- counts[,s]

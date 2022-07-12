@@ -5,13 +5,13 @@
 \alias{test.dge}
 \title{Test barcode DGEList object}
 \format{
-A DGEList object containing 100 rows and 4 variables:
+A DGEList object containing 1639 rows and 38 variables:
 }
 \usage{
 test.dge
 }
 \description{
-A DGEList object containing raw count information for 100 hypothetical barcodes
-in 4 hypothetical samples
+A DGEList object containing raw count information for 1639 hypothetical barcodes
+in 38 hypothetical samples
 }
 \keyword{datasets}

@@ -12,7 +12,7 @@ annotateBarcodeReads(all.cells, barcoded.cells)
 \item{barcoded.cells}{dataframe a dataframe with cell id and barcode id as columns}
 }
 \value{
-Returns a data-frame containing the the 10X cell ID and the lintraceR DNA barcode ID.
+Returns a data-frame containing the the 10X cell ID and the DNA barcode ID.
 }
 \description{
 Matches cells in a single cell experiment to detected DNA barcodes.

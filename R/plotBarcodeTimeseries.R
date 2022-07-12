@@ -26,8 +26,7 @@ plotBarcodeTimeseries <- function(counts.obj, name = "", seed = 5){
 
     timepoints <- unique(barcodes.proportional.melted$Sample)
 
-    colors <- c(RColorBrewer::brewer.pal(12, "Set3"),
-                RColorBrewer::brewer.pal(9, "Set1"))
+    colors <- scales::hue_pal()(30)
     set.seed(seed) # set custom seed to get same color order every time
     colors <- sample(colors, length(rownames(barcodes.proportional.melted)), replace = TRUE)
     barcodes.proportional.melted$color <- colors

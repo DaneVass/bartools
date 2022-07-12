@@ -43,7 +43,7 @@ plotBarcodePCA <- function(object, intgroup = "condition", col = "group", ntop =
   }
 
   # calculate the variance for each gene based on corrected dataset
-  rv <- matrixStats::rowVars(data)
+  rv <- apply(data, 1, stats::var)
 
   # select the ntop genes by variance
   select <- order(rv, decreasing=TRUE)[seq_len(min(ntop, length(rv)))]
