@@ -1,0 +1,51 @@
+# bartools <img src="man/figures/bartools_logo.png" align="right" width="40"/>
+
+<!-- badges: start -->
+
+<!-- badges: end -->
+
+The bartools package is an R-based toolkit for the analysis of synthetic DNA barcodes in
+
+high throughput genome and transcriptome sequencing datasets.
+
+See `vignette(bartools)` for more details and usage examples.
+
+## Installation
+
+You can install the development version of bartools from [GitHub](https://github.com/):
+
+```{r}
+install.packages("devtools")
+devtools::install_github("DaneVass/bartools", dependencies = TRUE)
+```
+
+## bartools examples
+
+bartools can preprocess, normalise and visualise all types of synthetic barcode count data.
+
+```{r}
+library(bartools)
+data("test.counts")
+```
+
+## plot from counts files
+
+```{r}
+plotBarcodeBubble(test.counts)
+
+```
+
+```{r}
+plotBarcodeCounts(test.counts)
+
+```
+
+```{r}
+plotBarcodeHistogram(test.counts, sample = "T0-1", top = 100)
+
+```
+
+```{r}
+plotReadCounts(test.counts, group = c("A", "A", "B", "B"))
+
+```
