@@ -33,7 +33,7 @@ thresholdCounts <- function(df, threshold = 20, plot = FALSE){
   if(plot == FALSE){
     return(above.threshold.counts)
   } else {
-    g <- ggplot2::ggplot(above.threshold.counts, ggplot2::aes(x=above.threshold.counts$Sample,y=above.threshold.counts$Count))
+    g <- ggplot2::ggplot(above.threshold.counts, ggplot2::aes(x=`Sample`,y=`Count`))
     g + ggplot2::geom_bar(stat = "identity") +
       ggplot2::theme(panel.grid.major.x=ggplot2::element_line(colour="grey70")) +
       ggplot2::labs(title = paste("Number of barcodes meeting threshold:", threshold)) +

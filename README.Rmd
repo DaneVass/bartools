@@ -1,12 +1,10 @@
-# bartools <img src="man/figures/bartools_logo.png" align="right" width="40"/>
+# bartools <img src="man/figures/bartools_logo.png" align="right" width="109"/>
 
 <!-- badges: start -->
 
 <!-- badges: end -->
 
-The bartools package is an R-based toolkit for the analysis of synthetic DNA barcodes in
-
-high throughput genome and transcriptome sequencing datasets.
+The bartools package is an R-based toolkit for the analysis of synthetic DNA barcodes in high throughput genome and transcriptome sequencing datasets.
 
 See `vignette(bartools)` for more details and usage examples.
 

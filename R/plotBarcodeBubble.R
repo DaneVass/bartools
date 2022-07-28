@@ -47,10 +47,10 @@ plotBarcodeBubble <- function(counts.obj, labels = T, proportion.cutoff = 10, na
     # generate bubbleplot
     suppressWarnings(
     bubble.plot <- ggplot2::ggplot(barcodes.proportional.melted,
-                                   ggplot2::aes(x = barcodes.proportional.melted$Position,
-                                                y = barcodes.proportional.melted$Sample,
-                                                size = barcodes.proportional.melted$Proportion,
-                                                color = barcodes.proportional.melted$Color)) +
+                                   ggplot2::aes(x = `Position`,
+                                                y = `Sample`,
+                                                size = `Proportion`,
+                                                color = `Color`)) +
       ggplot2::geom_point(stat = "identity", alpha = 0.6, shape = 16) +
       ggplot2::scale_color_identity() +
       ggplot2::labs(y = "Condition", x = "Barcode", title = name) +
@@ -67,10 +67,10 @@ plotBarcodeBubble <- function(counts.obj, labels = T, proportion.cutoff = 10, na
     # generate bubbleplot
     suppressWarnings(
     bubble.plot <- ggplot2::ggplot(barcodes.proportional.melted,
-                                   ggplot2::aes(x = barcodes.proportional.melted$Position,
-                                                y = barcodes.proportional.melted$Sample,
-                                                size = barcodes.proportional.melted$Proportion,
-                                                color = barcodes.proportional.melted$Color)) +
+                                   ggplot2::aes(x = `Position`,
+                                                y = `Sample`,
+                                                size = `Proportion`,
+                                                color = `Color`)) +
       ggplot2::geom_point(stat = "identity", alpha = 0.6, shape = 16) +
       ggplot2::scale_color_identity() +
       ggplot2::labs(y = "Condition", x = "Barcode", title = name) +
