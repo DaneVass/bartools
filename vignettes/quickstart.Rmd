@@ -16,18 +16,6 @@ vignette: >
 
 # Quickstart Guide
 
-## Introduction
-
-### A brief introduction to DNA barcoding technology
-The ability to accurately track the progeny of a clone within a population of cells is necessary to dissect biological phenomena at single cell resolution. Several technologies have emerged that enable lineage tracing in cell populations. Many of these involve the insertion or generation of a unique sequence of DNA that marks the genome of each cell and which can be tracked using high throughput sequencing technologies. These markers are often termed DNA barcodes as they essentially consist of a stretch of degenerate DNA bases which is unique to that cell. This degenerate sequence of bases affords considerable complexity to the barcode library and uniqueness to each barcode. Many current DNA barcoding methodologies utilise stretches of up to 60 bases for their barcode region allowing an astronomical theoretical number of individual barcodes to be generated from combinations of the four nucleotides that comprise DNA: adenine (A), thymine (T), guanine (G) and cytosine (C). In reality, the need to synthesize and clone these barcodes into viral vectors reduces the overall complexity that can be achieved. Nevertheless, several barcode constructs exist with barcode complexities reaching 10^6 unique barcodes or higher.
-
-### What is bartools
-`bartools` was built out of our need to develop robust tools for the analysis of DNA barcoding datasets in a large number of samples. The package consists of a suite of functions to annotate, analyse and plot DNA barcodes that are read out using common high throughput sequencing methodologies such as those obtained from Illumina machines. Furthermore, the rapid rise of single cell technologies has necessitated the development of methods that can process and visualise DNA barcode data at single cell resolution. New methods incorporate barcode sequences into the three prime region of a reporter gene construct that is transcribed under the direction of a constitutive promoter. This results in transcription of the barcode which can be detected in 3 prime single cell RNA sequencing datasets. Recent examples of this are SPLINTR (ref), LARRY (ref) and CellTagging (ref). bartools contains additional methods to process and visualise these datatypes with the aim of opening up this technology to the broader scientific community. This vignette will showcase the capabilities of the bartools package for processing and analysing synthetic barcode information at the bulk and single cell levels.
-
-## Getting started
-The `bartools` package is optimised for use with SPLINTR lineage barcode libraries (ref) however the functions within can be adapted to any DNA barcoding methodology that utiilses random DNA barcodes.
-
-
 Load the bartools library 
 ```{r setup}
 library(bartools)
