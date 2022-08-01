@@ -77,6 +77,7 @@ We remove barcodes that have no counts across all samples.
 
 ```{r}
 # Remove rows with no data
+
 keeprows = rowSums(test.dge$counts) >= 1
 dge.filtered <- test.dge[keeprows,]
 dge.filtered.counts <- dge.filtered$counts
@@ -87,7 +88,7 @@ We then normalise samples to sequencing depth
 
 ```{r}
 # Normalise each sample to counts per million
-dge.cpmnorm <- as.data.frame(cpm(dge.filtered.counts, normalized.lib.sizes = T))
+dge.cpmnorm <- normaliseCounts(dge.filtered.counts, method = "cpm", threshold = 1)
 ```
 
 We can plot the raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates
@@ -317,4 +318,10 @@ diff.bc
 
 ```{r, eval = FALSE}
 plotAbundanceLines(dge.filtered.collapsed, condition = dge.filtered.collapsed$samples$group, condition_names = c("Vehicle","High_dose"), plot_type = 'counts')
+```
+
+## 5. Session Info
+
+```{r}
+sessionInfo()
 ```
