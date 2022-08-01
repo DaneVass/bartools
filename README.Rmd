@@ -2,7 +2,7 @@
 
 #### Tools for the analysis of cellular barcoding datasets
 
-<img src="man/figures/bartools_logo.png" align="right" width="230"/>
+![](man/figures/bartools_logo.png){align="right" width="230"}
 
 ### Introduction
 
