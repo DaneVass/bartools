@@ -28,5 +28,5 @@ Plot the cumulative sum of barcode cpm counts for a list of samples against and 
 }
 \examples{
 data(test.counts)
-plotBarcodeCumSum(counts = test.counts, sample1 = 'T0-1', samples = c('T0-1','T0b-1'))
+plotBarcodeCumSum(counts = test.counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
 }

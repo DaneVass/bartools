@@ -4,7 +4,14 @@
 \alias{plotDetectedBarcodes}
 \title{plotDetectedBarcodes}
 \usage{
-plotDetectedBarcodes(counts, percentile = 0.95, plot = T)
+plotDetectedBarcodes(
+  counts,
+  percentile = 0.95,
+  plot = T,
+  sample.order = NULL,
+  group = NULL,
+  title = NULL
+)
 }
 \arguments{
 \item{counts}{DGEList or dataframe containing raw or normalised barcode counts}
@@ -12,6 +19,12 @@ plotDetectedBarcodes(counts, percentile = 0.95, plot = T)
 \item{percentile}{desired percentile value. 95th percentile by default}
 
 \item{plot}{Logical. plot data instead of returning counts table.}
+
+\item{sample.order}{desired ordering of the samples on the plot}
+
+\item{group}{grouping field in dgelist$samples to color samples by}
+
+\item{title}{desired plot title}
 }
 \value{
 Returns a histogram plot of the number of detected barcodes per sample.

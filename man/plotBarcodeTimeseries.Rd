@@ -4,7 +4,7 @@
 \alias{plotBarcodeTimeseries}
 \title{plotBarcodeTimeseries}
 \usage{
-plotBarcodeTimeseries(counts.obj, name = "", seed = 5)
+plotBarcodeTimeseries(counts.obj, name = "", seed = 5, top = 50)
 }
 \arguments{
 \item{counts.obj}{dataframe containing raw counts of barcodes}
@@ -12,6 +12,8 @@ plotBarcodeTimeseries(counts.obj, name = "", seed = 5)
 \item{name}{desired plot title}
 
 \item{seed}{RNG seed}
+
+\item{top}{number of top barcodes per sample to plot}
 }
 \value{
 Returns a bubbleplot of barcodes represented by proportion of total pool

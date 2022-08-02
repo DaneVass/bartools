@@ -37,9 +37,15 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
-docs
 
 # other files
 .DS_Store
 .Rbuildignore
+README.Rmd
+.DS_Store
+./inst/.DS_Store
+./inst/extdata/.DS_Store
+.Rbuildignore
 bartools_test_notebook.Rmd
+bartools_test_notebook.nb.html
+docs*

@@ -28,5 +28,5 @@ Compare barcode abundance between 2 conditions using EdgeR
 }
 \examples{
 data(test.dge)
-compareAbundance(test.dge, test.dge$samples$group, c("T0","T0b"))
+compareAbundance(test.dge, test.dge$samples$group, c("T0","10_High_dose"))
 }

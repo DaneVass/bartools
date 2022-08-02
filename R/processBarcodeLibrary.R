@@ -26,7 +26,7 @@ processBarcodeLibrary <- function(file = NULL, samplename = "Barcode", cutoff = 
     stop("Please include a valid path to starcode output")
   }
 
-  if(class(file) == "data.frame"){
+  if(methods::is(file)[1] == "data.frame"){
     barcodes <- file
   } else {
     barcodes <- data.table::fread(file)
@@ -44,12 +44,11 @@ processBarcodeLibrary <- function(file = NULL, samplename = "Barcode", cutoff = 
   # Generate rank and proportion information
   raw.total.count <- sum(barcodes$Raw_count)
   raw.proportion <- 100*(barcodes$Raw_count/raw.total.count)
-  assertthat::are_equal(sum(raw.proportion), 100)
-
+  stopifnot(sum(raw.proportion) == 100)
 
   filtered.total.count <- sum(barcodes.out$Raw_count)
   filtered.proportion <- 100*(barcodes.out$Raw_count/filtered.total.count)
-  assertthat::are_equal(sum(filtered.proportion), 100)
+  stopifnot(sum(filtered.proportion) == 100)
 
   filtered.counts.starcode <- sum(barcodes[barcodes$Raw_count >= 100,2])
   proportion.starcode <- 100*(filtered.counts.starcode/raw.total.count)

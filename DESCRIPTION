@@ -1,7 +1,7 @@
 Package: bartools
 Type: Package
 Title: A toolkit for the analysis and visualisation of synthetic DNA barcodes in high thorughput sequencing datasets
-Version: 0.1.0
+Version: 0.2.1
 Authors@R: person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
                   role = c("aut", "cre"))
 Maintainer: Dane Vassiliadis <dane.vassiliadis@petermac.org>
@@ -16,7 +16,6 @@ Suggests:
 Imports: 
     data.table,
     ComplexHeatmap,
-    RColorBrewer,
     vegan,
     ineq,
     Rbowtie,
@@ -25,17 +24,14 @@ Imports:
     seqinr,
     stringr,
     scales,
-    BiocGenerics,
-    assertthat,
     ggpubr,
-    matrixStats,
     plyr,
     dplyr,
+    forcats,
     reshape2,
     limma,
-    viridis,
-    magrittr
-RoxygenNote: 7.1.2
+    methods
+RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 Depends:
     R (>= 3.5),

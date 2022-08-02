@@ -27,7 +27,7 @@
 #' @examples
 #' data(test.dge)
 #' plotAbundanceLines(dge = test.dge, condition = test.dge$samples$group,
-#' condition_names = c("T0","T0b"), plot_type = 'counts', title = 'test')
+#' condition_names = c("T0","10_High_dose"), plot_type = 'counts', title = 'test')
 
 plotAbundanceLines <- function(dge, condition, condition_names, plot_type = 'DEG', keep = 0.9, nbarcode = 10, title = '') {
   counts <- t(as.data.frame(dge$counts))
