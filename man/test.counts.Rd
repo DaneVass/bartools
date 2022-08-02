@@ -16,7 +16,7 @@ A data frame with 1639 rows and 38 variables:
 test.counts
 }
 \description{
-A dataset containing normalised count information for 100 hypothetical barcodes
-in 4 hypothetical samples
+A dataset containing normalised count information for 1639 hypothetical barcodes
+in 38 hypothetical samples
 }
 \keyword{datasets}

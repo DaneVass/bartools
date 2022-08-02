@@ -5,6 +5,9 @@
 #' @param counts DGEList or dataframe containing raw or normalised barcode counts
 #' @param percentile desired percentile value. 95th percentile by default
 #' @param plot Logical. plot data instead of returning counts table.
+#' @param sample.order desired ordering of the samples on the plot
+#' @param group grouping field in dgelist$samples to color samples by
+#' @param title desired plot title
 #'
 #' @return Returns a histogram plot of the number of detected barcodes per sample.
 #'
@@ -18,7 +21,7 @@
 plotDetectedBarcodes <- function(counts, percentile = 0.95, plot = T, sample.order = NULL, group = NULL, title = NULL)
 {
   # check inputs
-  if (class(counts) == "DGEList") {
+  if (methods::is(counts)[1] == "DGEList") {
     counts.obj <- as.data.frame(counts$counts)
   }
   else {
@@ -75,7 +78,7 @@ plotDetectedBarcodes <- function(counts, percentile = 0.95, plot = T, sample.ord
   }
 
   # merge group into percentile.df
-  if (class(counts) == "DGEList") {
+  if (methods::is(counts)[1] == "DGEList") {
     if (!is.null(group)) {
       groups <- counts$samples[,which(colnames(counts$samples) == as.character(group)), drop = F]
       groups$Sample <- rownames(groups)

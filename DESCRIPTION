@@ -27,8 +27,10 @@ Imports:
     ggpubr,
     plyr,
     dplyr,
+    forcats,
     reshape2,
-    limma
+    limma,
+    methods
 RoxygenNote: 7.2.0
 VignetteBuilder: knitr
 Depends:

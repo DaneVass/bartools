@@ -14,7 +14,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Cellular Barcoding Dataset Preprocessing 
+## Cellular Barcoding Dataset Preprocessing
 
 ### Getting started
 

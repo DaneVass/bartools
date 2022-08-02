@@ -26,7 +26,7 @@ processBarcodeLibrary <- function(file = NULL, samplename = "Barcode", cutoff = 
     stop("Please include a valid path to starcode output")
   }
 
-  if(class(file) == "data.frame"){
+  if(methods::is(file)[1] == "data.frame"){
     barcodes <- file
   } else {
     barcodes <- data.table::fread(file)

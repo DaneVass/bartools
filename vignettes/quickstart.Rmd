@@ -35,13 +35,13 @@ For these data types the `edgeR` package provides an efficient `DGEList` object 
 
 For this section we will make use of a hypothetical DNA barcoding dataset based on recent unpublished data from the Dawson lab investigating the response of acute myeloid leukaemia (AML) cells to a novel class of MYST acetyltransferase inhibitor described recently in [MacPherson et al. Nature 2019](https://dx.doi.org/10.1038/s41586-019-1835-6).
 
-AML cells were cultured *in vitro*, barcoded using a lentiviral based barcoding library called SPLINTR, and transplanted into three groups of C57BL/6J mice with daily dosing of MYST inhibitor at low or high dose or a corresponding vehicle control.
+AML cells were cultured *in vitro*, barcoded using a lentiviral based barcoding library called [SPLINTR](https://dx.doi.org/10.1038/s41586-021-04206-7), and transplanted into three groups of C57BL/6J mice with daily dosing of MYST inhibitor at low or high dose or a corresponding vehicle control.
 Barcode samples were harvested from the bone marrow of moribund mice and sequenced for in technical replicate replicate.
 
 To follow along with this vignette the raw counts tables and sample metadata are included in the bartools package.
 
 ```{r}
-bartools::data(test.dge)
+data(test.dge)
 ```
 
 ### Generating a DGEList object from sample counts and metadata
@@ -65,7 +65,7 @@ This results in the creation of a DGEList object containing counts and metadata 
 
 ```{r}
 data(test.dge)
-dge
+test.dge
 ```
 
 ## 2. Data QC and Normalisation
@@ -77,7 +77,6 @@ We remove barcodes that have no counts across all samples.
 
 ```{r}
 # Remove rows with no data
-
 keeprows = rowSums(test.dge$counts) >= 1
 dge.filtered <- test.dge[keeprows,]
 dge.filtered.counts <- dge.filtered$counts
@@ -88,7 +87,7 @@ We then normalise samples to sequencing depth
 
 ```{r}
 # Normalise each sample to counts per million
-dge.cpmnorm <- normaliseCounts(dge.filtered.counts, method = "cpm", threshold = 1)
+dge.cpmnorm <- normaliseCounts(dge.filtered, method = "cpm", threshold = 1)
 ```
 
 We can plot the raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates
@@ -271,7 +270,7 @@ These plots show that both top barcodes in the T0 sample were essentially exting
 plotBarcodeBoxplot(dge.filtered.collapsed, barcodes = top.bc$T0, condition = c("T0", "Low_dose", "High_dose"))
 ```
 
-### Calculating and plotting percentile abundance. 
+### Calculating and plotting percentile abundance.
 
 The above graphs demonstrate that relatively few barcodes can sometimes comprise the majority of a sample's clonality, particularly following a selective event such as drug treatment.
 It is useful to formally analyse this based on a desired percentile threshold.

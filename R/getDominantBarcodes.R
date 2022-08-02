@@ -24,7 +24,7 @@
 getDominantBarcodes <- function(counts.obj, pct.thresh = 5){
 
   # get counts from DGEList object if given
-  if(class(counts.obj) == "DGEList"){
+  if(methods::is(counts.obj)[1] == "DGEList"){
     counts.obj <- edgeR::cpm(counts.obj$counts)
   }
 

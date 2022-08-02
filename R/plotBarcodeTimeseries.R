@@ -5,6 +5,7 @@
 #' @param counts.obj dataframe containing raw counts of barcodes
 #' @param name desired plot title
 #' @param seed RNG seed
+#' @param top number of top barcodes per sample to plot
 
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 

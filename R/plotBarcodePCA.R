@@ -30,7 +30,7 @@ plotBarcodePCA <- function(object, intgroup = "condition", col = "group", ntop =
   # https://github.com/Bioconductor-mirror/DESeq2/blob/0d7983c345bfc576725ef89addcb49c6e14ef83d/R/plots.R
 
   # get data from DGEList or dataframe
-  if (class(object) == "DGEList"){
+  if (methods::is(object)[1] == "DGEList"){
     dge <- edgeR::calcNormFactors(object, method = "TMM")
     data <- dge$counts * edgeR::getOffset(dge)
   } else {
