@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bartools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -78,12 +78,20 @@ Vassiliadis</h4>
     
     
 <div class="section level2">
-<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+<h2 id="cellular-barcoding-dataset-preprocessing">Cellular Barcoding Dataset Preprocessing<a class="anchor" aria-label="anchor" href="#cellular-barcoding-dataset-preprocessing"></a>
 </h2>
-<p>The <code>bartools</code> package is optimised for use with SPLINTR
-lineage barcode libraries (ref) however the functions within can be
-adapted to any DNA barcoding methodology that utiilses random DNA
+<div class="section level3">
+<h3 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h3>
+<p>The first step in any cellular barcoding analysis is to extract
+barcode containing reads from high throughput sequencing datasets and
+count the number of each barcode within each sample. The
+<code>bartools</code> package is optimised for use with SPLINTR lineage
+barcode libraries (See <a href="https://dx.doi.org/10.1038/s41586-021-04206-7" class="external-link">Fennell and
+Vassiliadis et al. Nature 2021</a>) however the functions within can be
+adapted to other DNA barcoding methodologies that use randomised DNA
 barcodes.</p>
+</div>
 <div class="section level3">
 <h3 id="the-reference-barcode-library">The reference barcode library<a class="anchor" aria-label="anchor" href="#the-reference-barcode-library"></a>
 </h3>
@@ -92,8 +100,8 @@ barcoding experiment uses a known reference library of barcodes. Since
 DNA barcodes are generally introduced into cells using viral vectors,
 the plasmid pool used to generate the barcode virus represents the
 reference set of barcodes that can be present in an experiment. The
-primary step in any barcoding analysis is to determine what barcodes are
-present in this reference pool and at what proportion.</p>
+primary step in any barcoding analysis is to determine which barcodes
+are present in this reference pool and at what proportion.</p>
 <p>In the case of SPLINTR, barcodes take the following form:</p>
 <pre><code><span><span class="va">tgaccatgtacgattgactaNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWtgctaatgcgtactg</span></span></code></pre>
 <p>where lower case sequence represents upstream and downstream constant
@@ -101,38 +109,21 @@ regions that are critical for accurately retrieving barcodes from the
 genomic DNA of cells.</p>
 <p>Load the bartools library</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bartools</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://danevass.github.io/bartools/">bartools</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: edgeR</span></span>
 <span><span class="co">#&gt; Loading required package: limma</span></span>
-<span><span class="co">#&gt; Loading required package: ggplot2</span></span>
-<span><span class="co">#&gt; Warning: package 'ggplot2' was built under R version 4.1.2</span></span></code></pre></div>
+<span><span class="co">#&gt; Loading required package: ggplot2</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="a-simple-analysis">A simple analysis<a class="anchor" aria-label="anchor" href="#a-simple-analysis"></a>
-</h2>
-<p>Here we will follow the analysis of an example experiment to
-understand the basic functions of bartools. Say we have a population of
-cells growing in culture. These cells were transduced with a lentiviral
-vector encoding an mCHERRY fluorescent protein and a downstream barcode
-in the 3’ UTR possessing the following structure:</p>
-<pre><code><span><span class="va">tgaccatgtacgattgactaNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWNNSWSNNWSWtgctaatgcgtactg</span></span></code></pre>
-<p>Two days after transduction, two sets of 5000 mCHERRY positive cells
-were sorted using flow cytometry into separate wells and resuspended in
-culture media. Genomic DNA from the cells was harvested 1 week following
-transduction and barcode regions were specifically amplified using PCR
-and sequenced for 75 cycles on an Illumina NextSeq 550 resulting in
-single ended fastq files containing barcoded reads.</p>
 <div class="section level3">
-<h3 id="barcode-pre-processing">barcode pre-processing<a class="anchor" aria-label="anchor" href="#barcode-pre-processing"></a>
+<h3 id="barcode-pre-processing">Barcode pre-processing<a class="anchor" aria-label="anchor" href="#barcode-pre-processing"></a>
 </h3>
 <p>Barcode information can be extracted from raw fastq files and
 summarised into a table of counts per barcode as follows</p>
 <p>Firstly we define the expected barcode pattern and the upstream and
 downstream constant regions that flank true barcodes. And then extract
 reads containing this barcode pattern using the
-<code>extractbartoolseads</code> function</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code>extractBarcodeReads</code> function</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pattern</span> <span class="op">&lt;-</span> <span class="st">"([ACTG][ACTG][GC][AT][GC][ACTG][ACTG][AT][GC][AT]){3,6}"</span></span>
 <span><span class="va">fastq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"test_extract_75bp_single-end.fastq.gz"</span>, package <span class="op">=</span> <span class="st">"bartools"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">constant</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper</a></span><span class="op">(</span><span class="st">"tgaccatgtacgattgacta"</span><span class="op">)</span></span>
@@ -143,11 +134,11 @@ reads containing this barcode pattern using the
 <span><span class="va">test.extract</span></span></code></pre></div>
 <p>Following barcode extraction we make use of previously generated
 library of reference barcodes and map our extracted sequences to this
-reference using <code>mapbartoolseads</code>. True barcodes will align
-without mismatches. reads containing sequencing errors or false barcode
+reference using <code>mapBarcodeReads</code>. True barcodes will align
+without mismatches. Reads containing sequencing errors or false barcode
 sequences that snuck through the extraction step will be filtered out
 here.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test.map</span> <span class="op">&lt;-</span> <span class="fu">bartools</span><span class="fu">::</span><span class="fu">mapbartoolseads</span><span class="op">(</span>reads <span class="op">=</span> <span class="va">test.extract</span>,</span>
 <span>                                      bowtie_index <span class="op">=</span> <span class="st">"../data/bowtie/index"</span>,</span>
 <span>                                      mismatches <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -156,20 +147,20 @@ here.</p>
 <span><span class="va">test.map</span></span></code></pre></div>
 <p>If a bowtie reference has not yet been generated we can specify
 <code>reference_fasta</code> in place of <code>bowtie_index</code> and
-it will be generated for us</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+it will be generated automatically.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reference.fa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"barcode_lib_reference_test.fasta"</span>, package <span class="op">=</span> <span class="st">"bartools"</span>, mustWork <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="va">test.map</span> <span class="op">&lt;-</span> <span class="fu">bartools</span><span class="fu">::</span><span class="fu"><a href="../reference/mapBarcodeReads.html">mapBarcodeReads</a></span><span class="op">(</span>reads <span class="op">=</span> <span class="va">test.extract</span>,</span>
 <span>                                      bowtie_index <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>                                      reference_fasta <span class="op">=</span> <span class="va">reference.fa</span>,</span>
-<span>                                      mismatches <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                                      mismatches <span class="op">=</span> <span class="fl">1</span>, <span class="co"># maximum 3 mismatches</span></span>
 <span>                                      threads <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>                                      prefix <span class="op">=</span> <span class="st">"test_map"</span><span class="op">)</span></span>
 <span><span class="va">test.map</span></span></code></pre></div>
-<p><code>mapBarcodeReads</code> takes the liberty of counting the number
-of occurrences of each barcode for us and saving the output in a file.
-We can easily load and examine the final count data here.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p><code>mapBarcodeReads</code> counts the number of occurrences of each
+barcode and saves the output in a file. We can easily load and examine
+the final count data here.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">test.counts</span> <span class="op">&lt;-</span> <span class="fu">utils</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="st">"./test_map_counts.csv"</span>, header <span class="op">=</span> <span class="cn">T</span>, sep <span class="op">=</span> <span class="st">","</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">test.counts</span> <span class="op">%&gt;%</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rownames_to_column</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mapped</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -180,12 +171,51 @@ We can easily load and examine the final count data here.</p>
 to process raw count data within R as shown above. It is more efficient
 to process these samples and generate count tables using a pipeline that
 can be distributed across HPC infrastructure</p>
-<p>We have developed BARtab, a Nextflow (ref) pipeline for the
+<p>We have developed <a href="https://github.com/DaneVass/BARtab" class="external-link">BARtab</a>, a <a href="https://www.nextflow.io/" class="external-link">Nextflow</a> pipeline for the
 preprocessing of DNA barcoding datasets from bulk and single-cell
 experiments. The pipeline and associated running instructions can be
-found at <code>&lt;insert link to barcode-seq pipeline&gt;</code></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ToDo</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># example running snakemake barcode-seq workflow</span></span></code></pre></div>
+found at <a href="https://github.com/DaneVass/BARtab" class="external-link uri">https://github.com/DaneVass/BARtab</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="session-info">Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
+</h3>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.1 (2022-06-23)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: macOS Big Sur ... 10.16</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRblas.0.dylib</span></span>
+<span><span class="co">#&gt; LAPACK: /Library/Frameworks/R.framework/Versions/4.2/Resources/lib/libRlapack.dylib</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt; [1] en_AU.UTF-8/en_AU.UTF-8/en_AU.UTF-8/C/en_AU.UTF-8/en_AU.UTF-8</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt; [1] bartools_0.2.1 ggplot2_3.3.6  edgeR_3.38.1   limma_3.52.2  </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] Rcpp_1.0.9        locfit_1.5-9.5    lattice_0.20-45   assertthat_0.2.1 </span></span>
+<span><span class="co">#&gt;  [5] rprojroot_2.0.3   digest_0.6.29     utf8_1.2.2        R6_2.5.1         </span></span>
+<span><span class="co">#&gt;  [9] evaluate_0.15     pillar_1.7.0      rlang_1.0.3       rstudioapi_0.13  </span></span>
+<span><span class="co">#&gt; [13] vegan_2.6-2       jquerylib_0.1.4   Matrix_1.4-1      ineq_0.2-13      </span></span>
+<span><span class="co">#&gt; [17] rmarkdown_2.14    pkgdown_2.0.6     textshaping_0.3.6 desc_1.4.1       </span></span>
+<span><span class="co">#&gt; [21] splines_4.2.1     stringr_1.4.0     munsell_0.5.0     compiler_4.2.1   </span></span>
+<span><span class="co">#&gt; [25] xfun_0.31         pkgconfig_2.0.3   systemfonts_1.0.4 mgcv_1.8-40      </span></span>
+<span><span class="co">#&gt; [29] htmltools_0.5.2   tidyselect_1.1.2  tibble_3.1.7      fansi_1.0.3      </span></span>
+<span><span class="co">#&gt; [33] permute_0.9-7     crayon_1.5.1      dplyr_1.0.9       withr_2.5.0      </span></span>
+<span><span class="co">#&gt; [37] MASS_7.3-57       grid_4.2.1        nlme_3.1-157      jsonlite_1.8.0   </span></span>
+<span><span class="co">#&gt; [41] gtable_0.3.0      lifecycle_1.0.1   DBI_1.1.3         magrittr_2.0.3   </span></span>
+<span><span class="co">#&gt; [45] scales_1.2.0      cli_3.3.0         stringi_1.7.6     cachem_1.0.6     </span></span>
+<span><span class="co">#&gt; [49] fs_1.5.2          bslib_0.3.1       ellipsis_0.3.2    ragg_1.2.2       </span></span>
+<span><span class="co">#&gt; [53] generics_0.1.3    vctrs_0.4.1       tools_4.2.1       glue_1.6.2       </span></span>
+<span><span class="co">#&gt; [57] purrr_0.3.4       parallel_4.2.1    fastmap_1.1.0     yaml_2.3.5       </span></span>
+<span><span class="co">#&gt; [61] colorspace_2.0-3  cluster_2.1.3     memoise_2.0.1     knitr_1.39       </span></span>
+<span><span class="co">#&gt; [65] sass_0.4.1</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -201,7 +231,7 @@ found at <code>&lt;insert link to barcode-seq pipeline&gt;</code></p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

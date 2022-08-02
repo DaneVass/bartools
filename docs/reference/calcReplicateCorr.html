@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bartools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,26 +84,14 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">calcReplicateCorr</span><span class="op">(</span><span class="va">test.dge</span>, group <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1_BM_High_dose  1_SPL_High_dose  10_BM_High_dose 10_SPL_High_dose </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9990           0.8949           0.9999           0.9997 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    11_BM_Vehicle   11_SPL_Vehicle    12_BM_Vehicle   12_SPL_Vehicle </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9988           0.9990           0.9993           0.9997 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   13_BM_Low_dose  13_SPL_Low_dose   14_BM_Low_dose  14_SPL_Low_dose </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           1.0000           0.9999           1.0000           0.9997 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   15_BM_Low_dose  15_SPL_Low_dose   16_BM_Low_dose  16_SPL_Low_dose </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9999           1.0000           0.9999           0.9996 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  17_BM_High_dose 17_SPL_High_dose    18_BM_Vehicle   18_SPL_Vehicle </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9998           0.9997           0.9996           0.9994 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2_BM_High_dose  2_SPL_High_dose   3_BM_High_dose  3_SPL_High_dose </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9975           0.9973           0.9997           0.9998 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     4_BM_Vehicle    4_SPL_Vehicle    5_BM_Low_dose   5_SPL_Low_dose </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9976           0.9986           0.9999           0.9978 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   6_BM_High_dose  6_SPL_High_dose     7_BM_Vehicle    7_SPL_Vehicle </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9995           0.9998           0.9997           0.9973 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     8_BM_Vehicle    8_SPL_Vehicle    9_BM_Low_dose   9_SPL_Low_dose </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9993           0.9990           0.9997           0.9993 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               T0              T0b </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0.9984           0.9964 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10_High_dose   11_Vehicle   12_Vehicle  13_Low_dose  14_Low_dose  15_Low_dose </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0.9998575    0.9988328    0.9992805    0.9999569    0.9999779    0.9998939 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  16_Low_dose 17_High_dose   18_Vehicle  1_High_dose  2_High_dose  3_High_dose </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0.9998965    0.9998268    0.9995628    0.9990491    0.9975029    0.9997352 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    4_Vehicle   5_Low_dose  6_High_dose    7_Vehicle    8_Vehicle   9_Low_dose </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0.9975620    0.9999389    0.9994985    0.9997088    0.9992879    0.9997057 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           T0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    0.9983838 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -115,7 +103,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

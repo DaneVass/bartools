@@ -79,6 +79,12 @@
     <loc>https://danevass.github.io/bartools/reference/plotAbundanceLines.html</loc>
   </url>
   <url>
+    <loc>https://danevass.github.io/bartools/reference/plotBARtabFilterQC.html</loc>
+  </url>
+  <url>
+    <loc>https://danevass.github.io/bartools/reference/plotBARtabMapQC.html</loc>
+  </url>
+  <url>
     <loc>https://danevass.github.io/bartools/reference/plotBarcodeBoxplot.html</loc>
   </url>
   <url>
@@ -128,6 +134,9 @@
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/processBarcodeLibrary.html</loc>
+  </url>
+  <url>
+    <loc>https://danevass.github.io/bartools/reference/proportionalBubbleplot.html</loc>
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/test.counts.html</loc>

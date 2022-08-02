@@ -7,7 +7,7 @@ output:
     number_sections: true
     toc_depth: 3
     highlight: tango 
-date: June 27, 2019
+date: August 2, 2022
 vignette: >
   %\VignetteIndexEntry{bartools-quickstart}
   %\VignetteEncoding{UTF-8}
@@ -16,6 +16,10 @@ editor_options:
   markdown: 
     wrap: sentence
 ---
+
+```{r, echo=FALSE}
+knitr::opts_chunk$set(error = TRUE)
+```
 
 # Bartools Quickstart Guide
 
@@ -207,7 +211,6 @@ Alternatively, we can focus in on the most abundant barcodes within a set of sam
 plotBarcodeHistogram(dge.filtered.collapsed$counts, 
                      sample = dge.filtered.collapsed$samples$Group[[1]], 
                      top = 50)
-
 ```
 
 ### Timeseries Plots
@@ -216,8 +219,7 @@ For timecourse experiments it is useful to visualise the kinetics of barcode div
 In this instance we can use `plotBarcodeTimeseries` to get an idea of the relative abundance of the top *n* barcodes in a sample relative to others.
 
 ```{r}
-plotBarcodeTimeseries(dge.filtered.collapsed[,dge.filtered.collapsed$samples$Treatment %in% c("Vehicle", "T0")], top = 10)
-
+plotBarcodeTimeseries(dge.filtered.collapsed, top = 5)
 ```
 
 ### Principal Components Analysis

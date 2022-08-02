@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">bartools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,42 +61,50 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="bartools">Bartools<a class="anchor" aria-label="anchor" href="#bartools"></a>
+<div class="page-header"><h1 id="bartools">bartools<a class="anchor" aria-label="anchor" href="#bartools"></a>
 </h1></div>
+<div class="section level4">
+<h4 id="tools-for-the-analysis-of-cellular-barcoding-datasets">Tools for the analysis of cellular barcoding datasets<a class="anchor" aria-label="anchor" href="#tools-for-the-analysis-of-cellular-barcoding-datasets"></a>
+</h4>
+<p><img src="reference/figures/bartools_logo.png" align="right" width="260"></p>
+</div>
+<div class="section level3">
+<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h3>
+<p>Cellular barcoding is a powerful and widespread method to accurately track the progeny of a clone within a population of cells, enabling the dissection of biological phenomena at single cell resolution. However there remains a need for scalable and standardised open-source tools to pre-process and visualise cellular barcoding datasets. The bartools package is an R-based toolkit for the analysis of cellular barcoding information from high throughput sequencing datasets. The package consists of a suite of functions to annotate, analyse and plot DNA barcodes that are read out using common high throughput sequencing methodologies such as from Illumina machines. The bartools package is optimised for use with <a href="https://www.nature.com/articles/s41586-021-04206-7" class="external-link">SPLINTR</a> lineage barcode libraries however the functions within can be adapted to any cellular barcoding methodology that utiilses random DNA barcodes.</p>
 <!-- badges: start -->
 <!-- badges: end -->
-<p>bartools is an R-based toolkit for the analysis of synthetic barcodes in the genome and transcriptome</p>
-<div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h2>
-<p>You can install the development version of bartools from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"DaneVass/bartools"</span>,  dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<hr>
 </div>
-<div class="section level2">
-<h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
-</h2>
-<p><code>bartools</code> can preprocess, normalise and visualise all types of synthetic barcode count data.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bartools</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"test.counts"</span><span class="op">)</span></span>
-<span><span class="co">## plot from counts files</span></span>
-<span><span class="fu"><a href="reference/plotBarcodeBubble.html">plotBarcodeBubble</a></span><span class="op">(</span><span class="va">test.counts</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
-<span><span class="co">#&gt; Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-1.png" width="100%"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plotBarcodeCounts.html">plotBarcodeCounts</a></span><span class="op">(</span><span class="va">test.counts</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-2.png" width="100%"></p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plotBarcodeHistogram.html">plotBarcodeHistogram</a></span><span class="op">(</span><span class="va">test.counts</span>, sample <span class="op">=</span> <span class="st">"T0-1"</span>, top <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-3.png" width="100%"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/plotReadCounts.html">plotReadCounts</a></span><span class="op">(</span><span class="va">test.counts</span>, group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-example-4.png" width="100%"></p>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
+<p>You can install the development version of bartools from <a href="https://github.com/" class="external-link">GitHub</a>:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"devtools"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"DaneVass/bartools"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h3>
+<p>See <code>vignette(bartools)</code> for more details and usage examples.</p>
+</div>
+<div class="section level3">
+<h3 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h3>
+<p>See the <a href="https://danevass.github.io/bartools/">Docs</a> for full package documentation.</p>
+</div>
+<div class="section level3">
+<h3 id="looking-for-a-dataset-preprocessing-pipeline">Looking for a dataset preprocessing pipeline?<a class="anchor" aria-label="anchor" href="#looking-for-a-dataset-preprocessing-pipeline"></a>
+</h3>
+<p>We have also developed <a href="https://github.com/DaneVass/BARtab" class="external-link">BARtab</a>, a pre-processing pipeline to automate the extraction and enumeration of barcode reads from raw sequence files. See the github for</p>
+</div>
+<div class="section level3">
+<h3 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
+</h3>
+<p>The bartools package was developed by <a href="https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis" class="external-link">Dane Vassiliadis</a>. Please post any issues at <a href="https://github.com/DaneVass/bartools/issues" class="external-link uri">https://github.com/DaneVass/bartools/issues</a></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
@@ -136,7 +144,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

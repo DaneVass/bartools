@@ -12,7 +12,7 @@ Modified from collapseReplicates function from DESeq2 package to accept DGEList 
     
     <a class="navbar-brand me-2" href="../index.html">bartools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,213 +102,108 @@ Modified from collapseReplicates function from DESeq2 package to accept DGEList 
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">collapseReplicates</span><span class="op">(</span><span class="va">test.dge</span>, groupby <span class="op">=</span> <span class="va">test.dge</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span>, by <span class="op">=</span> <span class="st">"mean"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1_BM_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 41 42</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`10_High_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1_SPL_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 43 44</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`10_BM_High_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`11_Vehicle`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5 6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`10_SPL_High_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`12_Vehicle`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 7 8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`11_BM_Vehicle`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`13_Low_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  9 10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`11_SPL_Vehicle`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`14_Low_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 11 12</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`12_BM_Vehicle`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`15_Low_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 13 14</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`12_SPL_Vehicle`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`16_Low_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 15 16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`13_BM_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`17_High_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 17 18</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`13_SPL_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`18_Vehicle`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 19 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`14_BM_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`1_High_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 21 22</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`14_SPL_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`2_High_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 23 24</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`15_BM_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`3_High_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 25 26</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`15_SPL_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`4_Vehicle`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 27 28</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`16_BM_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`5_Low_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 29 30</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`16_SPL_Low_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`6_High_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 31 32</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`17_BM_High_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`7_Vehicle`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 33 34</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`17_SPL_High_dose`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`8_Vehicle`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 35 36</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`18_BM_Vehicle`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`9_Low_dose`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 37 38</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`18_SPL_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 39 40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2_BM_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 45 46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2_SPL_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 47 48</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`3_BM_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 49 50</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`3_SPL_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 51 52</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`4_BM_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 53 54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`4_SPL_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 55 56</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`5_BM_Low_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 57 58</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`5_SPL_Low_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 59 60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`6_BM_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 61 62</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`6_SPL_High_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 63 64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`7_BM_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 65 66</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`7_SPL_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 67 68</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`8_BM_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 69 70</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`8_SPL_Vehicle`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 71 72</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`9_BM_Low_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 73 74</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`9_SPL_Low_dose`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 75 76</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $T0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $T0b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 3 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An object of class "DGEList"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                   Sample Experiment            Group Strain Mouse Tissue</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1_BM_High_dose    1-BM-1       LM25   1_BM_High_dose C57BL6     1     BM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1_SPL_High_dose   1-SP-1       LM25  1_SPL_High_dose C57BL6     1    SPL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10_BM_High_dose  10-BM-1       LM25  10_BM_High_dose C57BL6    10     BM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10_SPL_High_dose 10-SP-1       LM25 10_SPL_High_dose C57BL6    10    SPL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11_BM_Vehicle    11-BM-1       LM25    11_BM_Vehicle C57BL6    11     BM</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  PCR_Replicate Treatment Days.post.transplant Library</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1_BM_High_dose               1 High_dose                   35     BFP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1_SPL_High_dose              1 High_dose                   35     BFP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10_BM_High_dose              1 High_dose                   41     BFP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10_SPL_High_dose             1 High_dose                   41     BFP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11_BM_Vehicle                1   Vehicle                   30     BFP</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                             group lib.size norm.factors</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1_BM_High_dose     1_BM_High_dose  3447629            1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1_SPL_High_dose   1_SPL_High_dose      246            1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10_BM_High_dose   10_BM_High_dose  4114186            1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 10_SPL_High_dose 10_SPL_High_dose  4670972            1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 11_BM_Vehicle       11_BM_Vehicle  2907500            1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33 more rows ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              Sample Experiment        Group PCR_Replicate Treatment</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10_High_dose  S10-1    test_01 10_High_dose             1 High_dose</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11_Vehicle    S11-1    test_01   11_Vehicle             1   Vehicle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12_Vehicle    S12-1    test_01   12_Vehicle             1   Vehicle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13_Low_dose   S13-1    test_01  13_Low_dose             1  Low_dose</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14_Low_dose   S14-1    test_01  14_Low_dose             1  Low_dose</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                     group lib.size norm.factors</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 10_High_dose 10_High_dose  4114186            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 11_Vehicle     11_Vehicle  2907500            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 12_Vehicle     12_Vehicle  4202337            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13_Low_dose   13_Low_dose  4513559            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14_Low_dose   14_Low_dose  4503490            1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 more rows ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $counts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              1_BM_High_dose 1_SPL_High_dose 10_BM_High_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1                0               0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13               0               0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99             155               0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120              0               0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351              0               0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              10_SPL_High_dose 11_BM_Vehicle 11_SPL_Vehicle 12_BM_Vehicle</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1                  0             0              0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13                 0             0              2             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99                 0             0              2             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120                0             0              0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351                0             0              0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              12_SPL_Vehicle 13_BM_Low_dose 13_SPL_Low_dose 14_BM_Low_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1                0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13               0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99               0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120              0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351              0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              14_SPL_Low_dose 15_BM_Low_dose 15_SPL_Low_dose 16_BM_Low_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1                 0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13                0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99                0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120               0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351               0              0               0              0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              16_SPL_Low_dose 17_BM_High_dose 17_SPL_High_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1                 0               0                0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13                0               0                0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99                0               0                0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120               0               0                0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351               0               0                0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              18_BM_Vehicle 18_SPL_Vehicle 2_BM_High_dose 2_SPL_High_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1               0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13              0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99              0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120             0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351             0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              3_BM_High_dose 3_SPL_High_dose 4_BM_Vehicle 4_SPL_Vehicle</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1                0               0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13               0               0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99               0               0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120              0               0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351              0               0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              5_BM_Low_dose 5_SPL_Low_dose 6_BM_High_dose 6_SPL_High_dose</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1               0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13              0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99              0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120             0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351             0              0              0               0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              7_BM_Vehicle 7_SPL_Vehicle 8_BM_Vehicle 8_SPL_Vehicle</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1              0             0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13             0             0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99             0             0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120            0             0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351            0             0            0             0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                  Samples</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Tags              9_BM_Low_dose 9_SPL_Low_dose   T0 T0b</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_1               0              0  127 352</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_13              0              0 1146 378</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_99              0              0 1354 989</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_120             0              0  234 236</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BFP_Barcode_351             0              0    0  61</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Samples</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tags     10_High_dose 11_Vehicle 12_Vehicle 13_Low_dose 14_Low_dose 15_Low_dose</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_1              0          0          0           0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_13             0          0          0           0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_99             0          0          0           0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_120            0          0          0           0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_351            0          0          0           0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Samples</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tags     16_Low_dose 17_High_dose 18_Vehicle 1_High_dose 2_High_dose</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_1             0            0          0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_13            0            0          0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_99            0            0          0         155           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_120           0            0          0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_351           0            0          0           0           0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Samples</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tags     3_High_dose 4_Vehicle 5_Low_dose 6_High_dose 7_Vehicle 8_Vehicle</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_1             0         0          0           0         0         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_13            0         0          0           0         0         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_99            0         0          0           0         0         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_120           0         0          0           0         0         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_351           0         0          0           0         0         0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         Samples</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Tags     9_Low_dose   T0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_1            0  127</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_13           0 1146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_99           0 1354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_120          0  234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BC_351          0    0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1634 more rows ...</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -323,7 +218,7 @@ Modified from collapseReplicates function from DESeq2 package to accept DGEList 
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>

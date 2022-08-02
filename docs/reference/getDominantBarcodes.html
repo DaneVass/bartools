@@ -14,7 +14,7 @@ then returns a list of barcodes meeting a threshold abundance per sample"><!-- m
     
     <a class="navbar-brand me-2" href="../index.html">bartools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,302 +88,122 @@ then returns a list of barcodes meeting a threshold abundance per sample</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">getDominantBarcodes</span><span class="op">(</span><span class="va">test.dge</span>, pct.thresh <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`T0-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_245016" "BFP_Barcode_121651"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_245016" "BC_121651"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`T0-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_245016" "BFP_Barcode_121651"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_245016" "BC_121651"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`T0b-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_121651" "BFP_Barcode_245016"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S10-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_8419"   "BC_124796"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`T0b-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_245016" "BFP_Barcode_121651"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S10-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_8419"   "BC_124796"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`10-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S11-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_205581" "BC_90135"  "BC_172626" "BC_58978" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`10-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S11-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_205581" "BC_90135"  "BC_172626" "BC_58978" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`10-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_102160"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S12-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_389078" "BC_159570" "BC_135438" "BC_500780" "BC_79755" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`10-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_102160"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S12-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_389078" "BC_159570" "BC_135438" "BC_500780" "BC_79755" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`11-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_205581" "BFP_Barcode_90135" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_172626" "BFP_Barcode_58978" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S13-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_8419"   "BC_124796" "BC_102160" "BC_257382"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`11-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_205581" "BFP_Barcode_90135" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_172626" "BFP_Barcode_58978" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S13-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_8419"   "BC_124796" "BC_102160" "BC_257382"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`11-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_205581" "BFP_Barcode_90135" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_159570" "BFP_Barcode_172626" "BFP_Barcode_257382"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_79755" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S14-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_90135"  "BC_388103" "BC_31610" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`11-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_205581" "BFP_Barcode_90135" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_159570" "BFP_Barcode_172626" "BFP_Barcode_257382"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_79755" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S14-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_90135"  "BC_388103" "BC_31610" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`12-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_389078" "BFP_Barcode_159570" "BFP_Barcode_135438"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_500780" "BFP_Barcode_79755" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S15-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_1478"   "BC_94579"  "BC_124796" "BC_8419"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`12-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_389078" "BFP_Barcode_159570" "BFP_Barcode_135438"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_500780" "BFP_Barcode_79755" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S15-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_1478"   "BC_94579"  "BC_124796" "BC_8419"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`12-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_389078" "BFP_Barcode_159570" "BFP_Barcode_49629" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_500780" "BFP_Barcode_31610"  "BFP_Barcode_79755" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S16-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_79755"  "BC_140320" "BC_31610"  "BC_248880" "BC_1478"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`12-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_389078" "BFP_Barcode_159570" "BFP_Barcode_49629" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_500780" "BFP_Barcode_31610" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S16-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_79755"  "BC_140320" "BC_31610"  "BC_248880" "BC_1478"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`13-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_102160"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_257382"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S17-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_183691" "BC_90135"  "BC_400391"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`13-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_102160"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_257382"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S17-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_183691" "BC_90135"  "BC_400391"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`13-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_257382"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_102160"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S18-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_49397"  "BC_91412"  "BC_159570" "BC_62602"  "BC_93485"  "BC_70225" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`13-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_257382"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_102160"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S18-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_49397"  "BC_91412"  "BC_159570" "BC_62602"  "BC_70225"  "BC_93485" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`14-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_90135"  "BFP_Barcode_388103" "BFP_Barcode_31610" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S1-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_102160" "BC_59493"  "BC_23361"  "BC_53234"  "BC_400391"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BC_142112"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`14-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_90135"  "BFP_Barcode_388103" "BFP_Barcode_31610" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S1-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_102160" "BC_59493"  "BC_23361"  "BC_53234" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`14-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_388103" "BFP_Barcode_90135"  "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_292962"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S2-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_248880" "BC_65104"  "BC_9141"   "BC_1478"   "BC_31610"  "BC_79755" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`14-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_388103" "BFP_Barcode_90135"  "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_292962"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S2-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_248880" "BC_65104"  "BC_9141"   "BC_1478"   "BC_31610"  "BC_79755" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`15-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_1478"   "BFP_Barcode_94579"  "BFP_Barcode_124796"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_8419"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S3-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_142024" "BC_102160"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`15-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_1478"   "BFP_Barcode_94579"  "BFP_Barcode_124796"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_8419"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S3-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_142024" "BC_102160" "BC_183691"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`15-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_1478"   "BFP_Barcode_124796" "BFP_Barcode_8419"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_94579"  "BFP_Barcode_400391"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S4-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_58978"  "BC_62602"  "BC_68847"  "BC_140320" "BC_79755" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`15-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_1478"   "BFP_Barcode_124796" "BFP_Barcode_8419"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_94579"  "BFP_Barcode_400391"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S4-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_58978"  "BC_62602"  "BC_68847"  "BC_140320" "BC_79755" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BC_327422"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`16-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_79755"  "BFP_Barcode_140320"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_31610"  "BFP_Barcode_248880" "BFP_Barcode_1478"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S5-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_561471" "BC_118640" "BC_59493"  "BC_1607"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`16-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_79755"  "BFP_Barcode_140320"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_31610"  "BFP_Barcode_248880" "BFP_Barcode_1478"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S5-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_561471" "BC_118640" "BC_59493"  "BC_1607"   "BC_31610" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`16-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_248880" "BFP_Barcode_79755"  "BFP_Barcode_1478"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_257382" "BFP_Barcode_142112" "BFP_Barcode_53234" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_94511"  "BFP_Barcode_31610" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S6-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_8419"   "BC_124796" "BC_4564"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`16-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_248880" "BFP_Barcode_79755"  "BFP_Barcode_1478"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_257382" "BFP_Barcode_142112" "BFP_Barcode_53234" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_94511"  "BFP_Barcode_31610"  "BFP_Barcode_142024"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`17-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_183691" "BFP_Barcode_90135"  "BFP_Barcode_400391"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S6-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_8419"   "BC_124796" "BC_4564"  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`17-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_183691" "BFP_Barcode_90135"  "BFP_Barcode_400391"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S7-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_54442"  "BC_142024" "BC_140320" "BC_93485" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`17-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_183691" "BFP_Barcode_400391" "BFP_Barcode_90135" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`17-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_183691" "BFP_Barcode_400391" "BFP_Barcode_90135" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`18-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_49397"  "BFP_Barcode_91412"  "BFP_Barcode_159570"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_62602"  "BFP_Barcode_93485"  "BFP_Barcode_70225" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`18-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_49397"  "BFP_Barcode_91412"  "BFP_Barcode_159570"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_62602"  "BFP_Barcode_70225"  "BFP_Barcode_93485" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`18-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_159570" "BFP_Barcode_49397"  "BFP_Barcode_4469"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_91412" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`18-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_159570" "BFP_Barcode_49397"  "BFP_Barcode_4469"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_91412"  "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_102160" "BFP_Barcode_59493" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_23361"  "BFP_Barcode_53234"  "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_142112"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S7-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_53234"  "BC_54442"  "BC_142024" "BC_140320" "BC_93485" </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_102160" "BFP_Barcode_59493" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_23361"  "BFP_Barcode_53234" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_59493"  "BFP_Barcode_102160"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_23361" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_59493"  "BFP_Barcode_102160"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_23361"  "BFP_Barcode_94511"  "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_248880" "BFP_Barcode_65104"  "BFP_Barcode_9141"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_1478"   "BFP_Barcode_31610"  "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_248880" "BFP_Barcode_65104"  "BFP_Barcode_9141"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_1478"   "BFP_Barcode_31610"  "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_248880" "BFP_Barcode_65104"  "BFP_Barcode_9141"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_79755"  "BFP_Barcode_1478"   "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`2-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_248880" "BFP_Barcode_65104"  "BFP_Barcode_9141"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_79755"  "BFP_Barcode_1478"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`3-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_142024" "BFP_Barcode_102160"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`3-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_142024" "BFP_Barcode_102160"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_183691"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`3-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_142024" "BFP_Barcode_183691"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_102160" "BFP_Barcode_59493"  "BFP_Barcode_23361" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`3-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_142024" "BFP_Barcode_183691"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_102160" "BFP_Barcode_59493"  "BFP_Barcode_23361" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`4-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_58978"  "BFP_Barcode_62602" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_68847"  "BFP_Barcode_140320" "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`4-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_58978"  "BFP_Barcode_62602" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_68847"  "BFP_Barcode_140320" "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_327422"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`4-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_327422" "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_58978"  "BFP_Barcode_81579"  "BFP_Barcode_159570"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`4-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_327422" "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_58978"  "BFP_Barcode_81579" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`5-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_561471" "BFP_Barcode_118640" "BFP_Barcode_59493" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_1607"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`5-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_561471" "BFP_Barcode_118640" "BFP_Barcode_59493" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_1607"   "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`5-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_561471" "BFP_Barcode_59493"  "BFP_Barcode_118640"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_23361"  "BFP_Barcode_1607"   "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`5-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_561471" "BFP_Barcode_59493"  "BFP_Barcode_23361" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_118640" "BFP_Barcode_1607"   "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`6-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_8419"   "BFP_Barcode_124796"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_4564"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`6-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_8419"   "BFP_Barcode_124796"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_4564"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`6-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`6-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_8419"   "BFP_Barcode_124796" "BFP_Barcode_79755" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`7-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_54442"  "BFP_Barcode_142024"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_140320" "BFP_Barcode_93485" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`7-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_53234"  "BFP_Barcode_54442"  "BFP_Barcode_142024"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_140320" "BFP_Barcode_93485" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`7-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_142024" "BFP_Barcode_54442"  "BFP_Barcode_53234" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_93485"  "BFP_Barcode_159570"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`7-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_142024" "BFP_Barcode_54442"  "BFP_Barcode_53234" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_93485"  "BFP_Barcode_159570"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`8-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_142024" "BFP_Barcode_90135"  "BFP_Barcode_58978" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_93485" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`8-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_142024" "BFP_Barcode_90135"  "BFP_Barcode_58978" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_93485" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`8-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_142024" "BFP_Barcode_90135"  "BFP_Barcode_4173"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_58978"  "BFP_Barcode_31610" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`8-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_142024" "BFP_Barcode_90135"  "BFP_Barcode_4173"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_58978" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`9-BM-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_4198"   "BFP_Barcode_81579" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_560839" "BFP_Barcode_118640" "BFP_Barcode_345889"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`9-BM-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_4198"   "BFP_Barcode_81579" </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_118640" "BFP_Barcode_560839" "BFP_Barcode_345889"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`9-SP-1`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_142024" "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_81579"  "BFP_Barcode_19146"  "BFP_Barcode_4198"  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_118640"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`9-SP-2`</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BFP_Barcode_79755"  "BFP_Barcode_142024" "BFP_Barcode_400391"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [4] "BFP_Barcode_81579"  "BFP_Barcode_19146"  "BFP_Barcode_118640"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BFP_Barcode_4198"  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S8-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_142024" "BC_90135"  "BC_58978"  "BC_93485" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S8-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_142024" "BC_90135"  "BC_58978"  "BC_93485" </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S9-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_4198"   "BC_81579"  "BC_560839" "BC_118640" "BC_345889"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BC_400391"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`S9-2`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "BC_79755"  "BC_4198"   "BC_81579"  "BC_118640" "BC_560839" "BC_345889"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "BC_400391"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
@@ -396,7 +216,7 @@ then returns a list of barcodes meeting a threshold abundance per sample</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer></div>
