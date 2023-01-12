@@ -1,6 +1,6 @@
 # bartools 0.2.1
 
--   Minor updates to DESCRIPTION and imports. README.md fixed, .gitignore updated
+-   
 
 # bartools 0.2.0
 
