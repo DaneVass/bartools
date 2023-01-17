@@ -4,22 +4,35 @@
 \alias{thresholdCounts}
 \title{Threshold counts}
 \usage{
-thresholdCounts(df, threshold = 20, plot = FALSE)
+thresholdCounts(
+  dge,
+  threshold = 10,
+  type = "absolute",
+  min.samps = 1,
+  plot = FALSE,
+  group = NULL
+)
 }
 \arguments{
-\item{df}{Dataframe to be thresholded.}
+\item{dge}{DGEList object to be thresholded.}
 
-\item{threshold}{The threshold to use. Rows with count below this will be removed.}
+\item{threshold}{The threshold to use. If type = "relative", must a float between 0 & 1. Default = 10}
 
-\item{plot}{Logical. Draw plots of dataset?}
+\item{type}{Threshold type to use. Must be one of "absolute" or "relative". Default = "absolute".}
+
+\item{min.samps}{Minimum number of samples a barcode must meet threshold to remain in dataset. Default = 1.}
+
+\item{plot}{Logical. Draw plots of dataset? Default = F}
+
+\item{group}{DGEList metadata field to color samples by}
 }
 \value{
-Returns a thresholded data-frame
+Returns a filtered DGEList object.
 }
 \description{
-Threshold dataframe to a given level and return number of barcodes meeting threshold in each
-sample.
+Filter barcodes meeting a given absolute (total read count) or relative (proportion based) abundance level
+Optionally plot number of barcodes detected using this threshold in each sample.
 }
 \examples{
-thresholdCounts(test.counts, threshold = 20, plot = FALSE)
+thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = FALSE)
 }

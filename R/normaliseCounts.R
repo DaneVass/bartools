@@ -11,10 +11,10 @@
 #'
 #' @examples
 #' data(test.dge)
-#' normaliseCounts(test.dge, method = "cpm", threshold = 0)
+#' normaliseCounts(test.dge, method = "CPM", threshold = 0)
 #'
 
-normaliseCounts <- function(dge, method = "cpm", threshold = 0){
+normaliseCounts <- function(dge, method = "CPM", threshold = 0){
 
   # check obj
   if (class(dge)[1] != "DGEList"){
@@ -39,10 +39,12 @@ normaliseCounts <- function(dge, method = "cpm", threshold = 0){
   keeprows = rowSums(dge$counts) >= as.numeric(threshold)
   dge <- dge[keeprows,]
 
+  # default is raw CPM
   if(method == "CPM"){
     norm.counts <- as.data.frame(edgeR::cpm(dge))
   } else {
-    norm.counts <- as.data.frame(dge$counts %*% diag(edgeR::calcNormFactors(dge$counts, method = method)))
+    norm.counts <- as.data.frame(cpm(edgeR::calcNormFactors(dge$counts, method = method)))
+    #norm.counts <- as.data.frame(dge$counts %*% diag(edgeR::calcNormFactors(dge$counts, method = method)))
   }
 
   return(norm.counts)
