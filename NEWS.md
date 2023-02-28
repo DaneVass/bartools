@@ -1,11 +1,11 @@
 # bartools 0.2.1
 
--   
+-   Updated plotting functions
 
 # bartools 0.2.0
 
 -   Updated plotDetectedBarcodes to color and reorder factors according to user input.
--   Updated quickstart vignette to detail a complete analysis workflow.
+-   Updated quickstart vignette detailing a complete analysis workflow.
 
 # bartools 0.1.0
 
