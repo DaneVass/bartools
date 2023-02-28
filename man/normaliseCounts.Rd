@@ -4,7 +4,7 @@
 \alias{normaliseCounts}
 \title{Normalise barcode counts}
 \usage{
-normaliseCounts(dge, method = "cpm", threshold = 0)
+normaliseCounts(dge, method = "CPM", threshold = 0)
 }
 \arguments{
 \item{dge}{DGEList object containing raw barcode counts to be normalised}
@@ -21,6 +21,6 @@ Normalise barcode counts within a DGEList object
 }
 \examples{
 data(test.dge)
-normaliseCounts(test.dge, method = "cpm", threshold = 0)
+normaliseCounts(test.dge, method = "CPM", threshold = 0)
 
 }

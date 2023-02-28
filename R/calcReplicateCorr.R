@@ -19,29 +19,32 @@ calcReplicateCorr <- function(dge, group, corr.thresh = 0.8, return = "all"){
   #if(return != "all" | return != "good" | return != "bad"){
   #  stop("return must be one of all, good or bad")
   #}
-
-  singletons <- which(table(dge$samples$group) == 1)
-  paired <- which(table(dge$samples$group) >= 2)
-
+  
+  # define grouping column in dge sample metadata
+  group.pos <- which(colnames(dge$samples) == group)
+  
+  singletons <- which(table(dge$samples[,group.pos]) == 1)
+  paired <- which(table(dge$samples[,group.pos]) >= 2)
+  
   # filter samples with technical replicates
-  keep <- which(dge$samples$group %in% (names(paired)))
+  keep <- which(dge$samples[,group.pos] %in% (names(paired)))
   dge.filter <- dge[,keep]
-
+  
   corrs <- lapply(unique(names(paired)), function(x){
-    data <- as.data.frame(dge$counts[,dge$samples$group==as.character(x)])
+    data <- as.data.frame(dge$counts[,dge$samples[,group.pos] == as.character(x)])
     fit <- stats::lm(data[,1] ~ data[,2])
     adj.r2 <- summary(fit)$adj.r.squared
     corr <- sqrt(adj.r2)
   })
-
+  
   names(corrs) <- unique(names(paired))
   corrs <- unlist(corrs)
-
+  
   # good corrs
   good.corrs <- corrs[which(corrs > corr.thresh)]
   # bad corrs
   bad.corrs <- corrs[which(corrs < corr.thresh)]
-
+  
   if(return == "all"){
     return(corrs)
   }
@@ -52,5 +55,3 @@ calcReplicateCorr <- function(dge, group, corr.thresh = 0.8, return = "all"){
     return(good.corrs)
   }
 }
-
-
