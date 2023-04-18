@@ -19,7 +19,7 @@ editor_options:
 
 # Bartools Quickstart Guide
 
-Load the bartools library
+Load the `bartools` library
 
 ```{r setup}
 library(bartools)
@@ -38,11 +38,10 @@ For this section we will make use of a hypothetical DNA barcoding dataset based 
 AML cells were cultured *in vitro*, barcoded using a lentiviral based barcoding library called [SPLINTR](https://dx.doi.org/10.1038/s41586-021-04206-7), and transplanted into three groups of C57BL/6J mice with daily dosing of MYST inhibitor at low or high dose or a corresponding vehicle control.
 Barcode samples were harvested from the bone marrow of moribund mice and sequenced for in technical replicate replicate.
 
-To follow along with this vignette the raw counts tables and sample metadata are included in the bartools package.
+To follow along with this vignette the raw counts tables and sample metadata are included in the `bartools` package.
 
 ```{r}
 data(test.dge)
-test.dge
 ```
 
 ### Generating a DGEList object from sample counts and metadata
@@ -138,11 +137,11 @@ plotReadCounts(dge.filtered$counts, group = dge.filtered$samples$Treatment)
 plotReadCounts(dge.cpmnorm, group = dge.filtered$samples$Treatment)
 ```
 
-For lentiviral based barcoding experiments, such as this one, it is common for the library to exhibit a degree of skewness based on the cloning method.
-This means that some barcodes are represented in the library more than others and so have a greater chance to be transduced into multiple cells.
+For lentiviral based barcoding experiments, such as this one, it is common for the library to exhibit a degree of skewness based on the cloning method. 
+This means that some barcodes are represented in the library more than others and so have a greater chance to be transduced into multiple cells.  
 Most experiments assume that each individual barcode is transduced into only one cell, and that each cell is only transduced with one barcode.
 This is ensured using a low multiplicity of infection (MOI) transduction in which the likelihood that a cell is transduced with one or more barcode containing virions follows a Poisson distribution.
-With this in mind, it also can be useful to check the total counts per barcode to identify bias in counts in sample vs. frequency of barcode in reference library.
+With this in mind, it also can be useful to check the total counts per barcode to identify bias in counts in sample vs. frequency of barcode in reference library.  
 The barcodes are labelled based on their ranked frequency in the reference library.
 
 ```{r}
@@ -154,9 +153,9 @@ plotBarcodeCounts(dge.cpmnorm, log10 = T)
 plotBarcodeCounts(dge.cpmnorm, log10 = T, order = T)
 ```
 
-In the first and second plot individual barcodes on the x-axis are ordered based on their frequency in the reference library pool.
+In the first and second plot individual barcodes on the x-axis are ordered based on their frequency in the reference library pool.  
 An increased number of counts per barcode toward the left hand side of the plot would be suggestive of transduction bias, meaning that there are more reads on average attributed to the more abundant barcodes in the library.
-And so, likely multiple cells were transduced with the same barcode.
+And so, likely multiple cells were transduced with the same barcode.  
 We don't see this here suggesting that this is not a problem for this experiment.
 
 ### Check correlation between PCR replicates
@@ -319,7 +318,7 @@ This heatmap shows high dose samples are generally distinct from the low dose an
 
 ```{r}
 plotBarcodeHeatmap(
-  cpm(dge.filtered.collapsed$counts),
+  counts = cpm(dge.filtered.collapsed$counts),
   N = 5,
   show_bc = T,
   samples = dge.filtered.collapsed$samples,
@@ -345,19 +344,17 @@ plotBarcodeCumSum(dge.filtered.collapsed$counts, sample1 = "T0", samples = colna
 ### Identifying abundant barcodes within samples
 
 It is important to be able to determine which barcodes are most abundant within each sample.
-Bartools allows this to be easily calculated according to an abundance threshold.
+`bartools` allows this to be easily calculated according to an abundance threshold.
 
 ```{r}
 top.bc <- getDominantBarcodes(dge.filtered.collapsed, pct.thresh = 5)
-top.bc
+top.bc[1:5]
 ```
 
 We can then use specific plots to visualise the dominance of specific barcodes within and across samples.
 These plots show that both top barcodes in the T0 sample were essentially extinguished by the high dose treatment
-<!-- TODO Adjust description -->
 
 ```{r}
-# plotBarcodeBoxplot(dge.filtered.collapsed, barcodes = c(top.bc$`1000nM-7-weeks`,top.bc$`DMSO-8-weeks`), condition = c("Sensitive-TPO", "400nM", "1000nM"))
 plotBarcodeBoxplot(dge.filtered.collapsed, barcodes = top.bc$T0, condition = c("T0", "Low_dose", "High_dose"))
 ```
 
@@ -368,7 +365,6 @@ It is useful to formally analyse this based on a desired percentile threshold.
 A common threshold is the 95th percentile.
 This can eliminate small barcodes that comprise the tail of the dataset and give a sense of how many clones truly comprise each sample
 
-<!-- TODO This output is v annoying in html format -->
 ```{r}
 top_barcodes <- calcPercentileBarcodes(dge.filtered.collapsed, percentile = 0.95)
 
@@ -416,7 +412,7 @@ qplot(diversity$name, diversity$shannon) + theme_bw() + coord_flip()
 ### Comparing abundance
 
 We can also statistically test for barcodes / tags that are over / underrepresented in a group of samples relative to another using the internal edgeR framework.
-bartools contains a convenience wrapper for this functionality
+`bartools` contains a convenience wrapper for this functionality
 
 ```{r}
 diff.bc <- compareAbundance(
@@ -429,13 +425,13 @@ diff.bc$pv <- -log10(diff.bc$PValue)
 
 
 ```{r}
-library(EnhancedVolcano)
-EnhancedVolcano(
-  toptable = diff.bc,
-  x = "logFC",
-  y = "PValue",
-  lab = rownames(diff.bc)
-)
+# library(EnhancedVolcano)
+# EnhancedVolcano(
+#   toptable = diff.bc,
+#   x = "logFC",
+#   y = "PValue",
+#   lab = rownames(diff.bc)
+# )
 ```
 
 ```{r}
