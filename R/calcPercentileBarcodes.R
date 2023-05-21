@@ -13,7 +13,7 @@
 #' data(test.dge)
 #' calcPercentileBarcodes(test.dge, percentile = .95)
 
-calcPercentileBarcodes <- function(counts.obj, percentile = .95){
+calcPercentileBarcodes <- function(counts.obj, percentile = .95) {
 
   counts.obj <- as.data.frame(counts.obj$counts)
   samples <- colnames(counts.obj)
@@ -27,11 +27,10 @@ calcPercentileBarcodes <- function(counts.obj, percentile = .95){
   for (i in 1:ncol(counts.obj)){
 
     # sort dataset
-    ordered <- order(counts.obj[,i], decreasing = T)
-    sorted <- counts.obj[ordered,i,drop = F]
-    sorted <- sorted[sorted > 0,, drop = F]
+    ordered <- order(counts.obj[, i], decreasing = T)
+    sorted <- counts.obj[ordered, i, drop = F]
+    sorted <- sorted[sorted > 0, , drop = F]
 
-    colsum <- sum(sorted)
     percentile.cutoff <- sum(sorted)*percentile
 
     # generate cumulative sum of sorted dataset
@@ -39,7 +38,6 @@ calcPercentileBarcodes <- function(counts.obj, percentile = .95){
 
     # find number of barcodes that make up Nth percentile
     len <- length(which(cumsum <= percentile.cutoff))
-    print(paste(samples[i], " ", percentile, "th percentile: ", len))
 
     # fill Nth percentile data frame for plotting below
     d <- data.frame(Sample=factor(samples[i]),NumBarcodes=len)
@@ -54,10 +52,8 @@ calcPercentileBarcodes <- function(counts.obj, percentile = .95){
     BarcodesCountPercentile[[i]] <- sorted[1:length(topBC),,drop=F]
     names(BarcodesCountPercentile) <- samples
   }
-  return (list("NumBarcodes" = TotalNumPercentile,
-               "TopBarcodes" = BarcodesPercentile,
-               "TopBarcodeCounts" = BarcodesCountPercentile))
+  return(list("NumBarcodes" = TotalNumPercentile,
+              "TopBarcodes" = BarcodesPercentile,
+              "TopBarcodeCounts" = BarcodesCountPercentile))
 
 }
-
-

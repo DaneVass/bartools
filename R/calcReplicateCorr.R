@@ -16,9 +16,9 @@
 
 # get paired technical replicates
 calcReplicateCorr <- function(dge, group, corr.thresh = 0.8, return = "all"){
-  #if(return != "all" | return != "good" | return != "bad"){
-  #  stop("return must be one of all, good or bad")
-  #}
+  if(!return %in% c("all", "good", "bad")){
+   stop("return must be one of all, good or bad")
+  }
   
   # define grouping column in dge sample metadata
   group.pos <- which(colnames(dge$samples) == group)
