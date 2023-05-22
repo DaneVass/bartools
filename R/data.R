@@ -1,3 +1,21 @@
+#' dose escalation dataset DGEList object
+#'
+#' A sample containing sample metadata information for the dose dataset
+#'
+#'
+#' @format A data.frame object with 90 rows and 13 variables:
+#' }
+"dose.sampletable"
+
+#' dose escalation dataset DGEList object
+#'
+#' A dataset containing raw count information for the dose dataset
+#'
+#'
+#' @format A DGElist object data frame with 13338 rows and 90 variables:
+#' }
+"dose"
+
 #' Test barcode counts
 #'
 #' A dataset containing normalised count information for 1639 hypothetical barcodes
