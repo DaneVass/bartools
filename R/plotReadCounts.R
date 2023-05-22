@@ -12,8 +12,7 @@
 #' @export
 #'
 #' @examples
-#' data(test.counts)
-#' plotReadCounts(test.dge$counts, group = test.dge$samples$Group)
+#' plotReadCounts(test.dge$counts, group = test.dge$samples$Treatment)
 #'
 
 plotReadCounts <- function(counts, group = NULL, log10 = FALSE, legend = TRUE, order = TRUE){

@@ -40,6 +40,5 @@ plotBarcodePCA
 Plot the first two principal components of the barcode dataset
 }
 \examples{
-data(test.dge)
-plotBarcodePCA(test.dge, intgroup = "group", ntop = 500, returnData = FALSE, batch = NULL)
+plotBarcodePCA(test.dge, intgroup = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
 }

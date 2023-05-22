@@ -18,7 +18,7 @@
 #' @importFrom ineq Gini
 #' @export
 #' @examples
-#' indexes <- calcDivIndexes(counts = test.counts)
+#' indexes <- calcDivIndexes(counts = test.dge$counts)
 
 calcDivIndexes <- function(counts, group = NULL){
   colnames <- colnames(counts)

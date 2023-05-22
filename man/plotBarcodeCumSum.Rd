@@ -27,6 +27,5 @@ plotBarcodeCumSum
 Plot the cumulative sum of barcode cpm counts for a list of samples against and ordered by sample1.
 }
 \examples{
-data(test.counts)
-plotBarcodeCumSum(counts = test.counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
+plotBarcodeCumSum(counts = test.dge$counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
 }

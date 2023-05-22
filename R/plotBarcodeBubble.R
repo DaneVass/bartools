@@ -10,9 +10,8 @@
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
 #' @examples
-#' data(test.counts)
-#' plotBarcodeBubble(test.counts, labels = TRUE, proportion.cutoff = 10)
-#' plotBarcodeBubble(test.counts, labels = FALSE, proportion.cutoff = 10)
+#' plotBarcodeBubble(test.dge$counts, labels = TRUE, proportion.cutoff = 10)
+#' plotBarcodeBubble(test.dge$counts, labels = FALSE, proportion.cutoff = 10)
 
 plotBarcodeBubble <-
   function(counts.obj,

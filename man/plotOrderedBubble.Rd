@@ -33,6 +33,5 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate ordered proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
-data(test.counts)
-plotOrderedBubble(test.counts, orderSample = "T0-1")
+plotOrderedBubble(test.dge$counts, orderSample = "T0-1")
 }

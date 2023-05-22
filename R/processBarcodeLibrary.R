@@ -12,9 +12,6 @@
 #'
 #' @export
 #'
-#' @examples
-#' load(system.file("extdata", "test_raw_lib.rda", package = "bartools"))
-#' processBarcodeLibrary(file = test.raw.lib, samplename = "Barcode", outdir = tempdir())
 
 processBarcodeLibrary <- function(file = NULL, samplename = "Barcode", cutoff = 10, header = FALSE, outdir = tempdir()){
   # imports barcode reference file from starcode or similar data frame.

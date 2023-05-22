@@ -20,8 +20,7 @@
 #' @return Returns a heatmap
 #' @export
 #' @examples
-#' data(test.counts)
-#' plotBarcodeHeatmap(test.counts, 10,'Counts',FALSE)
+#' plotBarcodeHeatmap(test.dge$counts, 10,'Counts',FALSE)
 
 plotBarcodeHeatmap <- function(counts, N, name = "CPM", show_bc = FALSE, samples = NULL, group = NULL){
     bc <- c()

@@ -12,8 +12,7 @@
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
 #' @examples
-#' data(test.counts)
-#' plotOrderedBubble(test.counts, orderSample = "T0-1")
+#' plotOrderedBubble(test.dge$counts, orderSample = "T0-1")
 
 plotOrderedBubble <- function(counts.obj,
                               labels = T,

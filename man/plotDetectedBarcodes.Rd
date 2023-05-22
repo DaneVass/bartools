@@ -33,7 +33,6 @@ Returns a histogram plot of the number of detected barcodes per sample.
 Plot the total number of barcodes detected in a sample
 }
 \examples{
-data(test.dge)
 plotDetectedBarcodes(test.dge, percentile = .95)
 plotDetectedBarcodes(test.dge, plot = FALSE)
 }

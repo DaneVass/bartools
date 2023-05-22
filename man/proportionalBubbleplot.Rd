@@ -27,6 +27,5 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
-data(test.counts)
-proportionalBubbleplot(test.counts, name = "Proportional Bubble Plot", proportion.cutoff = 10)
+proportionalBubbleplot(test.dge$counts, name = "Proportional Bubble Plot", proportion.cutoff = 10)
 }

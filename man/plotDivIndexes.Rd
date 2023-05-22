@@ -4,7 +4,13 @@
 \alias{plotDivIndexes}
 \title{Plot diversity indices across barcode samples}
 \usage{
-plotDivIndexes(counts, div = NULL, metric = "shannon", type = "bar")
+plotDivIndexes(
+  counts,
+  div = NULL,
+  metric = "shannon",
+  type = "bar",
+  group = NULL
+)
 }
 \arguments{
 \item{counts}{dataframe of raw or normalised counts with samples as columns and observations/barcodes as rows}
@@ -12,6 +18,10 @@ plotDivIndexes(counts, div = NULL, metric = "shannon", type = "bar")
 \item{div}{dataframe of diversity metrics as columns and samples as rows}
 
 \item{metric}{diversity metric to plot. one of "shannon", "simpson", "invsimpson" or "gini"}
+
+\item{type}{plot as bar graph or point}
+
+\item{group}{a character vector of containing grouping information. Must be equal the number of columns of counts. Can pass a metadata column from DGEList object.}
 }
 \value{
 Returns a plot of calculated diversity index per sample
@@ -25,5 +35,5 @@ plotDivIndexes
 Plots common diversity indices per sample
 }
 \examples{
-plotDivIndexes(dat = test.counts)
+plotDivIndexes(counts = test.dge$counts)
 }

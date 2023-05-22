@@ -10,21 +10,32 @@
 #' 
 #' @param counts dataframe of raw or normalised counts with samples as columns and observations/barcodes as rows
 #' @param div dataframe of diversity metrics as columns and samples as rows
+#' @param group a character vector of containing grouping information. Must be equal the number of columns of counts. Can pass a metadata column from DGEList object.
 #' @param metric diversity metric to plot. one of "shannon", "simpson", "invsimpson" or "gini"
+#' @param type plot as bar graph or point
 #'
 #' @return Returns a plot of calculated diversity index per sample
 #' @importFrom vegan diversity
 #' @importFrom ineq Gini
 #' @export
 #' @examples
-#' plotDivIndexes(dat = test.counts)
+#' plotDivIndexes(counts = test.dge$counts)
 
-plotDivIndexes <- function(counts, div = NULL, metric = "shannon", type = "bar"){
+plotDivIndexes <- function(counts, div = NULL, metric = "shannon", type = "bar", group = NULL){
   # calculate div indices if counts given
   if (is.null(div)){
     div <- calcDivIndexes(counts)  
   }
   
+  if(!is.null(group)){
+    cols <- as.factor(group)
+    div$group <- cols
+  } else {
+    cols <- rep("Group 1", length(colnames(counts)))
+    div$group <- cols
+    
+  }
+
   # check metric
   if(!metric %in% c("shannon", "simpson", "invsimpson", "gini")){
     stop("metric argument must be one of shannon, simpson, invsimpson, or gini")

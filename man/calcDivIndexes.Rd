@@ -25,5 +25,5 @@ calcDivIndexes
 Calculates common diversity indices per sample in a dataframe of counts
 }
 \examples{
-indexes <- calcDivIndexes(counts = test.counts)
+indexes <- calcDivIndexes(counts = test.dge$counts)
 }

@@ -50,7 +50,7 @@ Counts objects defined above can be specified in a sample metadata sheet as show
 This is the easiest way to generate a `DGEList` object containing the count information and metadata of interest for a set of barcode sequencing samples.
 An example of this process is shown below.
 
-```{r}
+```{r eval = FALSE}
 samplesheet <-
   read.csv(
     system.file(
@@ -68,7 +68,7 @@ samplesheet
 Load in the counts as specified in the samplesheet into a DGEList object.
 The function expects file locations to be specified either as character vector of filenames, or as a column named files in the samplesheet.
 
-```{r eval=FALSE}
+```{r eval = FALSE}
 dge <-
   edgeR::readDGE(
     files = samplesheet,
@@ -82,8 +82,6 @@ This results in the creation of a DGEList object containing counts and metadata 
 
 ```{r}
 data(test.dge)
-test.dge$samples$Treatment[c(1, 2)] <- "Baseline"
-test.dge <- test.dge[, order(test.dge$samples$Treatment)]
 test.dge
 ```
 

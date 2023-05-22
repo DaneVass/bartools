@@ -10,8 +10,7 @@
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
 #' @examples
-#' data(test.counts)
-#' proportionalBubbleplot(test.counts, name = "Proportional Bubble Plot", proportion.cutoff = 10)
+#' proportionalBubbleplot(test.dge$counts, name = "Proportional Bubble Plot", proportion.cutoff = 10)
 
 proportionalBubbleplot <- function(counts.obj, labels = TRUE, proportion.cutoff = 10, name = "Proportional Bubble Plot"){
   # transform CPM into percentage within sample

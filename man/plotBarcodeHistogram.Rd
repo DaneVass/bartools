@@ -27,6 +27,5 @@ Returns a barcode histogram plot of barcodes represented by proportion of total 
 Generate stacked barcode plots showing proportion from raw count object.
 }
 \examples{
-data(test.counts)
-plotBarcodeHistogram(test.counts, sample = "T0-1", top = 10, name = "Barcode Histogram")
+plotBarcodeHistogram(test.dge$counts, sample = "T0-1", top = 10, name = "Barcode Histogram")
 }
