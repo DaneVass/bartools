@@ -1,3 +1,11 @@
+# bartools 0.2.3
+
+-   Removed deprecated single cell workflows from package (workflow now in BARtab)
+
+# bartools 0.2.2
+
+-   Added dose escalation test dataset to package 
+
 # bartools 0.2.1
 
 -   Updated plotting functions
