@@ -1,6 +1,7 @@
 # bartools 0.2.3
 
 -   Removed deprecated single cell workflows from package (workflow now in BARtab)
+-   Updated plotting functions for plotOrderedBubble, plotBarcodeBubble, plotBarcodeHeatmap
 
 # bartools 0.2.2
 
