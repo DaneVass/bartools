@@ -15,15 +15,22 @@
 #' @param name String of the heatmap scale name
 #' @param show_bc Boolean to show barcode names on the heatmap
 #' @param samples Dataframe containing sample metadata sheet
-#' @param group metadata field to annotate samples
+#' @param group metadata fields to annotate samples
+#' @param col_annot list of vectors assigning colours to each level of metadata
+#' @param discrete Boolean to show presence/absence of barcodes instead of abundance
+#' @param discrete_threshold Threshold for presence of barcode in samples
 #'
 #' @return Returns a heatmap
 #' @export
 #' @examples
-#' plotBarcodeHeatmap(test.dge$counts, 10,'Counts',FALSE)
+#' plotBarcodeHeatmap(counts = cpm(test.dge$counts),N = 5,show_bc = TRUE,samples = test.dge$samples)
 
-plotBarcodeHeatmap <- function(counts, N, name = "CPM", show_bc = FALSE, samples = NULL, group = NULL){
+plotBarcodeHeatmap <- function(counts, N, name = "CPM", show_bc = FALSE, 
+                               samples = NULL, group = NULL,col_annot = NULL, 
+                               discrete = F,discrete_threshold = 1){
+    set.seed(1)
     bc <- c()
+    # select top N barcodes for each sample
     for (s in colnames(counts)){
         top_bc = utils::head(rownames(counts[order(counts[,s],decreasing = T),]), N)
         bc <- c(bc, top_bc)
@@ -31,25 +38,47 @@ plotBarcodeHeatmap <- function(counts, N, name = "CPM", show_bc = FALSE, samples
     tab = counts[rownames(counts) %in% bc,]
     # add annotation of samples
     if (!is.null(samples) && !is.null(group)) {
-        if (!group %in% colnames(samples)) {
+      # check that metadata names are in samples
+        if (!all(group %in% colnames(samples))) {
             stop("group must be column in samples")
         }
-        ha <-
-        ComplexHeatmap::HeatmapAnnotation(
-            group = samples[[group]],
-            # whether to show color legend for annotation and title of that legend
-            show_legend = T,
-            annotation_legend_param = list(title = group),
-            annotation_label = group
-        )
+      # keep group order for legend in plot
+      group_cols <- group[group %in% colnames(samples)]
+      dff <- samples[, group_cols, drop = FALSE]
+      colnames(dff) <- group_cols
+      
+      ha <- ComplexHeatmap::HeatmapAnnotation(df = dff,
+                                                  which = 'col',
+                                                  col = col_annot,
+                                                  annotation_width = unit(c(1, 4), 'cm'),
+                                                  gap = unit(1, 'mm'))
     } else {
         ha <- NULL
     }
-    suppressMessages(ComplexHeatmap::Heatmap(as.matrix(tab),
+    if (discrete){
+      tab2 <- ifelse(counts[rownames(counts) %in% bc, ] > discrete_threshold, 1, 0)
+      col <- c("1" = "red", "0" = "blue")
+      
+      suppressMessages(ComplexHeatmap::Heatmap(
+        as.matrix(tab2),
+        name = "Presence",
+        show_row_names = show_bc,
+        cell_fun = function(j, i, x, y, w, h, fill) {
+          if (tab[i, j] %in% utils::head(sort(tab[, j], decreasing = TRUE), n = N)) {
+            grid::grid.text("*", x, y, vjust = 0.8)
+          }
+        },
+        top_annotation = ha,
+        col = col,
+        heatmap_legend_param = list(labels = c("Yes","No"))
+      ))
+    } else{
+        suppressMessages(ComplexHeatmap::Heatmap(as.matrix(tab),
                                              name = name,show_row_names = show_bc,
                                              cell_fun = function(j, i, x, y, w, h, fill) {
                                                  if(tab[i, j] %in% utils::head(sort(tab[,j], decreasing=TRUE), n=N)) {
                                                      grid::grid.text("*", x, y, vjust = 0.8)
                                                  }},
-                                             bottom_annotation = ha))
+                                             top_annotation = ha))
+    }
 }

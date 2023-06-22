@@ -413,23 +413,13 @@ We can also statistically test for barcodes / tags that are over / underrepresen
 `bartools` contains a convenience wrapper for this functionality
 
 ```{r}
-diff.bc <- compareAbundance(
-  dge.filtered.collapsed,
-  condition = dge.filtered.collapsed$samples$Treatment,
-  condition_names = c("Vehicle", "High_dose")
-)
-diff.bc$pv <- -log10(diff.bc$PValue)
-```
+compareAbundance(dge.obj = dge.filtered.collapsed,
+                 meta = "Treatment", 
+                 condition1 = "Vehicle",
+                 condition2 = "Low_dose",
+                 pval.cutoff = 0.001,
+                 logFC.cutoff = 5)
 
-
-```{r}
-# library(EnhancedVolcano)
-# EnhancedVolcano(
-#   toptable = diff.bc,
-#   x = "logFC",
-#   y = "PValue",
-#   lab = rownames(diff.bc)
-# )
 ```
 
 ```{r}

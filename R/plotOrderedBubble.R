@@ -7,7 +7,13 @@
 #' @param proportion.cutoff barcodes represented at a percentage within any sample above this threshold will be labelled
 #' @param name desired plot title
 #' @param orderSample name of sample to order by
+#' @param samples Dataframe containing sample metadata sheet
+#' @param group metadata field to annotate samples on bubble plot
+#' @param displaySamples vector of samples to display - keep the order of vector
+#' @param displayBarcodes vector of barcodes to display 
 #' @param colorDominant only color clones with frequency above proportion.cutoff. Others colored grey
+#' @param filterLow Boolean to filter low barcodes in orderSample
+#' @param filter.cutoff barcodes below this threshold in orderSample will be filtered in all samples
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
@@ -18,12 +24,17 @@ plotOrderedBubble <- function(counts.obj,
                               labels = T,
                               name = "Proportional Bubble Plot",
                               orderSample = NULL,
+                              samples = NULL, 
+                              group = NULL,
+                              displaySamples = NULL,
+                              displayBarcodes = NULL,
                               proportion.cutoff = 10,
-                              colorDominant = FALSE) {
+                              colorDominant = FALSE,
+                              filterLow = FALSE,
+                              filter.cutoff = 0.001) {
   if (is.null(orderSample)) {
     stop("Please provide sample to order by")
   }
-
   # transform CPM into percentage within sample
   barcodes.proportional <- as.data.frame(counts.obj)
   barcodes.proportional <-
@@ -31,12 +42,31 @@ plotOrderedBubble <- function(counts.obj,
           2,
           colSums(barcodes.proportional),
           `/`) * 100
+  if (!is.null(displaySamples)) {
+    # check that sample names are in count object
+    missingSamples <- setdiff(displaySamples, colnames(barcodes.proportional))
+    if (length(missingSamples) > 0) {
+      for (sample in missingSamples) {
+        stop(paste("Sample", sample, "not found in count object"))
+      }
+    } else{
+      # filter and order based on displaySamples
+      barcodes.proportional <- barcodes.proportional[, displaySamples]
+    }
+  }
 
   # Order by selected sample. Plot in ascending rank order from original barcode library
   barcodes.proportional$Position <-
     barcodes.proportional[, orderSample]
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
-
+  if (filterLow){
+    barcodes.proportional <- barcodes.proportional[barcodes.proportional$Position > filter.cutoff, ]
+  }
+  # high prop barcodes
+  Highbarcodes <-
+    dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) - 3)],
+                      dplyr::any_vars(. > proportion.cutoff))
+  
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff
     colors <- "grey90"
@@ -46,10 +76,6 @@ plotOrderedBubble <- function(counts.obj,
     barcodes.proportional$Color <- colors
 
     # Assign diverse colours to high frequency barcodes
-    Highbarcodes <-
-      dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) -
-                                                     3)],
-                        dplyr::any_vars(. > proportion.cutoff))
     SelColors <- scales::hue_pal()(nrow(Highbarcodes))
     i = 1
     for (bc in rownames(Highbarcodes)) {
@@ -65,10 +91,6 @@ plotOrderedBubble <- function(counts.obj,
     barcodes.proportional$Color <- colors
 
     # Assign diverse colours to high frequency barcodes
-    Highbarcodes <-
-      dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) -
-                                                     3)],
-                        dplyr::any_vars(. > proportion.cutoff))
     SelColors <- scales::hue_pal()(nrow(Highbarcodes))
     i = 1
     for (bc in rownames(Highbarcodes)) {
@@ -76,11 +98,16 @@ plotOrderedBubble <- function(counts.obj,
       i <- i + 1
     }
   }
-
   HighbarcodesLabel <-
     barcodes.proportional[rownames(Highbarcodes), ]
   HighbarcodesLabel <-
     HighbarcodesLabel[HighbarcodesLabel$Position > 0, ]
+  
+
+  if (!is.null(displayBarcodes)){
+    barcodes.proportional <- barcodes.proportional[rownames(barcodes.proportional) %in% displayBarcodes,]
+    HighbarcodesLabel <- HighbarcodesLabel[HighbarcodesLabel$Barcode %in% displayBarcodes, ]
+  }
 
   # melt data frame and rename columns correctly
   barcodes.proportional.melted <-
@@ -96,7 +123,69 @@ plotOrderedBubble <- function(counts.obj,
   barcodes.proportional.melted$Proportion <-
     as.numeric(barcodes.proportional.melted$Proportion)
 
-  # generate bubbleplot
+  # add metadata to bubbleplot
+  if (!is.null(samples) && !is.null(group)) {
+    # check that metadata names are in samples
+    if (!all(group %in% colnames(samples))) {
+      stop("group must be column in samples")
+    } else{
+      # check if all samples should be displayed
+      if(!is.null(displaySamples)){
+        samples.filtered <- data.frame(samples[displaySamples,group])
+        samples.filtered$Sample <- displaySamples
+      }else
+      {
+        samples.filtered <- data.frame(samples[,group])
+        samples.filtered$Sample <- colnames(counts.obj)
+      }
+      # create new merged dataframe which including barcode data with metadata for the samples
+      colnames(samples.filtered) <- c(group,"Sample")
+      merged_data <- merge(barcodes.proportional.melted,samples.filtered, by = "Sample", all.x = TRUE)
+
+      bubble.plot <- ggplot2::ggplot(
+        merged_data,
+        ggplot2::aes(
+          x = Position,
+          y = Sample,
+          size = Proportion,
+          color = Color
+        )
+      ) +
+        ggplot2::geom_point(stat = "identity",
+                            alpha = 0.6,
+                            shape = 16) +
+        ggplot2::scale_color_identity() +
+        ggplot2::labs(y = "Condition", x = "Barcode Proportion", title = name) +
+        ggplot2::scale_size_continuous(range = c(0.1, 10)) +
+        ggplot2::scale_x_continuous(
+          trans = 'log10',
+          labels =
+            HighbarcodesLabel$Barcode,
+          breaks = HighbarcodesLabel$Position,
+          sec.axis = ggplot2::sec_axis(
+            ~ . * 1,
+            labels = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50),
+            breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50)
+          )
+        ) +
+        ggplot2::theme_bw() +
+        ggplot2::theme(
+          legend.position = "none",
+          axis.text.x = ggplot2::element_text(
+            angle = 90,
+            vjust = 0.5,
+            colour = HighbarcodesLabel$Color,
+            size = 6
+          ),
+          axis.text.y = ggplot2::element_text(size = 6),
+          plot.title = ggplot2::element_text(size = 8),
+          axis.title = ggplot2::element_text(size = 6)
+        )+ 
+        facet_grid(merged_data[[group]]~.,scales = "free", space = "free")
+
+    } 
+  } else {
+  # generate bubbleplot when no metadata provided
   bubble.plot <- ggplot2::ggplot(
     barcodes.proportional.melted,
     ggplot2::aes(
@@ -136,9 +225,8 @@ plotOrderedBubble <- function(counts.obj,
       plot.title = ggplot2::element_text(size = 8),
       axis.title = ggplot2::element_text(size = 6)
     )
+  }
 
   return(bubble.plot)
 
-  # SelColors <- data.frame(value = SelColors)
-  # return(SelColors)
 }
