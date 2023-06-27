@@ -35,6 +35,15 @@ plotOrderedBubble <- function(counts.obj,
   if (is.null(orderSample)) {
     stop("Please provide sample to order by")
   }
+  
+  # check inputs
+  if (methods::is(counts)[1] == "DGEList") {
+    counts.obj <- as.data.frame(counts$counts)
+  }
+  else {
+    counts.obj <- as.data.frame(counts)
+  }
+  
   # transform CPM into percentage within sample
   barcodes.proportional <- as.data.frame(counts.obj)
   barcodes.proportional <-

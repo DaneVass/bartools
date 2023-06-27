@@ -49,10 +49,5 @@ plotBarcodeHeatmap
 Plot a heatmap of the N most abundant barcodes per sample
 }
 \examples{
-col_meta = list(Experiment = c("test_01" = "black"), 
-Treatment = c("T0" = "green", "Vehicle" = "purple",
-"Low_dose" = "yellow","High_dose" = "brown"))
-plotBarcodeHeatmap(counts = cpm(test.dge$counts),N = 5,show_bc = TRUE,
-samples = test.dge$samples,group = c("Treatment","Experiment"), 
-col_annot = col_meta, discrete = TRUE, discrete_threshold = 1)
+plotBarcodeHeatmap(counts = cpm(test.dge$counts),N = 5,show_bc = TRUE,samples = test.dge$samples)
 }

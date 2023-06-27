@@ -25,14 +25,14 @@
 #' @export
 #' @examples
 #' data(test.dge)
-#' compareAbundance(test.dge,"Treatment", "Vehicle","Low_dose",0.01,2,"DiffAbundBc_treatment.csv")       
+#' compareAbundance(test.dge,"Treatment", "Vehicle","Low_dose",0.01,2)       
 
 
 
 compareAbundance <- function(dge.obj, meta, condition1,condition2,
                              pval.cutoff = 0.05, logFC.cutoff = 2,
                              filename = NULL) {
-  require(dplyr)
+  
   cdt <- as.factor(dge.obj$samples[[meta]])
   
   # barcode filtering using cpm > 0.1 in at least two samples
@@ -62,7 +62,7 @@ compareAbundance <- function(dge.obj, meta, condition1,condition2,
 
   # save results in a csv file ordered by FDR
   result <- as.data.frame(topTags(lrt, n = nrow(dge.obj$counts)))
-  result <- result %>% arrange(FDR)
+  result <- dplyr::arrange(result, FDR)
   if (!is.null(filename)) {
     write.table(result, file = filename, sep="\t", row.names = T)
   }

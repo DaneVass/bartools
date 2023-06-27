@@ -2,7 +2,7 @@
 # https://community.rstudio.com/t/how-to-solve-no-visible-binding-for-global-variable-note/28887
 utils::globalVariables(c(".", "group", "percent", "value", "variable", "Var1", "Var2", "Sample", 
                          "Proportion", "Color", "barcode", "Group", "Barcodes", "Count", "rowid",
-                         "name", "test.dge", "BC.count", "model.matrix", "makeContrasts", "%>%", "arrange", "FDR", "write.table",
+                         "name", "test.dge", "BC.count", "model.matrix", "makeContrasts", "arrange", "FDR", "write.table",
                          "logFC", "PValue", "category"))
 
 colors.npg <- c("#E64B35","#D85543","#CA5F52","#BC6960","#AE736F","#A07D7D","#92888C","#84929A","#769CA9","#68A6B7"

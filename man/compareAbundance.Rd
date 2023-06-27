@@ -48,5 +48,5 @@ compareAbundance
 }
 \examples{
 data(test.dge)
-compareAbundance(test.dge,"Treatment", "Vehicle","Low_dose",0.01,2,"DiffAbundBc_treatment.csv")       
+compareAbundance(test.dge,"Treatment", "Vehicle","Low_dose",0.01,2)       
 }

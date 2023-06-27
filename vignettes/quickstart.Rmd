@@ -22,7 +22,8 @@ editor_options:
 Load the `bartools` library
 
 ```{r setup}
-library(bartools)
+suppressWarnings(library(bartools))
+knitr::opts_chunk$set(dev="png")
 ```
 
 ## 1. Importing DNA barcode count data

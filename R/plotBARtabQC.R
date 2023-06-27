@@ -113,7 +113,7 @@ plotBARtabMapQC <- function(dir = NULL,
   for (log in logs){
 
     # get samplename from log
-    samp <- stringr::str_split(log, pattern = "/")[[1]][6]
+    samp <- tail(stringr::str_split(log, pattern = "/")[[1]],1)
     samp <- stringr::str_split(samp, pattern = "_", n = 2)[[1]][1]
 
     # filter alignment info from logfile
@@ -130,16 +130,26 @@ plotBARtabMapQC <- function(dir = NULL,
   # factorise sample group
   final.df$sample <- as.factor(gsub("-", "_",final.df$sample))
   final.df$group <- as.factor(gsub("_PCR[12]$", "",final.df$sample))
+  final.df$group <- as.factor(gsub("_[12]$", "",final.df$sample))
 
+  colour_breaks <- c(0, 20, 40, 60, 80, 100)
+  colours <- rev(c("darkblue", "lightblue", "yellow", "orange", "red", "firebrick"))
+  
   # plot data
   if (plot) {
-    p <- ggplot2::ggplot(final.df, ggplot2::aes(sample, percent, fill = group)) +
+    p <- ggplot2::ggplot(final.df, ggplot2::aes(sample, percent, fill = percent)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::coord_flip() +
       ggplot2::theme_bw() +
       ggplot2::ggtitle("Percentage of barcode reads aligning to the reference library") +
-      ggplot2::theme(legend.position = "none")
-    print(p)
+      #ggplot2::theme(legend.position = "none") +
+      scale_fill_gradientn(
+        limits  = range(0,100),
+        colours = colours[c(1, seq_along(colours), length(colours))],
+        values  = c(0, scales::rescale(colour_breaks, from = range(0,100)), 1),
+      )
+    
+    suppressWarnings(print(p))
   } else {
     return(final.df)
   }

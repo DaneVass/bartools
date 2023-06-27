@@ -22,7 +22,6 @@ Imports:
     seqinr,
     scales,
     ggpubr,
-    plyr,
     dplyr,
     forcats,
     reshape2,
