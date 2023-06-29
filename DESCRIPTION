@@ -1,7 +1,7 @@
 Package: bartools
 Type: Package
 Title: A toolkit for the analysis and visualisation of synthetic DNA barcodes in high thorughput sequencing datasets
-Version: 0.2.3
+Version: 0.2.4
 Authors@R: person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
                   role = c("aut", "cre"))
 Maintainer: Dane Vassiliadis <dane.vassiliadis@petermac.org>

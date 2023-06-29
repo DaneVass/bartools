@@ -1,3 +1,7 @@
+# bartools 0.2.4
+
+-   Updated plotting functions for plotBarcodeBoxplot, plotAbundanceLines
+
 # bartools 0.2.3
 
 -   Removed deprecated single cell workflows from package (workflow now in BARtab)
