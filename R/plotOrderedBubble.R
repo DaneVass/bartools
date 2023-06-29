@@ -37,11 +37,11 @@ plotOrderedBubble <- function(counts.obj,
   }
   
   # check inputs
-  if (methods::is(counts)[1] == "DGEList") {
-    counts.obj <- as.data.frame(counts$counts)
+  if (methods::is(counts.obj)[1] == "DGEList") {
+    counts.obj <- as.data.frame(counts.obj$counts)
   }
   else {
-    counts.obj <- as.data.frame(counts)
+    counts.obj <- as.data.frame(counts.obj)
   }
   
   # transform CPM into percentage within sample

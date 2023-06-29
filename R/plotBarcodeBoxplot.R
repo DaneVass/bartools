@@ -22,10 +22,11 @@
 #' @export
 #' @examples
 #' data(test.dge)
-#' plotBarcodeBoxplot(test.dge, barcodes, group = "Treatment", conditions = c("Vehicle", "Low_dose", "High_dose"))
+#' plotBarcodeBoxplot(test.dge, barcodes = "BC_190202", group = "Treatment", 
+#' conditions = c("Vehicle", "Low_dose", "High_dose"))
 
 plotBarcodeBoxplot <- function(dge.obj, 
-                               barcodes,
+                               barcodes = NULL,
                                group = NULL,
                                conditions = NULL,
                                trans = NULL, 
@@ -40,6 +41,10 @@ plotBarcodeBoxplot <- function(dge.obj,
     stop("input must be a DGEList object")
   }
   
+  if(is.null(barcodes)){
+    stop("please provide some barcodes to plot")
+  }
+    
   sample = dge.obj$samples
   counts.cpm <- cpm(counts.raw)
   
@@ -50,7 +55,10 @@ plotBarcodeBoxplot <- function(dge.obj,
     if (length(barcodes) == 1){
       message("single barcode given. No metadata group")
       dat <- counts.cpm[which(rownames(counts.cpm) == barcodes),]
-      p <- ggplot2::ggplot() + ggplot2::geom_boxplot(aes(y = dat)) + ggplot2::labs(xlab = as.factor(barcodes))
+      p <- ggplot2::ggplot() + 
+        ggplot2::geom_boxplot(aes(y = dat)) + 
+        ggplot2::labs(xlab = as.factor(barcodes)) +
+        ggplot2::theme_bw()
       
       # check violin
       if (violin) {
@@ -75,7 +83,8 @@ plotBarcodeBoxplot <- function(dge.obj,
       p <- ggplot2::ggplot(dat) + 
         ggplot2::geom_boxplot(aes(x = barcodes, y = value, fill = barcodes)) + 
         ggplot2::xlab(NULL) +
-        ggplot2::ylab("CPM")
+        ggplot2::ylab("CPM") +
+        ggplot2::theme_bw()
       
       # check violin
       if (violin) {
@@ -123,7 +132,8 @@ plotBarcodeBoxplot <- function(dge.obj,
       p <- ggplot2::ggplot() + 
         ggplot2::geom_boxplot(data = dat, mapping = aes(y = dat[,barcodes], x = dat[,group], fill = dat[,group])) +
         ggplot2::xlab(NULL) +
-        ggplot2::ylab("CPM")
+        ggplot2::ylab("CPM") +
+        ggplot2::theme_bw()
       
       # check violin
       if (violin) {
@@ -131,7 +141,8 @@ plotBarcodeBoxplot <- function(dge.obj,
           ggplot2::geom_violin(aes(y = dat[,barcodes], x = dat[,group], fill = dat[,group]), scale = "width") +
           ggplot2::geom_boxplot(aes(y = dat[,barcodes], x = dat[,group]), width = 0.2) + 
           ggplot2::xlab(NULL) +
-          ggplot2::ylab("CPM")
+          ggplot2::ylab("CPM") +
+          ggplot2::theme_bw()
       }
       
       if (!is.null(trans)) { p <- p + ggplot2::scale_y_continuous(trans = trans) +
