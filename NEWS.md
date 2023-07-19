@@ -1,3 +1,8 @@
+# bartools 0.2.5
+
+-   Added single cell QC plotting functions plotCellsPerGroup, plotMetrics, plotClusterEnrichment
+
+
 # bartools 0.2.4
 
 -   Updated plotting functions for plotBarcodeBoxplot, plotAbundanceLines
