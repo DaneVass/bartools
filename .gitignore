@@ -39,6 +39,7 @@ vignettes/*.pdf
 .Renviron
 
 # other files
+bartools.Rproj
 .DS_Store
 .Rbuildignore
 README.Rmd
