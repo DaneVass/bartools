@@ -109,59 +109,11 @@ barcode sequence mapped to the lintraceR DNA barcode ID.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/load.html" class="external-link">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"test_map.rda"</span>, package <span class="op">=</span> <span class="st">"bartools"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>cannot open compressed file '', probable reason 'No such file or directory'</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in readChar(con, 5L, useBytes = TRUE):</span> cannot open the connection</span>
 <span class="r-in"><span><span class="va">test.ref</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"barcode_lib_reference_test.fasta"</span>, package <span class="op">=</span> <span class="st">"bartools"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">mapBarcodeReads</span><span class="op">(</span>reads <span class="op">=</span> <span class="va">test.map</span>, reference_fasta <span class="op">=</span> <span class="va">test.ref</span>, outdir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span>, prefix <span class="op">=</span> <span class="st">"map"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> mapBarcodeReads</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> WARNING: No bowtie index given. Generating bowtie index from supplied fasta file.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Generating bowtie index from file: /private/var/folders/vx/2y48s95j52ggg49gkq7qzgqngmbrj3/T/Rtmpo0A5ob/temp_libpathb3e9324040d4/bartools/extdata/barcode_lib_reference_test.fasta</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                     Read.ID</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: A00130:99:HK225DSXX:1:1262:16351:17942</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: A00130:99:HK225DSXX:1:2306:13747:20353</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:  A00130:99:HK225DSXX:1:2556:7012:12195</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:  A00130:99:HK225DSXX:1:2535:11939:4695</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:  A00130:99:HK225DSXX:1:2435:10556:4366</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 518: A00130:99:HK225DSXX:1:2514:31539:16595</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 519:   A00130:99:HK225DSXX:1:1137:9616:8469</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 520:  A00130:99:HK225DSXX:1:2429:4237:29935</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 521:  A00130:99:HK225DSXX:1:2275:28085:6762</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 522:  A00130:99:HK225DSXX:1:1176:27661:6934</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                                                                                                                                    Read.Qual</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: :FFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:  FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFF:,FFFFFFFFFFFFFFFFFFFFF:FFF:FFFFFFFFFFFFFFFF:FFFFFFFFF:FFFFFFFFFFFFFFFFFF,FFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFF:FFFFFFFFFF:FF:FFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFF:FFF:FFFFFFF:FFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: FFFFFFFFFFFFFFFFFFFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                                                                                                        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 518:   FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFF,FFFFFF,FFFFFFFFFFFF:,FFFFFFFFFFF:FFFFFFFFFFFFF:FFFFFF,FFFFFFF:FFFFFFFFFFFFF:FFFF:FFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 519:  FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFF:FFFFFFFFFFFFFFFFFFFFFFF:FFF::FFFFF,FFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFF:FFF:FFFFF:F:FFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 520: ::F,FFF:FF,,:F,:,F:FFF,,FF,,F::::F,,:,:F:,FF,FFF,F:F,FFFF:,F,FF,F,FFFFF:F,F:F::,F:FFF:F,FFF,FFF::F:,FF,FF,FF::F,:FF:F:F,F:FF:,:FFFF,FFFFFFFFF:FF:FFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 521: FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF::FFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 522:  FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF:FFFFFFFFFFFFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF,FFFFF:FFF:FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>        Cell.10X.Barcode Read.10X.UMI DNA.Barcode         referenceID</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1: AAACCCAAGACCAAGC-1 GGTCTCCATTAA  TCCAGTCACA mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2: AAACCCAAGACCAAGC-1 GGTCTCCATTAA  TGCTGATTGT mCHERRY_barcode_963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3: AAACCCAAGACCAAGC-1 GGTCTCCATTAA  CTGACCATGT mCHERRY_barcode_301</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4: AAACCCAAGTCGCCCA-1 GGTTGGTACTGG  CTGACCATGT mCHERRY_barcode_836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5: AAACCCAAGTTGCTCA-1 AGTGTTGCTCAC  TCCAGTCACA mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 518: AACAACCCATTGGCAT-1 TACCACAGGCAT  CTGACCATGT mCHERRY_barcode_836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 519: AACAACCCATTGGCAT-1 TGCGTAGTCAGT  TGCTGATTGT mCHERRY_barcode_963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 520: AACAACCGTACTCGAT-1 TTGTTCCGCATG  CTGACCATGT mCHERRY_barcode_375</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 521: AACAACCTCCGACGGT-1 CATCCTAATGTC  TCCAGTCACA mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 522: AACAACCTCCGACGGT-1 CGTGATCACAAC  TCCAGTCACA mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>      current.df$Cell.10X.Barcode current.df$Read.10X.UMI current.df$referenceID</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   1:          AAACCCAAGACCAAGC-1            GGTCTCCATTAA    mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   2:          AAACCCAAGACCAAGC-1            GGTCTCCATTAA    mCHERRY_barcode_963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   3:          AAACCCAAGACCAAGC-1            GGTCTCCATTAA    mCHERRY_barcode_301</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   4:          AAACCCAAGTCGCCCA-1            GGTTGGTACTGG    mCHERRY_barcode_836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   5:          AAACCCAAGTTGCTCA-1            AGTGTTGCTCAC    mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  ---                                                                           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 518:          AACAACCCATTGGCAT-1            TACCACAGGCAT    mCHERRY_barcode_836</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 519:          AACAACCCATTGGCAT-1            TGCGTAGTCAGT    mCHERRY_barcode_963</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 520:          AACAACCGTACTCGAT-1            TTGTTCCGCATG    mCHERRY_barcode_375</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 521:          AACAACCTCCGACGGT-1            CATCCTAATGTC    mCHERRY_barcode_893</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 522:          AACAACCTCCGACGGT-1            CGTGATCACAAC    mCHERRY_barcode_893</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in mapBarcodeReads(reads = test.map, reference_fasta = test.ref,     outdir = tempdir(), prefix = "map"):</span> could not find function "mapBarcodeReads"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

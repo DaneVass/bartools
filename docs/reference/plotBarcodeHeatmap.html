@@ -94,8 +94,9 @@ Stars indicate the most abundant barcodes per sample.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.counts</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>data set ‘test.counts’ not found</span>
 <span class="r-in"><span><span class="fu">plotBarcodeHeatmap</span><span class="op">(</span><span class="va">test.counts</span>, <span class="fl">10</span>,<span class="st">'Counts'</span>,<span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="plotBarcodeHeatmap-1.png" alt="" width="700" height="433"></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in is.data.frame(x):</span> object 'test.counts' not found</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

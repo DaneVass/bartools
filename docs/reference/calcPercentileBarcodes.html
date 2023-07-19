@@ -76,44 +76,6 @@
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">calcPercentileBarcodes</span><span class="op">(</span><span class="va">test.dge</span>, percentile <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "T0-1   0.95 th percentile:  593"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "T0-2   0.95 th percentile:  590"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S10-1   0.95 th percentile:  3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S10-2   0.95 th percentile:  4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S11-1   0.95 th percentile:  19"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S11-2   0.95 th percentile:  20"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S12-1   0.95 th percentile:  14"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S12-2   0.95 th percentile:  14"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S13-1   0.95 th percentile:  10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S13-2   0.95 th percentile:  11"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S14-1   0.95 th percentile:  6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S14-2   0.95 th percentile:  6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S15-1   0.95 th percentile:  7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S15-2   0.95 th percentile:  7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S16-1   0.95 th percentile:  19"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S16-2   0.95 th percentile:  20"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S17-1   0.95 th percentile:  5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S17-2   0.95 th percentile:  6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S18-1   0.95 th percentile:  27"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S18-2   0.95 th percentile:  27"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S1-1   0.95 th percentile:  14"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S1-2   0.95 th percentile:  15"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S2-1   0.95 th percentile:  12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S2-2   0.95 th percentile:  11"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S3-1   0.95 th percentile:  10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S3-2   0.95 th percentile:  10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S4-1   0.95 th percentile:  25"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S4-2   0.95 th percentile:  26"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S5-1   0.95 th percentile:  11"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S5-2   0.95 th percentile:  12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S6-1   0.95 th percentile:  9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S6-2   0.95 th percentile:  10"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S7-1   0.95 th percentile:  16"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S7-2   0.95 th percentile:  16"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S8-1   0.95 th percentile:  20"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S8-2   0.95 th percentile:  21"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S9-1   0.95 th percentile:  19"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "S9-2   0.95 th percentile:  19"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $NumBarcodes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Sample NumBarcodes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    T0-1         593</span>
