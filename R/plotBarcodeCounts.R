@@ -11,10 +11,9 @@
 #' @export
 #'
 #' @examples
-#' data(test.counts)
-#' plotBarcodeCounts(test.counts)
-#' plotBarcodeCounts(test.counts, order = TRUE)
-#' plotBarcodeCounts(test.counts, order = TRUE, log10 = TRUE)
+#' plotBarcodeCounts(test.dge$counts)
+#' plotBarcodeCounts(test.dge$counts, order = TRUE)
+#' plotBarcodeCounts(test.dge$counts, order = TRUE, log10 = TRUE)
 
 plotBarcodeCounts <- function(counts, order = F, log10 = F){
   rowsums <- rowSums(counts)

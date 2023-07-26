@@ -13,7 +13,7 @@
 
 #' @examples
 #' data(test.counts)
-#' plotBarcodeTimeseries(test.counts[,1:4], name = "Proportional Timeseries Plot", seed = 5, top = 10)
+#' plotBarcodeTimeseries(test.dge$counts[,1:4], name = "Proportional Timeseries Plot", seed = 5)
 
 plotBarcodeTimeseries <- function(counts.obj, name = "", seed = 5, top = 50){
     barcodes.proportional <- as.data.frame(counts.obj)

@@ -10,8 +10,7 @@
 #' @return Returns a barcode histogram plot of barcodes represented by proportion of total pool
 #' @export
 #' @examples
-#' data(test.counts)
-#' plotBarcodeHistogram(test.counts, sample = "T0-1", top = 10, name = "Barcode Histogram")
+#' plotBarcodeHistogram(test.dge$counts, sample = "T0-1", top = 10, name = "Barcode Histogram")
 
 plotBarcodeHistogram <- function(counts.obj, sample = NULL, top = 10, name = "Barcode Histogram"){
 

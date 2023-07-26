@@ -18,8 +18,7 @@
 #' @export
 #'
 #' @examples
-#' data(test.counts)
-#' plotBarcodeCumSum(counts = test.counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
+#' plotBarcodeCumSum(counts = test.dge$counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
 plotBarcodeCumSum <- function(counts, sample1 = NULL, samples = NULL) {
 
   var1 <- counts[,sample1]

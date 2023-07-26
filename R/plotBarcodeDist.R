@@ -13,8 +13,7 @@
 #' @export
 #'
 #' @examples
-#' test.mat <- matrix(rnorm(10*10,mean=0,sd=2), 10, 10)
-#' plotBarcodeDistance(test.mat)
+#' plotBarcodeDistance(test.dge$counts)
 
 plotBarcodeDistance <- function(counts,
                           method = "euclidean",

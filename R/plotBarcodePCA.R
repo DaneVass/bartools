@@ -21,8 +21,7 @@
 #' @export
 #'
 #' @examples
-#' data(test.dge)
-#' plotBarcodePCA(test.dge, intgroup = "group", ntop = 500, returnData = FALSE, batch = NULL)
+#' plotBarcodePCA(test.dge, intgroup = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
 
 plotBarcodePCA <- function(object, intgroup = "condition", col = "group", ntop = 500, returnData = FALSE, batch = NULL){
 
