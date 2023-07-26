@@ -12,7 +12,7 @@ LazyData: true
 Suggests: 
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
     ggrepel
 Imports: 
     data.table,

@@ -258,13 +258,7 @@ plotBarcodeBubble(dge.filtered.collapsed$counts, proportion.cutoff = 10, labels 
 Bubbleplots can also be ordered according to a particular sample which can help with visual representation of large vs small clones.
 
 ```{r}
-plotOrderedBubble(
-  dge.filtered.collapsed$counts,
-  proportion.cutoff = 10,
-  labels = T,
-  orderSample = "T0",
-  colorDominant = F
-)
+plotOrderedBubble(counts.obj = dge.filtered.collapsed$counts, proportion.cutoff = 10, labels = T, orderSample = "T0", colorDominant = F, filterLow = T, samples = dge.filtered.collapsed$samples, group = "Treatment")
 ```
 
 Barcodes that fail to meet a defined abundance threshold in any sample can be greyed out.
