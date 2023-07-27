@@ -27,7 +27,9 @@ Imports:
     forcats,
     reshape2,
     limma,
-    methods
+    methods,
+    viridis,
+    rlang
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends:

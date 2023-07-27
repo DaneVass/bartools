@@ -1,147 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://danevass.github.io/bartools/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>https://danevass.github.io/bartools/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
+    <loc>https://danevass.github.io/bartools/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://danevass.github.io/bartools/articles/preprocessing.html</loc>
   </url>
   <url>
-    <loc>/articles/preprocessing.html</loc>
+    <loc>https://danevass.github.io/bartools/articles/quickstart.html</loc>
   </url>
   <url>
-    <loc>/articles/quickstart.html</loc>
+    <loc>https://danevass.github.io/bartools/authors.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://danevass.github.io/bartools/index.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://danevass.github.io/bartools/news/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/annotateBarcodeReads.html</loc>
   </url>
   <url>
-    <loc>/reference/annotateBarcodeReads.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/calcDivIndexes.html</loc>
   </url>
   <url>
-    <loc>/reference/calcDivIndexes.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/calcPercentileBarcodes.html</loc>
   </url>
   <url>
-    <loc>/reference/calcPercentileBarcodes.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/calcReplicateCorr.html</loc>
   </url>
   <url>
-    <loc>/reference/calcReplicateCorr.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/cluster_cormat.html</loc>
   </url>
   <url>
-    <loc>/reference/cluster_cormat.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/collapseReplicates.html</loc>
   </url>
   <url>
-    <loc>/reference/collapseReplicates.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/compareAbundance.html</loc>
   </url>
   <url>
-    <loc>/reference/compareAbundance.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/countBarcodeReads.html</loc>
   </url>
   <url>
-    <loc>/reference/countBarcodeReads.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/createBarcodeObj.html</loc>
   </url>
   <url>
-    <loc>/reference/createBarcodeObj.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/extractBAM.html</loc>
   </url>
   <url>
-    <loc>/reference/extractBAM.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/extractBarcodeReads.html</loc>
   </url>
   <url>
-    <loc>/reference/extractBarcodeReads.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/extractFASTQ.html</loc>
   </url>
   <url>
-    <loc>/reference/extractFASTQ.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/getDominantBarcodes.html</loc>
   </url>
   <url>
-    <loc>/reference/getDominantBarcodes.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/get_upper_tri.html</loc>
   </url>
   <url>
-    <loc>/reference/get_upper_tri.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/mapBarcodeReads.html</loc>
   </url>
   <url>
-    <loc>/reference/mapBarcodeReads.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/normaliseCounts.html</loc>
   </url>
   <url>
-    <loc>/reference/normaliseCounts.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotAbundanceLines.html</loc>
   </url>
   <url>
-    <loc>/reference/plotAbundanceLines.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBARtabFilterQC.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeBoxplot.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBARtabMapQC.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeBubble.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeBoxplot.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeCorrelation.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeBubble.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeCounts.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeCorrelation.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeCumSum.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeCounts.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeDistance.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeCumSum.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeHeatmap.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeDistance.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeHistogram.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeHeatmap.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodePCA.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeHistogram.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeRegression.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodePCA.html</loc>
   </url>
   <url>
-    <loc>/reference/plotBarcodeTimeseries.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeRegression.html</loc>
   </url>
   <url>
-    <loc>/reference/plotDetectedBarcodes.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodeTimeseries.html</loc>
   </url>
   <url>
-    <loc>/reference/plotLibraryCumSum.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotDetectedBarcodes.html</loc>
   </url>
   <url>
-    <loc>/reference/plotLibraryDiversity.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotLibraryCumSum.html</loc>
   </url>
   <url>
-    <loc>/reference/plotOrderedBubble.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotLibraryDiversity.html</loc>
   </url>
   <url>
-    <loc>/reference/plotReadCounts.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotOrderedBubble.html</loc>
   </url>
   <url>
-    <loc>/reference/processBarcodeLibrary.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/plotReadCounts.html</loc>
   </url>
   <url>
-    <loc>/reference/proportionalBubbleplot.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/processBarcodeLibrary.html</loc>
   </url>
   <url>
-    <loc>/reference/test.counts.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/test.counts.html</loc>
   </url>
   <url>
-    <loc>/reference/test.dge.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/test.dge.html</loc>
   </url>
   <url>
-    <loc>/reference/thresholdCounts.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/thresholdCounts.html</loc>
   </url>
 </urlset>
