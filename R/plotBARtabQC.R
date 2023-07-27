@@ -133,7 +133,7 @@ plotBARtabMapQC <- function(dir = NULL,
   final.df$group <- as.factor(gsub("_[12]$", "",final.df$sample))
 
   colour_breaks <- c(0, 20, 40, 60, 80, 100)
-  colours <- rev(c("darkblue", "lightblue", "yellow", "orange", "red", "firebrick"))
+  colours <- c("darkblue", "lightblue", "yellow", "orange", "red2")
   
   # plot data
   if (plot) {

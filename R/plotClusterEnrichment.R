@@ -21,6 +21,7 @@
 #'
 #' @return Returns a histogram of hypergeometric test results or underlying plot data
 #' @export
+#' @examples
 #' 
 
 plotClusterEnrichment <- function(sc.obj = NULL, 
