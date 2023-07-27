@@ -80,7 +80,7 @@ plotClusterEnrichment <- function(sc.obj = NULL,
     message(paste("cluster", as.character(factor), "cells:", cluster.test.cells, sep = " "))
     
     # run hypergeometric test for the cluster
-    p <- phyper(cluster.test.cells,
+    p <- stats::phyper(cluster.test.cells,
                 test.cells.total,
                 total.cells - test.cells.total,
                 cluster.total.cells,

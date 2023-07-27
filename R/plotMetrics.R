@@ -60,7 +60,7 @@ plotMetrics <- function(sc.obj = NULL,
   # summarise per clone
   clone.summary <- dplyr::summarise_at(meta.select.group, vars(factor), 
                                        list(avg = mean, max = max, 
-                                            min = min, sd = sd))
+                                            min = min, sd = stats::sd))
   
   # plot distributions (optional box or violin plot) 
   if (plot) {
