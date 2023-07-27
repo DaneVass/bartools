@@ -1,9 +1,13 @@
 # fixes issues with no visible binding for global variables. See here
 # https://community.rstudio.com/t/how-to-solve-no-visible-binding-for-global-variable-note/28887
-utils::globalVariables(c(".", "group", "percent", "value", "variable", "Var1", "Var2", "Sample", 
-                         "Proportion", "Color", "barcode", "Group", "Barcodes", "Count", "rowid",
-                         "name", "test.dge", "BC.count", "model.matrix", "makeContrasts", "arrange", "FDR", "write.table",
-                         "logFC", "PValue", "category", "tail", "Freq", "num.barcodes","neglog10pval", "enriched", "cluster"))
+utils::globalVariables(c(".", "group", "percent", "value", "variable", "Var1", 
+                         "Var2", "Sample", "Proportion", "Color", "barcode", 
+                         "Group", "Barcodes", "Count", "rowid", "name", 
+                         "test.dge", "BC.count", "model.matrix", 
+                         "makeContrasts", "arrange", "FDR", "write.table", 
+                         "logFC", "PValue", "category", "tail", "Freq", 
+                         "num.barcodes","neglog10pval", "enriched", "cluster",
+                         "Percentage", "n"))
 
 colors.npg <- c("#E64B35","#D85543","#CA5F52","#BC6960","#AE736F","#A07D7D","#92888C","#84929A","#769CA9","#68A6B7"
   ,"#5AB0C6","#4CBBD5","#45B8CD","#3EB6C6","#37B3BF","#30B1B8","#29AEB1","#22ACAA","#1BA9A3","#14A79C"

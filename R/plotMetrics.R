@@ -18,8 +18,6 @@
 #'
 #' @return Returns a plot of cell number by barcode test results or underlying plot data
 #' @export
-#' @examples
-#' 
 #' 
 
 plotMetrics <- function(sc.obj = NULL, 
