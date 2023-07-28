@@ -48,3 +48,6 @@ bartools_test_notebook.Rmd
 bartools_test_notebook.nb.html
 docs*
 bartools.Rproj
+inst/doc
+/doc/
+/Meta/
