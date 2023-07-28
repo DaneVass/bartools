@@ -21,7 +21,6 @@
 #'
 #' @return Returns a histogram of hypergeometric test results or underlying plot data
 #' @export
-#' @examples
 #' 
 
 plotClusterEnrichment <- function(sc.obj = NULL, 
@@ -80,10 +79,10 @@ plotClusterEnrichment <- function(sc.obj = NULL,
     
     # run hypergeometric test for the cluster
     p <- stats::phyper(cluster.test.cells,
-                test.cells.total,
-                total.cells - test.cells.total,
-                cluster.total.cells,
-                lower.tail = F, log.p = FALSE)
+                       test.cells.total,
+                       total.cells - test.cells.total,
+                       cluster.total.cells,
+                       lower.tail = F, log.p = FALSE)
     
     print(paste("Hypergeometric test p-value:", p, sep = " "))
     return(p)
