@@ -1,11 +1,28 @@
+# bartools 0.2.5
+
+-   Added single cell QC plotting functions plotCellsPerGroup, plotMetrics, plotClusterEnrichment, plotCellsinClusters
+
+# bartools 0.2.4
+
+-   Updated plotting functions for plotBarcodeBoxplot, plotAbundanceLines
+
+# bartools 0.2.3
+
+-   Removed deprecated single cell workflows from package (workflow now in BARtab)
+-   Updated plotting functions for plotOrderedBubble, plotBarcodeBubble, plotBarcodeHeatmap
+
+# bartools 0.2.2
+
+-   Added dose escalation test dataset to package 
+
 # bartools 0.2.1
 
--   Minor updates to DESCRIPTION and imports. README.md fixed, .gitignore updated
+-   Updated plotting functions
 
 # bartools 0.2.0
 
 -   Updated plotDetectedBarcodes to color and reorder factors according to user input.
--   Updated quickstart vignette to detail a complete analysis workflow.
+-   Updated quickstart vignette detailing a complete analysis workflow.
 
 # bartools 0.1.0
 
