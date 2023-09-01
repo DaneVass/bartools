@@ -20,7 +20,7 @@
 #' plotOrderedBubble(test.dge$counts, orderSample = "T0-1")
 
 plotOrderedBubble <- function(counts,
-                              name = "Proportional Bubble Plot",
+                              title = "Proportional Bubble Plot",
                               orderSample = NULL,
                               samples = NULL,
                               group = NULL,
@@ -32,11 +32,11 @@ plotOrderedBubble <- function(counts,
                               legend = TRUE) {
   ###### check inputs ##########
   if (methods::is(counts)[1] == "DGEList") {
-    counts <- as.data.frame(counts$counts)
     # if no samplesheet is provided, extract it from DGE object
     if (is.null(samples)) {
       samples <- as.data.frame(counts$samples)
     }
+    counts <- as.data.frame(counts$counts)
   }
   else {
     counts <- as.data.frame(counts)
@@ -97,7 +97,7 @@ plotOrderedBubble <- function(counts,
       barcodes.proportional[, displaySamples]
   }
 
-  # Order by selected sample. Plot in ascending rank order from original barcode library
+  # Order by selected sample.
   barcodes.proportional$Position <-
     barcodes.proportional[, orderSample]
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
@@ -106,6 +106,7 @@ plotOrderedBubble <- function(counts,
       barcodes.proportional[barcodes.proportional$Position > filterCutoff,]
   }
   # high prop barcodes
+  # TODO
   Highbarcodes <-
     dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) - 3)],
                       dplyr::any_vars(. > proportionCutoff))
@@ -113,33 +114,21 @@ plotOrderedBubble <- function(counts,
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff
     colors <- "grey90"
-    colors <-
-      sample(colors, length(rownames(barcodes.proportional)), replace = TRUE)
-    names(colors) <- rownames(barcodes.proportional)
-    barcodes.proportional$Color <- colors
-
-    # Assign diverse colours to high frequency barcodes
-    SelColors <- scales::hue_pal()(nrow(Highbarcodes))
-    i = 1
-    for (bc in rownames(Highbarcodes)) {
-      barcodes.proportional[bc,]$Color <- SelColors[i]
-      i <- i + 1
-    }
   } else {
     # give each barcode a specific color
     colors <- scales::hue_pal()(30)
-    colors <-
-      sample(colors, length(rownames(barcodes.proportional)), replace = TRUE)
-    names(colors) <- rownames(barcodes.proportional)
-    barcodes.proportional$Color <- colors
+  }
+  colors <-
+    sample(colors, length(rownames(barcodes.proportional)), replace = TRUE)
+  names(colors) <- rownames(barcodes.proportional)
+  barcodes.proportional$Color <- colors
 
-    # Assign diverse colours to high frequency barcodes
-    SelColors <- scales::hue_pal()(nrow(Highbarcodes))
-    i = 1
-    for (bc in rownames(Highbarcodes)) {
-      barcodes.proportional[bc,]$Color <- SelColors[i]
-      i <- i + 1
-    }
+  # Assign diverse colours to high frequency barcodes
+  SelColors <- scales::hue_pal()(nrow(Highbarcodes))
+  i = 1
+  for (bc in rownames(Highbarcodes)) {
+    barcodes.proportional[bc,]$Color <- SelColors[i]
+    i <- i + 1
   }
   HighbarcodesLabel <-
     barcodes.proportional[rownames(Highbarcodes),]
@@ -211,7 +200,7 @@ plotOrderedBubble <- function(counts,
       )
   }
 
-  # generate bubbleplot when no metadata provided
+  # generate bubbleplot
   bubble.plot <- ggplot2::ggplot(
     barcodes.proportional.melted,
     ggplot2::aes(
@@ -226,9 +215,8 @@ plotOrderedBubble <- function(counts,
                         shape = 16) +
     ggplot2::scale_color_identity() +
     ggplot2::labs(y = "Condition",
-                  # x = paste("Barcode Proportion in", orderSample, "(%)"),
                   x = "",
-                  title = name) +
+                  title = title) +
     ggplot2::scale_size_continuous(
       name = "Barcode Proportion (%)",
       range = c(0.1, 10),
@@ -237,8 +225,7 @@ plotOrderedBubble <- function(counts,
     ) +
     ggplot2::scale_x_continuous(
       trans = 'log10',
-      labels =
-        HighbarcodesLabel$Barcode,
+      labels = HighbarcodesLabel$Barcode,
       breaks = HighbarcodesLabel$Position,
       sec.axis = ggplot2::sec_axis(
         ~ . * 1,
@@ -255,13 +242,13 @@ plotOrderedBubble <- function(counts,
         colour = HighbarcodesLabel$Color,
         size = 6
       ),
-      axis.text.y = ggplot2::element_text(size = 6),
       legend.title = ggplot2::element_text(size = 8),
       legend.text = ggplot2::element_text(size = 6),
       legend.box.spacing = unit(2, "mm"),
       legend.margin = margin(0, 0, 0, 0),
       legend.spacing.x = unit(0, "mm"),
       legend.spacing.y = unit(0, "mm"),
+      axis.text.y = ggplot2::element_text(size = 6),
       plot.title = ggplot2::element_text(size = 8),
       axis.title = ggplot2::element_text(size = 6)
     )
