@@ -3,7 +3,6 @@
 #' Generate ordered proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 #'
 #' @param counts dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.
-#' @param labels logical. Print barcode labels
 #' @param proportionCutoff barcodes represented at a percentage within any sample above this threshold will be labelled
 #' @param title desired plot title
 #' @param orderSample name of sample to order by
@@ -12,8 +11,8 @@
 #' @param displaySamples vector of samples to display - keep the order of vector
 #' @param displayBarcodes vector of barcodes to display
 #' @param colorDominant only color clones with frequency above proportionCutoff. Others colored grey
-#' @param filterLow Boolean to filter low barcodes in orderSample
 #' @param filterCutoff barcodes below this threshold in orderSample will be filtered in all samples
+#' @param legend Boolean, whether to print a legend of bubble sizes
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
@@ -21,7 +20,6 @@
 #' plotOrderedBubble(test.dge$counts, orderSample = "T0-1")
 
 plotOrderedBubble <- function(counts,
-                              labels = T,
                               name = "Proportional Bubble Plot",
                               orderSample = NULL,
                               samples = NULL,
@@ -30,12 +28,8 @@ plotOrderedBubble <- function(counts,
                               displayBarcodes = NULL,
                               proportionCutoff = 10,
                               colorDominant = FALSE,
-                              filterLow = FALSE,
-                              filterCutoff = 0.001) {
-  if (is.null(orderSample)) {
-    stop("Please provide sample to order by")
-  }
-
+                              filterCutoff = NULL,
+                              legend = TRUE) {
   ###### check inputs ##########
   if (methods::is(counts)[1] == "DGEList") {
     counts <- as.data.frame(counts$counts)
@@ -47,18 +41,22 @@ plotOrderedBubble <- function(counts,
   else {
     counts <- as.data.frame(counts)
   }
-  # check parameters samples, group, displaySamples, displayBarcodes, orderSample
+  # check parameters
+
+  if (is.null(orderSample)) {
+    stop("Please provide sample to order by")
+  }
 
   if (!is.null(group) & is.null(samples)) {
-    stop("if grouping samples, samples must be provided or present in DGE object")
+    stop("If grouping samples, samples must be provided or present in DGE object")
   }
 
   if (!is.null(group) & !all(group %in% colnames(samples))) {
-    stop("group must be column in samples")
+    stop("Group must be column in samples")
   }
 
   if (!orderSample %in% colnames(counts)) {
-    stop("sample to order by is not present in counts data")
+    stop("Sample to order by is not present in counts data")
   }
 
   if (!is.null(displaySamples)) {
@@ -66,7 +64,11 @@ plotOrderedBubble <- function(counts,
     missingSamples <-
       setdiff(displaySamples, colnames(counts))
     if (length(missingSamples) > 0) {
-      stop(paste("Samples", paste(missingSamples, collapse = ", "), "not found in count object"))
+      stop(paste(
+        "Samples",
+        paste(missingSamples, collapse = ", "),
+        "not found in count object"
+      ))
     }
   }
 
@@ -99,7 +101,7 @@ plotOrderedBubble <- function(counts,
   barcodes.proportional$Position <-
     barcodes.proportional[, orderSample]
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
-  if (filterLow) {
+  if (!is.null(filterCutoff)) {
     barcodes.proportional <-
       barcodes.proportional[barcodes.proportional$Position > filterCutoff,]
   }
@@ -161,8 +163,17 @@ plotOrderedBubble <- function(counts,
   # convert variables to correct form
   barcodes.proportional.melted$Barcode <-
     as.factor(barcodes.proportional.melted$Barcode)
+  # barcodes.proportional.melted$Sample <-
+  #   as.factor(barcodes.proportional.melted$Sample)
+  # ordered sample on top by ordering levels of factor
   barcodes.proportional.melted$Sample <-
-    as.factor(barcodes.proportional.melted$Sample)
+    factor(
+      barcodes.proportional.melted$Sample,
+      levels = c(as.character(
+        unique(barcodes.proportional.melted$Sample[barcodes.proportional.melted$Sample != orderSample])
+      ), orderSample),
+      ordered = TRUE
+    )
   barcodes.proportional.melted$Proportion <-
     as.numeric(barcodes.proportional.melted$Proportion)
 
@@ -176,8 +187,21 @@ plotOrderedBubble <- function(counts,
       samples.filtered <- data.frame(samples[, group])
       samples.filtered$Sample <- colnames(counts)
     }
-    # create new merged dataframe which including barcode data with metadata for the samples
     colnames(samples.filtered) <- c(group, "Sample")
+
+    # order groups so that group containing ordered sample is on top
+    orderGroup <-
+      samples.filtered[samples.filtered$Sample == orderSample, group]
+    samples.filtered[group] <-
+      factor(
+        samples.filtered[[group]],
+        levels = c(orderGroup, as.character(unique(
+          samples.filtered[group][samples.filtered[group] != orderGroup]
+        ))),
+        ordered = TRUE
+      )
+
+    # create new merged data frame which including barcode data with metadata for the samples
     barcodes.proportional.melted <-
       merge(
         barcodes.proportional.melted,
@@ -201,8 +225,16 @@ plotOrderedBubble <- function(counts,
                         alpha = 0.6,
                         shape = 16) +
     ggplot2::scale_color_identity() +
-    ggplot2::labs(y = "Condition", x = "Barcode Proportion", title = name) +
-    ggplot2::scale_size_continuous(range = c(0.1, 10)) +
+    ggplot2::labs(y = "Condition",
+                  # x = paste("Barcode Proportion in", orderSample, "(%)"),
+                  x = "",
+                  title = name) +
+    ggplot2::scale_size_continuous(
+      name = "Barcode Proportion (%)",
+      range = c(0.1, 10),
+      breaks = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
+      labels = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
+    ) +
     ggplot2::scale_x_continuous(
       trans = 'log10',
       labels =
@@ -211,12 +243,12 @@ plotOrderedBubble <- function(counts,
       sec.axis = ggplot2::sec_axis(
         ~ . * 1,
         labels = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50),
-        breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50)
+        breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50),
+        name = paste("Barcode Proportion in", orderSample, "(%)")
       )
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
-      legend.position = "none",
       axis.text.x = ggplot2::element_text(
         angle = 90,
         vjust = 0.5,
@@ -224,6 +256,12 @@ plotOrderedBubble <- function(counts,
         size = 6
       ),
       axis.text.y = ggplot2::element_text(size = 6),
+      legend.title = ggplot2::element_text(size = 8),
+      legend.text = ggplot2::element_text(size = 6),
+      legend.box.spacing = unit(2, "mm"),
+      legend.margin = margin(0, 0, 0, 0),
+      legend.spacing.x = unit(0, "mm"),
+      legend.spacing.y = unit(0, "mm"),
       plot.title = ggplot2::element_text(size = 8),
       axis.title = ggplot2::element_text(size = 6)
     )
@@ -231,7 +269,15 @@ plotOrderedBubble <- function(counts,
   # facet plot if grouping is provided
   if (!is.null(group)) {
     bubble.plot <- bubble.plot +
-      facet_grid(barcodes.proportional.melted[[group]] ~ ., scales = "free", space = "free")
+      facet_grid(barcodes.proportional.melted[[group]] ~ .,
+                 scales = "free",
+                 space = "free")
+  }
+
+  # remove legend
+  if (legend == FALSE) {
+    bubble.plot <- bubble.plot +
+      theme(legend.position = "None")
   }
 
   return(bubble.plot)
