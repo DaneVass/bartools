@@ -4,6 +4,7 @@
 #'
 #' @param counts dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.
 #' @param proportionCutoff barcodes represented at a percentage within any sample above this threshold will be labelled
+#' @param labelBarcodes Boolean, whether to label barcodes with a proportion larger than proportionCutoff in any sample
 #' @param title desired plot title
 #' @param orderSample name of sample to order by
 #' @param samples Dataframe containing sample metadata sheet with samples as row names.
@@ -12,7 +13,7 @@
 #' @param displayBarcodes vector of barcodes to display
 #' @param colorDominant only color clones with frequency above proportionCutoff. Others colored grey
 #' @param filterCutoff barcodes below this threshold in orderSample will be filtered in all samples
-#' @param legend Boolean, whether to print a legend of bubble sizes
+#' @param legend Boolean, whether to show a legend of bubble sizes
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
@@ -29,6 +30,7 @@ plotOrderedBubble <- function(counts,
                               proportionCutoff = 10,
                               colorDominant = FALSE,
                               filterCutoff = NULL,
+                              labelBarcodes = TRUE,
                               legend = TRUE) {
   ###### check inputs ##########
   if (methods::is(counts)[1] == "DGEList") {
@@ -79,10 +81,15 @@ plotOrderedBubble <- function(counts,
     if (length(missingBarcodes) > 0) {
       stop(paste(
         "Barcodes",
-        cat(missingBarcodes),
+        paste(missingBarcodes, collapse = ", "),
         "not found in count object"
       ))
     }
+  }
+
+  # this will avoid plotting any barcode labels
+  if (labelBarcodes == FALSE) {
+    proportionCutoff = 100
   }
 
   # transform CPM into percentage within sample
@@ -123,18 +130,19 @@ plotOrderedBubble <- function(counts,
   names(colors) <- rownames(barcodes.proportional)
   barcodes.proportional$Color <- colors
 
-  # Assign diverse colours to high frequency barcodes
-  SelColors <- scales::hue_pal()(nrow(Highbarcodes))
-  i = 1
-  for (bc in rownames(Highbarcodes)) {
-    barcodes.proportional[bc,]$Color <- SelColors[i]
-    i <- i + 1
+  if (nrow(Highbarcodes) != 0) {
+    # Assign diverse colours to high frequency barcodes
+    SelColors <- scales::hue_pal()(nrow(Highbarcodes))
+    i = 1
+    for (bc in rownames(Highbarcodes)) {
+      barcodes.proportional[bc,]$Color <- SelColors[i]
+      i <- i + 1
+    }
   }
   HighbarcodesLabel <-
     barcodes.proportional[rownames(Highbarcodes),]
   HighbarcodesLabel <-
     HighbarcodesLabel[HighbarcodesLabel$Position > 0,]
-
 
   if (!is.null(displayBarcodes)) {
     barcodes.proportional <-
@@ -218,7 +226,7 @@ plotOrderedBubble <- function(counts,
                   x = "",
                   title = title) +
     ggplot2::scale_size_continuous(
-      name = "Barcode Proportion (%)",
+      name = "Barcode\nProportion (%)",
       range = c(0.1, 10),
       breaks = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
       labels = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
@@ -236,12 +244,6 @@ plotOrderedBubble <- function(counts,
     ) +
     ggplot2::theme_bw() +
     ggplot2::theme(
-      axis.text.x = ggplot2::element_text(
-        angle = 90,
-        vjust = 0.5,
-        colour = HighbarcodesLabel$Color,
-        size = 6
-      ),
       legend.title = ggplot2::element_text(size = 8),
       legend.text = ggplot2::element_text(size = 6),
       legend.box.spacing = unit(2, "mm"),
@@ -252,6 +254,18 @@ plotOrderedBubble <- function(counts,
       plot.title = ggplot2::element_text(size = 8),
       axis.title = ggplot2::element_text(size = 6)
     )
+  # turn and color labels if labels are plotted
+  if (nrow(Highbarcodes) > 0) {
+    bubble.plot <- bubble.plot +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(
+          angle = 90,
+          vjust = 0.5,
+          colour = HighbarcodesLabel$Color,
+          size = 6
+        )
+      )
+  }
 
   # facet plot if grouping is provided
   if (!is.null(group)) {

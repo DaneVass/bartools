@@ -4,13 +4,14 @@
 #'
 #' @param counts dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.
 #' @param proportionCutoff barcodes represented at a percentage within any sample above this threshold will be labelled
+#' @param labelBarcodes Boolean, whether to label barcodes with a proportion larger than proportionCutoff in any sample
 #' @param title desired plot title
 #' @param samples Dataframe containing sample metadata sheet with samples as row names.
 #' @param group metadata field to annotate samples on bubble plot
 #' @param displaySamples vector of samples to display - keep the order of vector
 #' @param displayBarcodes vector of barcodes to display
 #' @param colorDominant only color clones with frequency above proportionCutoff. Others colored grey
-#' @param legend Boolean, whether to print a legend of bubble sizes
+#' @param legend Boolean, whether to show a legend of bubble sizes
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
@@ -25,6 +26,7 @@ plotBarcodeBubble <- function(counts,
                               displayBarcodes = NULL,
                               proportionCutoff = 10,
                               colorDominant = FALSE,
+                              labelBarcodes = TRUE,
                               legend = TRUE) {
   ###### check inputs ##########
   if (methods::is(counts)[1] == "DGEList") {
@@ -33,8 +35,7 @@ plotBarcodeBubble <- function(counts,
       samples <- as.data.frame(counts$samples)
     }
     counts <- as.data.frame(counts$counts)
-  }
-  else {
+  } else {
     counts <- as.data.frame(counts)
   }
   # check parameters
@@ -67,10 +68,15 @@ plotBarcodeBubble <- function(counts,
     if (length(missingBarcodes) > 0) {
       stop(paste(
         "Barcodes",
-        cat(missingBarcodes),
+        paste(missingBarcodes, collapse = ", "),
         "not found in count object"
       ))
     }
+  }
+
+  # this will avoid plotting any barcode labels
+  if (labelBarcodes == FALSE) {
+    proportionCutoff = 100
   }
 
   # transform counts / CPM into percentage within sample
@@ -91,18 +97,12 @@ plotBarcodeBubble <- function(counts,
     as.factor(seq(1, length(rownames(counts))))
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
 
-  # # identify high proportion barcodes for labelling
-  # Highbarcodes <-
-  #   barcodes.proportional[barcodes.proportional$Proportion > proportionCutoff, ]
-  # # only take unique barcode labels
-  # HighbarcodeOrdered <-
-  #   unique(Highbarcodes[order(Highbarcodes$Barcode), c("Color", "Position", "Barcode")])
-
   # high prop barcodes
   # TODO
   Highbarcodes <-
     dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) - 2)],
                       dplyr::any_vars(. > proportionCutoff))
+
 
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff
@@ -116,12 +116,14 @@ plotBarcodeBubble <- function(counts,
   names(colors) <- rownames(barcodes.proportional)
   barcodes.proportional$Color <- colors
 
-  # Assign diverse colours to high frequency barcodes
-  SelColors <- scales::hue_pal()(nrow(Highbarcodes))
-  i = 1
-  for (bc in rownames(Highbarcodes)) {
-    barcodes.proportional[bc,]$Color <- SelColors[i]
-    i <- i + 1
+  if (nrow(Highbarcodes) != 0) {
+    # Assign diverse colours to high frequency barcodes
+    SelColors <- scales::hue_pal()(nrow(Highbarcodes))
+    i = 1
+    for (bc in rownames(Highbarcodes)) {
+      barcodes.proportional[bc,]$Color <- SelColors[i]
+      i <- i + 1
+    }
   }
 
   HighbarcodesLabel <-
@@ -166,6 +168,7 @@ plotBarcodeBubble <- function(counts,
   barcodes.proportional.melted$Proportion <-
     as.numeric(barcodes.proportional.melted$Proportion)
 
+  # barcodes.proportional.melted_10 <- barcodes.proportional.melted
 
   # generate bubbleplot
   bubble.plot <- ggplot2::ggplot(
@@ -185,21 +188,30 @@ plotBarcodeBubble <- function(counts,
                   x = "Barcode",
                   title = title) +
     ggplot2::scale_size_continuous(
-      name = "Barcode Proportion (%)",
+      name = "Barcode\nProportion (%)",
       range = c(0.1, 10),
       breaks = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
       labels = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
     ) +
     ggplot2::scale_x_discrete(breaks = HighbarcodesLabel$Position,
                               labels = HighbarcodesLabel$Barcode) +
-    ggplot2::theme_bw() +
+    ggplot2::theme_bw()
+
+  # x-axis label formatting depending on whether there are labels
+  if (nrow(Highbarcodes) > 0) {
+    bubble.plot <- bubble.plot +
+      ggplot2::theme(
+        axis.text.x = ggplot2::element_text(
+          angle = 90,
+          vjust = 0.5,
+          colour = HighbarcodesLabel$Color,
+          size = 5
+        )
+      )
+  }
+
+  bubble.plot <- bubble.plot +
     ggplot2::theme(
-      axis.text.x = ggplot2::element_text(
-        angle = 90,
-        vjust = 0.5,
-        colour = HighbarcodesLabel$Color,
-        size = 6
-      ),
       legend.title = ggplot2::element_text(size = 8),
       legend.text = ggplot2::element_text(size = 6),
       legend.box.spacing = unit(2, "mm"),
