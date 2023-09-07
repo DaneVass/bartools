@@ -131,6 +131,13 @@ plotBarcodeBubble <- function(counts,
   HighbarcodesLabel <-
     HighbarcodesLabel[as.numeric(HighbarcodesLabel$Position) > 0,]
 
+  if (!is.null(displayBarcodes)) {
+    barcodes.proportional <-
+      barcodes.proportional[rownames(barcodes.proportional) %in% displayBarcodes, ]
+    HighbarcodesLabel <-
+      HighbarcodesLabel[HighbarcodesLabel$Barcode %in% displayBarcodes,]
+  }
+
   # melt data frame and rename columns correctly
   barcodes.proportional.melted <-
     reshape2::melt(barcodes.proportional,
