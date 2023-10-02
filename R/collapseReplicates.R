@@ -18,7 +18,7 @@
 #' collapseReplicates(test.dge, groupby = test.dge$samples$group, by = "mean")
 #'
 
-collapseReplicates <- function (object, groupby, run, renameCols = TRUE, show_reps = TRUE, by = "mean") {
+collapseReplicates <- function (object, groupby, run, renameCols = TRUE, show_reps = FALSE, by = "mean") {
 
   # check inputs
   stopifnot(by != "mean" | by != "sum")
@@ -73,7 +73,7 @@ collapseReplicates <- function (object, groupby, run, renameCols = TRUE, show_re
   } else {
     stop("output is not a valid DGEList object")
   }
-  collapsed
+  return(collapsed)
 }
 
 

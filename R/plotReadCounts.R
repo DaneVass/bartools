@@ -34,7 +34,7 @@ plotReadCounts <- function(counts, group = NULL, log10 = FALSE, legend = TRUE, o
   p <- ggplot2::ggplot(data=dat, ggplot2::aes(y=sample, x=counts, fill = group)) +
     ggplot2::geom_bar(stat="identity", width = .75) +
     ggplot2::theme_bw() +
-    ggplot2::theme(axis.text.y = ggplot2::element_text(angle=0, vjust=0, hjust = 0.5)) +
+    ggplot2::theme(axis.text.y = ggplot2::element_text(angle=0, vjust=0.5)) +
     ggplot2::theme(axis.text.x = ggplot2::element_text(size = 5)) +
     ggplot2::ggtitle("Total Read Counts") +
     ggplot2::xlim(0,max(dat$counts+100)) +

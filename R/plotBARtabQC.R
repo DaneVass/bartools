@@ -1,3 +1,227 @@
+#' readBartabCounts
+#'
+#' Read BARtab counts table from single-cell sample
+#'
+#' @param counts_path Path to BARtab counts.tsv file
+#'
+#' @return Returns a data frame in long format of cell IDs, barcodes and barcode UMI counts
+#'
+#' @export
+readBartabCounts <- function(counts_path) {
+  # read in barcode-cell pairs
+  counts <- read.delim(counts_path, header = TRUE)
+  if (ncol(counts) != 3) {
+    stop("Data is not in the expected format. Expects columns <gene, cell, count>.")
+  }
+  if (any(colnames(counts) != c("gene", "cell", "count"))) {
+    stop("Data is not in the expected format. Expects columns <gene, cell, count>.")
+  }
+  counts <- counts[, c("cell", "gene", "count")]
+  names(counts) <- c("cellid", "barcode", "bc.umi.count")
+  return(counts)
+}
+
+#' aggregateBarcodes
+#'
+#' Aggregate barcodes and barcode UMIs per cell
+#'
+#' @param counts Dataframe with barcodes and UMI counts per cell
+#'
+#' @return Returns a data frame with one row per cell ID
+#'
+#' @export
+#
+aggregateBarcodes <- function(counts) {
+  bc.counts <- as.data.frame(dcast(
+    setDT(counts),
+    cellid ~ .,
+    value.var = c("barcode", "bc.umi.count"),
+    fun.aggregate = function(x) {
+      paste(x, collapse = ";")
+    }
+  ))
+  return(bc.counts)
+}
+
+#' filterBarcodes
+#'
+#' Filter barcodes from single-cell sample
+#'
+#' @param counts Dataframe with barcodes and UMI counts per cell
+#' @param umi_count_filter Minimum number of UMIs per barcode per cell
+#' @param umi_fraction_filter Minimum fraction of UMIs per barcode per cell compared to dominant barcode in cell (barcode supported by most UMIs)
+#'
+#' @return Returns a data frame with one row per cell ID
+#'
+#' @export
+#
+filterBarcodes <-
+  function(counts,
+           umi_count_filter = 1,
+           umi_fraction_filter = 0.3) {
+    counts_filtered <- counts %>%
+      filter(bc.umi.count >= umi_count_filter)
+
+    counts_filtered <- counts_filtered %>%
+      group_by(cellid) %>%
+      mutate(max_count = max(bc.umi.count)) %>%
+      arrange(cellid) %>%
+      filter(bc.umi.count / umi_fraction_filter >= max_count)
+
+    return(counts_filtered)
+  }
+
+
+integer_breaks <- function(n = 5, ...) {
+  fxn <- function(x) {
+    breaks <- floor(pretty(x, n, ...))
+    names(breaks) <- attr(breaks, "labels")
+    breaks
+  }
+  return(fxn)
+}
+
+#' plotBarcodesPerCell
+#'
+#' Plot number of detected barcodes per cell
+#'
+#' @param counts Dataframe with barcodes and UMI counts per cell
+#' @param fraction Boolean, whether to plot fraction or number of cells
+#'
+#' @return Returns a plot
+#'
+#' @export
+
+plotBarcodesPerCell <- function(counts, fraction = TRUE) {
+  # Detected lineage barcodes per cell
+  lineagePerCell.dist.df <- counts %>%
+    dplyr::select(cellid, barcode) %>%
+    dplyr::group_by(cellid) %>%
+    dplyr::tally(., name = "number_of_lineage_barcodes") %>%
+    dplyr::arrange(dplyr::desc(number_of_lineage_barcodes))
+
+  lineagePerCell.dist.df <- lineagePerCell.dist.df %>%
+    dplyr::count(number_of_lineage_barcodes) %>%
+    mutate(frac = n / nrow(lineagePerCell.dist.df))
+
+  if (fraction) {
+    p <- lineagePerCell.dist.df %>%
+      ggplot(aes(x = number_of_lineage_barcodes, y = frac))
+  } else {
+    p <- lineagePerCell.dist.df %>%
+      ggplot(aes(x = number_of_lineage_barcodes, y = n))
+  }
+  p <- p +
+    theme(
+      axis.text = element_text(size = 18, face = "bold"),
+      axis.title = element_text(size = 16, face = "bold")
+    ) +
+    geom_bar(stat = "identity",
+             fill = "blue",
+             width = .75) +
+    xlab("# Barcodes") +
+    ggtitle(paste("Number of barcodes detected per cell")) +
+    theme_bw() +
+    scale_x_continuous(breaks = integer_breaks())
+
+  if (fraction) {
+    p <- p +
+      ylab("Fraction of cells")
+  } else {
+    p <- p +
+      ylab("# cells")
+  }
+
+  return(p)
+}
+
+
+#' plotUmiPerBarcode
+#'
+#' Plot number of UMIs supporting the most frequenc barcode per cell
+#'
+#' @param counts Dataframe with barcodes and UMI counts per cell
+#' @param fraction Boolean, whether to plot fraction or number of cells
+#'
+#' @return Returns a plot
+#'
+#' @export
+
+plotUmiPerBarcode <- function(counts, fraction = TRUE) {
+  # Number of UMIs supporting the most frequent barcode
+  max.umi.per.cell <- counts %>%
+    group_by(cellid) %>%
+    summarise(max = max(bc.umi.count))
+
+  max.umi.per.cell <- max.umi.per.cell %>%
+    dplyr::count(max) %>%
+    mutate(frac = n / nrow(max.umi.per.cell))
+
+  if (fraction) {
+    p <- max.umi.per.cell %>%
+      ggplot(aes(x = max, y = frac))
+  } else {
+    p <- max.umi.per.cell %>%
+      ggplot(aes(x = max, y = n))
+  }
+  p <- p +
+    theme(
+      axis.text = element_text(size = 18, face = "bold"),
+      axis.title = element_text(size = 16, face = "bold")
+    ) +
+    geom_bar(stat = "identity", width = .75) +
+    xlab("# UMI") +
+    ggtitle("Number of UMI supporting the most frequent barcode") +
+    theme_bw() +
+    scale_x_continuous(breaks = integer_breaks())
+
+  if (fraction) {
+    p <- p +
+      ylab("Fraction of cells")
+  } else {
+    p <- p +
+      ylab("# cells")
+  }
+
+  return(p)
+}
+
+
+#' plotUmiFilterThresholds
+#'
+#' Plot number of cells with barcodes annotated given different UMI count filter thresholds
+#'
+#' @param counts Dataframe with barcodes and UMI counts per cell
+#'
+#' @return Returns a plot
+#'
+#' @export
+#'
+plotUmiFilterThresholds <- function(counts) {
+
+  max.umi.per.cell <- counts %>%
+    # get UMI count of dominant barcode per cell
+    group_by(cellid) %>%
+    summarise(max = max(bc.umi.count)) %>%
+    # cummulative count of cells
+    group_by(max) %>%
+    summarise(count_max = n()) %>%
+    arrange(desc(max)) %>%
+    mutate(cumsum_count_max = cumsum(count_max))
+
+  p <-
+    ggplot(max.umi.per.cell, aes(x = max, y = cumsum_count_max)) +
+    geom_bar(stat = "identity", width = .75) +
+    ylab("# cells") +
+    xlab("UMI threshold") +
+    ggtitle("Number of cells with barcodes annotated given UMI threshold") +
+    theme_bw() +
+    scale_x_continuous(breaks = integer_breaks())
+
+  return(p)
+}
+
+
 #' plotBARtabFilterQC
 #'
 #' Plot filtered read percentages from a BARtab run folder
@@ -134,7 +358,7 @@ plotBARtabMapQC <- function(dir = NULL,
 
   colour_breaks <- c(0, 20, 40, 60, 80, 100)
   colours <- c("darkblue", "lightblue", "yellow", "orange", "red2")
-  
+
   # plot data
   if (plot) {
     p <- ggplot2::ggplot(final.df, ggplot2::aes(sample, percent, fill = percent)) +
@@ -148,7 +372,7 @@ plotBARtabMapQC <- function(dir = NULL,
         colours = colours[c(1, seq_along(colours), length(colours))],
         values  = c(0, scales::rescale(colour_breaks, from = range(0,100)), 1),
       )
-    
+
     suppressWarnings(print(p))
   } else {
     return(final.df)
