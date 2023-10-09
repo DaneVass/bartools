@@ -62,6 +62,9 @@ plotBarcodeDistance <- function(counts,
 #' @param upper Logical. plot only the upper half of the matrix
 #' @param clustered Logical. cluster rows and columns of matrix
 #' @param name title of plot
+#' @param samples Dataframe containing sample metadata sheet with samples as row names.
+#' @param group metadata field to annotate samples
+#' @param col_annot list of vectors assigning colours to each level of metadata
 #'
 #' @return Returns a heatmap of sample distances using desired clustering
 #'
@@ -75,37 +78,64 @@ plotBarcodeCorrelation <- function(counts,
                             method = "pearson",
                             upper = T,
                             clustered = T,
+                            group = NULL,
+                            col_annot = NULL,
+                            samples = NULL,
                             name = "Sample Correlation"){
 
+  # check input parameters
+  if (!is.null(group)) {
+    if (any(is.null(samples), is.null(col_annot))) {
+      stop("When specifying a group, please also provide sample metadata and color annotations.")
+    }
+  }
+
   # generate correlation matrix
-  cormat <- round(stats::cor(counts, method = method),2)
+  cormat <- round(stats::cor(counts, method = method), 2)
 
   # cluster matrix if specified
-  if(isTRUE(clustered)){
+  if (isTRUE(clustered)) {
     cormat <- cluster_cormat(cormat)
   }
 
   # take only upper triangle if specified
-  if(isTRUE(upper)){
+  if (isTRUE(upper)) {
     cormat <- get_upper_tri(cormat)
   }
 
-  # Melt the correlation matrix
-  melted_cormat <- reshape2::melt(cormat, na.rm = TRUE)
+  cormat <- cormat[rev(rownames(cormat)), ]
 
-  # Create a ggheatmap
-  name <- paste(name, "-", method)
-  ggheatmap <- ggplot2::ggplot(melted_cormat, ggplot2::aes(`Var2`, `Var1`, fill = `value`)) +
-    ggplot2::geom_tile(color = "white") +
-    ggplot2::scale_fill_viridis_c() +
-    ggplot2::theme_bw() +
-    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 1, size = 6, hjust = 1),
-                   axis.text.y = ggplot2::element_text(size = 6)) +
-    ggplot2::coord_fixed() +
-    ggplot2::labs(x = "", y = "", title = name)
+  if (!is.null(group)) {
+    # keep group order for legend in plot
+    # reorder samples in case they were clustered
+    group_cols <- group[group %in% colnames(samples)]
+    df_annotation <-
+      samples[colnames(cormat), group_cols, drop = FALSE]
 
-  # Print the heatmap
-  print(ggheatmap)
+    ha <- ComplexHeatmap::HeatmapAnnotation(
+      df = df_annotation,
+      which = 'col',
+      col = col_annot,
+      annotation_width = unit(c(1, 4), 'cm'),
+      gap = unit(1, 'mm')
+    )
+  } else {
+    ha <- NULL
+  }
+
+  ComplexHeatmap::Heatmap(
+    cormat,
+    cluster_columns = F,
+    cluster_rows = F,
+    col = viridis::viridis(100),
+    bottom_annotation = ha,
+    width = ncol(cormat) * unit(5, "mm"),
+    height = nrow(cormat) * unit(5, "mm"),
+    heatmap_legend_param = list(title = paste(method, "\ncorrelation")),
+    column_title = name,
+    na_col = "white",
+    row_names_side = "left"
+  )
 }
 
 
