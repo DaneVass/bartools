@@ -76,7 +76,7 @@ dge <-
     files = samplesheet,
     group = samplesheet$treatment,
     labels = samplesheet$sample,
-    header = T
+    header = F
   )
 ```
 
