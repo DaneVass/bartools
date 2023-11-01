@@ -10,7 +10,8 @@ thresholdCounts(
   type = "absolute",
   min.samps = 1,
   plot = FALSE,
-  group = NULL
+  group = NULL,
+  order = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ thresholdCounts(
 \item{plot}{Logical. Draw plots of dataset? Default = F}
 
 \item{group}{DGEList metadata field to color samples by}
+
+\item{order}{Boolean. Order samples by group?}
 }
 \value{
 Returns a filtered DGEList object.
