@@ -29,7 +29,8 @@ Imports:
     limma,
     methods,
     viridis,
-    rlang
+    rlang,
+    RColorBrewer
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends:
