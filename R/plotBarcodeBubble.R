@@ -12,6 +12,7 @@
 #' @param displayBarcodes vector of barcodes to display
 #' @param colorDominant only color clones with frequency above proportionCutoff. Others colored grey
 #' @param legend Boolean, whether to show a legend of bubble sizes
+#' @param orderBarcodes Boolean, whether to order barcodes alphanumerical. For SPLINTR that represents abundance in  original barcode library. Default TRUE.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
@@ -27,6 +28,7 @@ plotBarcodeBubble <- function(counts,
                               proportionCutoff = 10,
                               colorDominant = FALSE,
                               labelBarcodes = TRUE,
+                              orderBarcodes = TRUE,
                               legend = TRUE) {
   ###### check inputs ##########
   if (methods::is(counts)[1] == "DGEList") {
@@ -92,7 +94,13 @@ plotBarcodeBubble <- function(counts,
       barcodes.proportional[, displaySamples]
   }
 
-  # maintain Rank information of barcodes. Plot in ascending rank order from original barcode library
+  # maintain Rank information of barcodes. Plot in ascending rank order from original barcode library.
+  # this is done by ordering barcodes alphanumerical.
+  # this only makes sense for SPLINTR, where the rank order is in the barcode name
+  # but not barcode systems like DRAG and is thus optional but default behavior.
+  if (orderBarcodes) {
+    barcodes.proportional <- barcodes.proportional[str_sort(rownames(barcodes.proportional), numeric = T),]
+  }
   barcodes.proportional$Position <-
     as.factor(seq(1, length(rownames(counts))))
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
@@ -174,8 +182,6 @@ plotBarcodeBubble <- function(counts,
     as.factor(barcodes.proportional.melted$Sample)
   barcodes.proportional.melted$Proportion <-
     as.numeric(barcodes.proportional.melted$Proportion)
-
-  # barcodes.proportional.melted_10 <- barcodes.proportional.melted
 
   # generate bubbleplot
   bubble.plot <- ggplot2::ggplot(
