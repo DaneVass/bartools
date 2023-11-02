@@ -9,7 +9,7 @@ collapseReplicates(
   groupby,
   run,
   renameCols = TRUE,
-  show_reps = TRUE,
+  show_reps = FALSE,
   by = "mean"
 )
 }

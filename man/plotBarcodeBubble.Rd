@@ -5,20 +5,38 @@
 \title{plotBarcodeBubble}
 \usage{
 plotBarcodeBubble(
-  counts.obj,
-  labels = T,
-  proportion.cutoff = 10,
-  name = "Proportional Bubble Plot"
+  counts,
+  title = "Proportional Bubble Plot",
+  samples = NULL,
+  group = NULL,
+  displaySamples = NULL,
+  displayBarcodes = NULL,
+  proportionCutoff = 10,
+  colorDominant = FALSE,
+  labelBarcodes = TRUE,
+  legend = TRUE
 )
 }
 \arguments{
-\item{counts.obj}{dataframe containing raw counts of barcodes}
+\item{counts}{dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.}
 
-\item{labels}{Boolean. print barcode labels?}
+\item{title}{desired plot title}
 
-\item{proportion.cutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
+\item{samples}{Dataframe containing sample metadata sheet with samples as row names.}
 
-\item{name}{desired plot title}
+\item{group}{metadata field to annotate samples on bubble plot}
+
+\item{displaySamples}{vector of samples to display - keep the order of vector}
+
+\item{displayBarcodes}{vector of barcodes to display}
+
+\item{proportionCutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
+
+\item{colorDominant}{only color clones with frequency above proportionCutoff. Others colored grey}
+
+\item{labelBarcodes}{Boolean, whether to label barcodes with a proportion larger than proportionCutoff in any sample}
+
+\item{legend}{Boolean, whether to show a legend of bubble sizes}
 }
 \value{
 Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -27,6 +45,5 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
-plotBarcodeBubble(test.dge$counts, labels = TRUE, proportion.cutoff = 10)
-plotBarcodeBubble(test.dge$counts, labels = FALSE, proportion.cutoff = 10)
+plotBarcodeBubble(test.dge$counts, proportionCutoff = 10)
 }

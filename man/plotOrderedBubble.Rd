@@ -5,30 +5,28 @@
 \title{plotOrderedBubble}
 \usage{
 plotOrderedBubble(
-  counts.obj,
-  labels = T,
-  name = "Proportional Bubble Plot",
+  counts,
+  title = "Proportional Bubble Plot",
   orderSample = NULL,
   samples = NULL,
   group = NULL,
   displaySamples = NULL,
   displayBarcodes = NULL,
-  proportion.cutoff = 10,
+  proportionCutoff = 10,
   colorDominant = FALSE,
-  filterLow = FALSE,
-  filter.cutoff = 0.001
+  filterCutoff = NULL,
+  labelBarcodes = TRUE,
+  legend = TRUE
 )
 }
 \arguments{
-\item{counts.obj}{dataframe containing raw counts of barcodes. assumes barcodes as rownames.}
+\item{counts}{dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.}
 
-\item{labels}{logical. Print barcode labels}
-
-\item{name}{desired plot title}
+\item{title}{desired plot title}
 
 \item{orderSample}{name of sample to order by}
 
-\item{samples}{Dataframe containing sample metadata sheet}
+\item{samples}{Dataframe containing sample metadata sheet with samples as row names.}
 
 \item{group}{metadata field to annotate samples on bubble plot}
 
@@ -36,13 +34,15 @@ plotOrderedBubble(
 
 \item{displayBarcodes}{vector of barcodes to display}
 
-\item{proportion.cutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
+\item{proportionCutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
 
-\item{colorDominant}{only color clones with frequency above proportion.cutoff. Others colored grey}
+\item{colorDominant}{only color clones with frequency above proportionCutoff. Others colored grey}
 
-\item{filterLow}{Boolean to filter low barcodes in orderSample}
+\item{filterCutoff}{barcodes below this threshold in orderSample will be filtered in all samples}
 
-\item{filter.cutoff}{barcodes below this threshold in orderSample will be filtered in all samples}
+\item{labelBarcodes}{Boolean, whether to label barcodes with a proportion larger than proportionCutoff in any sample}
+
+\item{legend}{Boolean, whether to show a legend of bubble sizes}
 }
 \value{
 Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -51,5 +51,5 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate ordered proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
-plotOrderedBubble(test.dge$counts, orderSample = "T0-1")
+plotOrderedBubble(test.dge$counts, orderSample = "T0-1", filterCutoff = 0.001)
 }
