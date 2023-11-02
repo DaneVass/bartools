@@ -4,10 +4,12 @@
 \alias{calcDivIndexes}
 \title{Calculate diversity indices for barcode samples}
 \usage{
-calcDivIndexes(dat)
+calcDivIndexes(counts, group = NULL)
 }
 \arguments{
-\item{dat}{dataframe of raw or normalised counts with samples as columns and observations/barcodes as rows}
+\item{counts}{dataframe of raw or normalised counts with samples as columns and observations/barcodes as rows}
+
+\item{group}{vector of sample group metadata, assumes the same sample order as counts}
 }
 \value{
 Returns a data-frame containing the calculated diversity indices per sample
@@ -23,5 +25,5 @@ calcDivIndexes
 Calculates common diversity indices per sample in a dataframe of counts
 }
 \examples{
-indexes <- calcDivIndexes(dat = test.counts)
+indexes <- calcDivIndexes(counts = test.dge$counts)
 }

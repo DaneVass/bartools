@@ -29,7 +29,3 @@ returns data frame containing barcode and read count in reference
 \description{
 process barcode reference file from raw sequencing datasets
 }
-\examples{
-load(system.file("extdata", "test_raw_lib.rda", package = "bartools"))
-processBarcodeLibrary(file = test.raw.lib, samplename = "Barcode", outdir = tempdir())
-}

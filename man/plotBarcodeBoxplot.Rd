@@ -4,14 +4,30 @@
 \alias{plotBarcodeBoxplot}
 \title{Boxplot of selected barcodes}
 \usage{
-plotBarcodeBoxplot(dge.obj, barcodes, condition = NULL)
+plotBarcodeBoxplot(
+  dge.obj,
+  barcodes = NULL,
+  group = NULL,
+  conditions = NULL,
+  trans = NULL,
+  point = FALSE,
+  violin = FALSE
+)
 }
 \arguments{
 \item{dge.obj}{DGE object containing counts and sample information}
 
-\item{barcodes}{vector of barcodes to be plotted}
+\item{barcodes}{a vector of barcodes to be plotted}
 
-\item{condition}{specific metadata condition to be plotted}
+\item{group}{metadata field to facet data on}
+
+\item{conditions}{specific levels of group to be plotted. If NULL all levels are plotted}
+
+\item{trans}{From ggplot2. For continuous scales, the name of a transformation object or the object itself.}
+
+\item{point}{From ggplot2. Include plot points?}
+
+\item{violin}{From ggplot2. Include violin plot?}
 }
 \value{
 Returns a boxplot
@@ -28,7 +44,6 @@ Boxplot of selected barcodes
 }
 \examples{
 data(test.dge)
-barcodes <- sample(rownames(test.dge), 10)
-plotBarcodeBoxplot(test.dge, barcodes)
-plotBarcodeBoxplot(test.dge, barcodes, condition = c("T0", "T0b"))
+plotBarcodeBoxplot(test.dge, barcodes = "BC_190202", group = "Treatment", 
+conditions = c("Vehicle", "Low_dose", "High_dose"))
 }

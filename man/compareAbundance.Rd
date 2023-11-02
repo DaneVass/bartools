@@ -4,29 +4,49 @@
 \alias{compareAbundance}
 \title{Barcode abundance comparison}
 \usage{
-compareAbundance(counts, condition, condition_names)
+compareAbundance(
+  dge.obj,
+  meta,
+  condition1,
+  condition2,
+  pval.cutoff = 0.05,
+  logFC.cutoff = 2,
+  filename = NULL
+)
 }
 \arguments{
-\item{counts}{dataframe containing raw counts of barcodes}
+\item{dge.obj}{DGElist list object with counts and samples dataframe}
 
-\item{condition}{sample condition of interest}
+\item{meta}{Name of metadata field of interest for the comparison}
 
-\item{condition_names}{names of possible conditions in experiment}
+\item{condition1}{Name of reference condition in meta}
+
+\item{condition2}{Name of second condition in meta}
+
+\item{pval.cutoff}{Pvalue threshold for the volcano plot}
+
+\item{logFC.cutoff}{logFC threshold for the volcano plot}
+
+\item{filename}{Filename for the results of the likelihood ratio test}
 }
 \value{
-Returns a text file
+Returns a volcano plot and a csv file with differentially abundant 
+barcode results
 }
 \description{
-Takes a dataframe of barcode counts,
-computes the mean abundance of each barcode for two specific conditions,
-then do a line plot for both conditions
+Takes a DGElist list object with counts and samples dataframe.
+Finds differentially abundant barcodes between two experimental conditions,
+using the likelihood ratio test (LRT) based on the fitted generalized linear 
+model (GLM) to compare two nested models, typically a reduced model and a 
+full model, to determine if the additional terms in the full model 
+significantly improve the model fit.  Additionally, it computes the p-values
+associated with the test statistic for each barcode.
+It save the results in a csv file and returns a volcano plot.
 }
 \details{
 compareAbundance
-
-Compare barcode abundance between 2 conditions using EdgeR
 }
 \examples{
 data(test.dge)
-compareAbundance(test.dge, test.dge$samples$group, c("T0","10_High_dose"))
+compareAbundance(test.dge,"Treatment", "Vehicle","Low_dose",0.01,2)       
 }

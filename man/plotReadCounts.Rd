@@ -30,7 +30,6 @@ Returns a plot of the read counts per column (sample) in a data frame
 Simple plot of total read counts per sample
 }
 \examples{
-data(test.counts)
-plotReadCounts(test.dge$counts, group = test.dge$samples$Group)
+plotReadCounts(test.dge$counts, group = test.dge$samples$Treatment)
 
 }

@@ -4,16 +4,36 @@
 \alias{plotBarcodeHeatmap}
 \title{Plot barcode heatmap}
 \usage{
-plotBarcodeHeatmap(counts, N, name = "CPM", show_bc = FALSE)
+plotBarcodeHeatmap(
+  counts,
+  N,
+  name = "CPM",
+  show_bc = FALSE,
+  samples = NULL,
+  group = NULL,
+  col_annot = NULL,
+  discrete = F,
+  discrete_threshold = 1
+)
 }
 \arguments{
 \item{counts}{Dataframe containing cpm counts}
 
-\item{N}{String of sample 1 name (used to ranked barcode abundance)}
+\item{N}{Number of top barcodes per sample}
 
 \item{name}{String of the heatmap scale name}
 
 \item{show_bc}{Boolean to show barcode names on the heatmap}
+
+\item{samples}{Dataframe containing sample metadata sheet}
+
+\item{group}{metadata fields to annotate samples}
+
+\item{col_annot}{list of vectors assigning colours to each level of metadata}
+
+\item{discrete}{Boolean to show presence/absence of barcodes instead of abundance}
+
+\item{discrete_threshold}{Threshold for presence of barcode in samples}
 }
 \value{
 Returns a heatmap
@@ -29,6 +49,5 @@ plotBarcodeHeatmap
 Plot a heatmap of the N most abundant barcodes per sample
 }
 \examples{
-data(test.counts)
-plotBarcodeHeatmap(test.counts, 10,'Counts',FALSE)
+plotBarcodeHeatmap(counts = cpm(test.dge$counts),N = 5,show_bc = TRUE,samples = test.dge$samples)
 }

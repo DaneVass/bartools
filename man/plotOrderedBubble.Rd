@@ -9,8 +9,14 @@ plotOrderedBubble(
   labels = T,
   name = "Proportional Bubble Plot",
   orderSample = NULL,
+  samples = NULL,
+  group = NULL,
+  displaySamples = NULL,
+  displayBarcodes = NULL,
   proportion.cutoff = 10,
-  colorDominant = FALSE
+  colorDominant = FALSE,
+  filterLow = FALSE,
+  filter.cutoff = 0.001
 )
 }
 \arguments{
@@ -22,9 +28,21 @@ plotOrderedBubble(
 
 \item{orderSample}{name of sample to order by}
 
+\item{samples}{Dataframe containing sample metadata sheet}
+
+\item{group}{metadata field to annotate samples on bubble plot}
+
+\item{displaySamples}{vector of samples to display - keep the order of vector}
+
+\item{displayBarcodes}{vector of barcodes to display}
+
 \item{proportion.cutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
 
 \item{colorDominant}{only color clones with frequency above proportion.cutoff. Others colored grey}
+
+\item{filterLow}{Boolean to filter low barcodes in orderSample}
+
+\item{filter.cutoff}{barcodes below this threshold in orderSample will be filtered in all samples}
 }
 \value{
 Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -33,6 +51,5 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate ordered proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
-data(test.counts)
-plotOrderedBubble(test.counts, orderSample = "T0-1")
+plotOrderedBubble(test.dge$counts, orderSample = "T0-1")
 }

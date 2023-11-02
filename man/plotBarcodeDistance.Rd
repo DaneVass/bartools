@@ -30,6 +30,5 @@ Returns a heatmap of sample distances using desired clustering
 Plot sample distances between barcode sets / samples
 }
 \examples{
-test.mat <- matrix(rnorm(10*10,mean=0,sd=2), 10, 10)
-plotBarcodeDistance(test.mat)
+plotBarcodeDistance(test.dge$counts)
 }
