@@ -255,20 +255,19 @@ Here, barcodes/tags are represented by bubbles aligned on a single plane.
 The size of the bubbles reflects the percentage abundance of each barcode within a sample.
 
 ```{r}
-plotBarcodeBubble(dge.filtered.collapsed$counts, 
-                  proportion.cutoff = 10, 
-                  labels = T)
+plotBarcodeBubble(counts = dge.filtered.collapsed$counts, 
+                  proportionCutoff = 10, 
+                  labelBarcodes = T)
 ```
 
 Using the `orderSample` parameter, bubbleplots can also be arranged according to frequency in a particular sample which can help with visual comparison of large vs small clones across samples and conditions. 
 
 ```{r}
-plotOrderedBubble(counts.obj = dge.filtered.collapsed$counts, 
-                  proportion.cutoff = 10, 
-                  labels = T, 
+plotOrderedBubble(counts = dge.filtered.collapsed$counts, 
+                  proportionCutoff = 10, 
+                  labelBarcodes = T, 
                   orderSample = "T0", 
                   colorDominant = F, 
-                  filterLow = T, 
                   samples = dge.filtered.collapsed$samples, 
                   group = "Treatment")
 ```
@@ -276,26 +275,24 @@ plotOrderedBubble(counts.obj = dge.filtered.collapsed$counts,
 Barcodes that fail to meet a defined abundance threshold in any sample can be greyed out.
 
 ```{r}
-plotOrderedBubble(counts.obj = dge.filtered.collapsed$counts, 
-                  proportion.cutoff = 10, 
-                  labels = T, 
+plotOrderedBubble(counts = dge.filtered.collapsed$counts, 
+                  proportionCutoff = 10, 
+                  labelBarcodes = T, 
                   orderSample = "T0", 
                   colorDominant = T, 
-                  filterLow = T, 
                   samples = dge.filtered.collapsed$samples, 
                   group = "Treatment")
 ```
 
-Or filtered from the plot entirely using `filterLow` and `filter.cutoff` parameters
+Or filtered from the plot entirely using the `filterCutoff` parameter
 
 ```{r}
-plotOrderedBubble(counts.obj = dge.filtered.collapsed$counts, 
-                  proportion.cutoff = 10, 
-                  labels = T, 
+plotOrderedBubble(counts = dge.filtered.collapsed$counts, 
+                  proportionCutoff = 10, 
+                  labelBarcodes = T, 
                   orderSample = "T0", 
                   colorDominant = T, 
-                  filterLow = T, 
-                  filter.cutoff = 0.01,
+                  filterCutoff = 0.01,
                   samples = dge.filtered.collapsed$samples, 
                   group = "Treatment")
 ```
@@ -305,7 +302,7 @@ plotOrderedBubble(counts.obj = dge.filtered.collapsed$counts,
 Alternatively, we can focus in on the most abundant barcodes within a set of samples to more easily observe how these change in frequency over the course of an experiment.
 
 ```{r}
-plotBarcodeHistogram(dge.filtered.collapsed$counts,
+plotBarcodeHistogram(counts.obj = dge.filtered.collapsed$counts,
                      sample = dge.filtered.collapsed$samples$group[[10]],
                      top = 50)
 ```
@@ -316,7 +313,7 @@ For timecourse experiments it is useful to visualise how the kinetics of barcode
 In this instance we can use `plotBarcodeTimeseries` to get an idea of the relative abundance of the top *n* barcodes in a sample relative to others.
 
 ```{r}
-plotBarcodeTimeseries(dge.filtered.collapsed, top = 5)
+plotBarcodeTimeseries(counts.obj = dge.filtered.collapsed, top = 5)
 ```
 
 ### Principal Components Analysis
@@ -324,10 +321,8 @@ plotBarcodeTimeseries(dge.filtered.collapsed, top = 5)
 A global level PCA analysis is a good way to get a high level understanding of the similarities and differences between samples.
 
 ```{r}
-plotBarcodePCA(
-  dge.filtered.collapsed[, dge.filtered.collapsed$samples$Treatment %in% 
-                           c("T0", "Vehicle", "High_dose")], 
-  intgroup = "Treatment")
+subset <- dge.filtered.collapsed[, dge.filtered.collapsed$samples$Treatment %in% c("T0", "Vehicle", "High_dose")]
+plotBarcodePCA(object = subset, intgroup = "Treatment")
 ```
 
 ### Heatmaps
