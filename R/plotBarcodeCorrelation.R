@@ -1,12 +1,12 @@
-#' Sample to sample distances
+#' Sample to sample correlation
 #'
-#' Plot sample distances between barcode sets / samples
+#' Plot sample correlation between barcode sets / samples
 #'
 #' @param dgeObject DGEList object with barcode counts.
-#' @param method Distance metric to use (string). One of "euclidean", "maximum", "manhattan", "canberra", "binary" or "minkowski". Refer to stats::dist for details. Default = `euclidean`.
+#' @param method Correlation metric to use (string). One of "pearson", "kendall", or "spearman". Refer to stats:cor for details. Default = `pearson`.
 #' @param upper Plot only the upper half of the matrix (boolean). Default = `TRUE`.
 #' @param clustered Cluster rows and columns of matrix (boolean). Default = `TRUE`.
-#' @param title Title of plot (string). Default = `Sample Distances - method`.
+#' @param title Title of plot (string). Default = `Sample Correlation - method`.
 #'
 #' @return Returns a heatmap of sample distances using desired clustering
 #'
@@ -14,41 +14,40 @@
 #'
 #' @examples
 #' data(test.dge)
-#' plotBarcodeDistance(test.dge$counts)
+#' plotBarcodeCorrelation(test.dge)
 
-plotBarcodeDistance <- function(dgeObject,
-                                method = "euclidean",
-                                upper = TRUE,
-                                clustered = TRUE,
-                                title = "Sample Distances") {
+plotBarcodeCorrelation <- function(dgeObject,
+                                   method = "pearson",
+                                   upper = TRUE,
+                                   clustered = TRUE,
+                                   title = "Sample Correlation") {
   if (methods::is(dgeObject)[1] != "DGEList") {
     stop("Please supply a valid DGEList object as input")
   }
   counts <- dgeObject$counts
 
   # generate correlation matrix
-  sample.distances <- stats::dist(t(counts), method = method)
-  sample.matrix <- as.matrix(sample.distances)
+  cormat <- round(stats::cor(counts, method = method), 2)
 
   # cluster matrix if specified
   if (isTRUE(clustered)) {
-    sample.matrix <- cluster_cormat(sample.matrix)
+    cormat <- cluster_cormat(cormat)
   }
 
   # take only upper triangle if specified
   if (isTRUE(upper)) {
-    sample.matrix <- get_upper_tri(sample.matrix)
+    cormat <- get_upper_tri(cormat)
   }
 
   # Melt the correlation matrix
-  melted_dist <- reshape2::melt(sample.matrix, na.rm = TRUE)
+  melted_cormat <- reshape2::melt(cormat, na.rm = TRUE)
 
   # Create a ggheatmap
   title <- paste(title, "-", method)
   ggheatmap <-
-    ggplot2::ggplot(melted_dist, ggplot2::aes(`Var2`, `Var1`, fill = `value`)) +
+    ggplot2::ggplot(melted_cormat, ggplot2::aes(`Var2`, `Var1`, fill = `value`)) +
     ggplot2::geom_tile(color = "white") +
-    ggplot2::scale_fill_viridis_c(option = "magma") +
+    ggplot2::scale_fill_viridis_c() +
     ggplot2::theme_bw() +
     ggplot2::theme(
       axis.text.x = ggplot2::element_text(
@@ -62,5 +61,6 @@ plotBarcodeDistance <- function(dgeObject,
     ggplot2::coord_fixed() +
     ggplot2::labs(x = "", y = "", title = title)
 
-  return(ggheatmap)
+  # Print the heatmap
+  print(ggheatmap)
 }

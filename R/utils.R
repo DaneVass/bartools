@@ -55,3 +55,35 @@ inputChecks <-
       }
     }
   }
+
+#### 2 functions used by plotBarcodeCorrelation and plotBarcodeDistance
+#' Cluster correlation matrix
+#'
+#' cluster a correlation matrix using hierarchical clustering
+#'
+#' @param cormat matrix of correlation values
+#'
+#' @return Returns a matrix of correlation values with columns and rows hierarchically clustered
+#'
+#' @export
+#'
+cluster_cormat <- function(cormat) {
+  dd <- stats::as.dist((1 - cormat) / 2)
+  hc <- stats::hclust(dd)
+  cormat <- cormat[hc$order, hc$order]
+  return(cormat)
+}
+
+#' Get upper triangle
+#'
+#' change lower triangle values in a mirrored matrix to NA
+#'
+#' @param cormat matrix of correlation values
+#'
+#' @return Returns a matrix of correlation values with lower triangle values changed to NA
+#' @export
+#'
+get_upper_tri <- function(cormat) {
+  cormat[lower.tri(cormat)] <- NA
+  return(cormat)
+}
