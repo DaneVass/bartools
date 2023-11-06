@@ -12,12 +12,12 @@
 #'
 #' @param dge DGEList object containing raw counts of barcodes
 #' @param condition sample condition of interest
-#' @param condition_names vector of size 2. Gives the name of the two conditions in conditions to plot
+#' @param conditionNames vector of size 2. Gives the name of the two conditions in conditions to plot
 #' @param keep percentage of highest abundant barcode to keep. Rest of barcodes is filtered and not used in plots.
-#' @param plot_type which barcodes are plotted. 'DEG' plot the 10 most differentially abundant barcodes.
+#' @param plotType which barcodes are plotted. 'DEG' plot the 10 most differentially abundant barcodes.
 #' 'counts' plots the 5 top highest abundant barcodes for each condition.
-#' 'log2FC' plots the barcodes with the highest absolute log2FC (number of barcodes to plot is given by nbarcode)
-#' @param nbarcode number of barcodes to plot when using 'log2FC' plot type.
+#' 'log2FC' plots the barcodes with the highest absolute log2FC (number of barcodes to plot is given by nBarcodes)
+#' @param nBarcodes number of barcodes to plot when using 'log2FC' plot type.
 #' @param title desired plot title
 #'
 #' @return Returns a lineplot
@@ -27,15 +27,15 @@
 #' @examples
 #' data(test.dge)
 #' plotAbundanceLines(dge = test.dge, condition = test.dge$samples$group,
-#' condition_names = c("T0","10_High_dose"), plot_type = 'counts', title = 'test')
+#' conditionNames = c("T0","10_High_dose"), plotType = 'counts', title = 'test')
 
 plotAbundanceLines <-
   function(dge,
            condition,
-           condition_names,
-           plot_type = "DEG",
+           conditionNames,
+           plotType = "DEG",
            keep = 0.9,
-           nbarcode = 10,
+           nBarcodes = 10,
            title = "") {
     counts <- t(as.data.frame(dge$counts))
 
@@ -45,9 +45,9 @@ plotAbundanceLines <-
     rownames(df) <- df$Group.1
     df$Group.1 <- NULL
 
-    # keep the most expressed barcodes (%keep), remove rows with 0 values, then compute the log2 fold change. Only nbarcode with the highest absolute FC are plotted.
+    # keep the most expressed barcodes (%keep), remove rows with 0 values, then compute the log2 fold change. Only nBarcodes with the highest absolute FC are plotted.
     df <- as.data.frame(t(df))
-    df <- df[names(df) %in% condition_names]
+    df <- df[names(df) %in% conditionNames]
     filtered_df <-
       utils::head(df[order(df[, 1], df[, 2], decreasing = T), ], nrow(df) * keep)
 
@@ -57,17 +57,17 @@ plotAbundanceLines <-
     ##Subset as usual
     filtered_df <- filtered_df[row_sub, ]
 
-    if (plot_type == "log2FC") {
+    if (plotType == "log2FC") {
       # compute the absolute log2 fold change for all barcodes for conditions
       filtered_df$abslog2FC <-
         abs(log2(filtered_df[, 1] / filtered_df[, 2]))
       filtered_df <-
-        utils::head(filtered_df[order(filtered_df$abslog2FC, decreasing = T), ], nbarcode)
+        utils::head(filtered_df[order(filtered_df$abslog2FC, decreasing = T), ], nBarcodes)
       filtered_df$abslog2FC <- NULL
       legend_title <- "Highest log2FC barcodes"
     }
 
-    if (plot_type == "counts") {
+    if (plotType == "counts") {
       highest_barcodes <-
         c(rownames(utils::head(df[order(df[, 1], decreasing = T), ], 5)),
           rownames(utils::head(df[order(df[, 2], decreasing = T), ], 5)))
@@ -75,10 +75,10 @@ plotAbundanceLines <-
       legend_title <- "Highest count barcodes"
     }
 
-    if (plot_type == "DEG") {
+    if (plotType == "DEG") {
       DEG_samples <-
-        rownames(dge$samples[condition %in% condition_names, ])
-      DEG_group <- condition[condition %in% condition_names]
+        rownames(dge$samples[condition %in% conditionNames, ])
+      DEG_group <- condition[condition %in% conditionNames]
 
       DEG_counts <- dge$counts[, colnames(dge$counts) %in% DEG_samples]
       DGE.obj <-
@@ -96,9 +96,9 @@ plotAbundanceLines <-
       DEG.obj.final <-
         edgeR::estimateCommonDisp(DEG.obj.final, verbose = TRUE)
       DEG.obj.final <- edgeR::estimateTagwiseDisp(DEG.obj.final)
-      DEG.res <- edgeR::exactTest(DEG.obj.final, pair = condition_names)
+      DEG.res <- edgeR::exactTest(DEG.obj.final, pair = conditionNames)
       DEG.barcodes <-
-        rownames(utils::head(DEG.res$table[order(DEG.res$table$PValue, decreasing = F), ], nbarcode))
+        rownames(utils::head(DEG.res$table[order(DEG.res$table$PValue, decreasing = F), ], nBarcodes))
       filtered_df <- df[rownames(df) %in% DEG.barcodes, ]
       legend_title <- "Differentially abundant barcodes"
     }

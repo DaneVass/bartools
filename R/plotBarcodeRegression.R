@@ -2,35 +2,37 @@
 #'
 #' Generate a linear regression scatterplot for two sets of sample counts.
 #'
-#' @param dge DGEList object containing grouping variable to fit linear model
-#' @param samp1 name of sample 1. must be one of colnames(dge)
-#' @param samp2 name of sample 2. must be one of colnames(dge)
-#' @param title desired name of output plot
-#' @param trendline Logical. Include linear trendline using stat_smooth()
-#' @param rug Logical. Include geom_rug density information on the axes?
-#' @param trans From ggplot2. For continuous scales, the name of a transformation object or the object itself.
+#' @param dgeObject DGEList object with barcode counts.
+#' @param sample1 Name of sample 1 (string).
+#' @param sample2 Name of sample 2 (string).
+#' @param title Optional, title of plot (string).
+#' @param trendline Include linear trendline using `stat_smooth()` (boolean). Default = `TRUE`.
+#' @param rug Include geom_rug density information on the axes (boolean). Defaule = `FALSE`.
+#' @param trans Optional, the name of a transformation object or the object itself.
 #'
 #' @return Returns a scatterplot of the two samples
 #' @export
 #' @examples
 #' data(test.dge)
-#' plotBarcodeRegression(dge = test.dge, samp1 = "T0-1", samp2 = "T0-2")
+#' plotBarcodeRegression(test.dge, sample1 = "T0-1", sample2 = "T0-2")
 
 plotBarcodeRegression <-
-  function(dge,
-           samp1 = NULL,
-           samp2 = NULL,
+  function(dgeObject,
+           sample1 = NULL,
+           sample2 = NULL,
            title = NULL,
-           trendline = T,
+           trendline = TRUE,
            trans = NULL,
-           rug = F) {
-    dat <- as.data.frame(dge$counts)
-    if (is.null(samp1) | is.null(samp2)) {
-      print("must provide two samples to plot.")
-      stop()
+           rug = FALSE) {
+    inputChecks(dgeObject, samples = c(sample1, sample2))
+
+    counts <- as.data.frame(dgeObject$counts)
+
+    if (is.null(sample1) | is.null(sample2)) {
+      stop("Must provide two samples to plot.")
     }
 
-    plot.dat <- as.data.frame(dat[, c(samp1, samp2)])
+    plot.dat <- counts[, c(sample1, sample2)]
 
     # plot fit data
     # generate lm fit
@@ -49,21 +51,25 @@ plotBarcodeRegression <-
     }
 
     if (isTRUE(trendline)) {
-      p <- p + ggplot2::stat_smooth(method = "lm",
-                                    col = "blue",
-                                    se = F)
+      p <- p + ggplot2::stat_smooth(
+        formula = y ~ x,
+        method = "lm",
+        col = "blue",
+        se = F
+      )
     }
 
     if (isTRUE(rug)) {
-      p <- p + ggplot2::geom_rug(col = grDevices::rgb(.5, 0, 0, alpha = .2))
+      p <-
+        p + ggplot2::geom_rug(col = grDevices::rgb(.5, 0, 0, alpha = .2))
     }
 
     if (is.null(title)) {
       title <-
         paste("Regression plot:",
-              as.character(samp1),
+              as.character(sample1),
               "vs",
-              as.character(samp2))
+              as.character(sample2))
     }
     p <-
       p + ggplot2::ggtitle(

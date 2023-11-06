@@ -2,10 +2,11 @@
 #'
 #' Calculate and return list of correlation between paired technical replicates in a dataset
 #'
-#' @param dge DGEList object containing technical replicates to be compared
-#' @param group grouping variable from metadata containing technical replicate information
-#' @param corr.thresh threshold distinguishing good vs bad correlation between technical replicates
-#' @param return which values to return. One of "good", "bad", "all"
+#' @param dgeObject DGEList object with barcode counts with technical replicates.
+#' @param group Column name in sample metadata with replicate information (string). Correlation can only be calculated between pairs of replicates.
+#' @param corrThreshold Threshold distinguishing good vs bad correlation between technical replicates (decimal). Default = `0.8`.
+#' @param return Which values to return, one of `good`, `bad`, `all` (string). Default = `all`.
+#' @param method Method for correlation, one of `spearman`, `pearson` (string). Default = `pearson`.
 #'
 #' @return Returns a plot of the read counts per barcode (row) in a data frame
 #' @export
@@ -15,43 +16,76 @@
 #' calcReplicateCorr(test.dge, group = "group")
 
 # get paired technical replicates
-calcReplicateCorr <- function(dge, group, corr.thresh = 0.8, return = "all"){
-  if(!return %in% c("all", "good", "bad")){
-   stop("return must be one of all, good or bad")
+calcReplicateCorr <-
+  function(dgeObject,
+           group = NULL,
+           corrThreshold = 0.8,
+           return = "all",
+           method = "pearson") {
+    inputChecks(dgeObject, groups = group)
+
+    if (!return %in% c("all", "good", "bad")) {
+      stop("Return must be one of all, good or bad")
+    }
+
+    counts <- dgeObject$counts
+
+    if (is.null(group)) {
+      stop(
+        "Please supply column name in dgeObject$samples dataframe with replicate information"
+      )
+    }
+
+    # define grouping column in dge sample metadata
+    singletons <- which(table(dgeObject$samples[, group]) == 1)
+    if (length(singletons) > 0) {
+      message(paste0(
+        "Following groups have only one technical replicate: ",
+        paste(singletons, collapse = ", ")
+      ))
+    }
+    multiple_replicates <-
+      which(table(dgeObject$samples[, group]) > 2)
+    if (length(multiple_replicates) > 0) {
+      message(paste0(
+        "Following groups have more than 2 replicates: ",
+        paste(multiple_replicates, collapse = ", ")
+      ))
+    }
+    paired <- which(table(dgeObject$samples[, group]) == 2)
+
+    # filter samples with technical replicates
+    keep <- which(dgeObject$samples[, group] %in% (names(paired)))
+    dgeObject.filter <- dgeObject[, keep]
+
+    corrs <- lapply(unique(names(paired)), function(x) {
+      data <-
+        as.data.frame(dgeObject$counts[, dgeObject$samples[, group] == as.character(x)])
+
+      # # Previous implementation, more in line with plotBarcodeRegression
+      # # But not clear why adjusted r is needed. Also returns strong negative correlation as positive value.
+      # fit <- stats::lm(data[, 1] ~ data[, 2])
+      # adj.r2 <- summary(fit)$adj.r.squared
+      # corr <- sqrt(adj.r2)
+
+      return(cor(data[, 1] ~ data[, 2], method = method))
+    })
+
+    names(corrs) <- unique(names(paired))
+    corrs <- unlist(corrs)
+
+    # good corrs
+    good.corrs <- corrs[which(corrs > corrThreshold)]
+    # bad corrs
+    bad.corrs <- corrs[which(corrs < corrThreshold)]
+
+    if (return == "all") {
+      return(corrs)
+    }
+    if (return == "bad") {
+      return(bad.corrs)
+    }
+    if (return == "good") {
+      return(good.corrs)
+    }
   }
-  
-  # define grouping column in dge sample metadata
-  group.pos <- which(colnames(dge$samples) == group)
-  
-  singletons <- which(table(dge$samples[,group.pos]) == 1)
-  paired <- which(table(dge$samples[,group.pos]) >= 2)
-  
-  # filter samples with technical replicates
-  keep <- which(dge$samples[,group.pos] %in% (names(paired)))
-  dge.filter <- dge[,keep]
-  
-  corrs <- lapply(unique(names(paired)), function(x){
-    data <- as.data.frame(dge$counts[,dge$samples[,group.pos] == as.character(x)])
-    fit <- stats::lm(data[,1] ~ data[,2])
-    adj.r2 <- summary(fit)$adj.r.squared
-    corr <- sqrt(adj.r2)
-  })
-  
-  names(corrs) <- unique(names(paired))
-  corrs <- unlist(corrs)
-  
-  # good corrs
-  good.corrs <- corrs[which(corrs > corr.thresh)]
-  # bad corrs
-  bad.corrs <- corrs[which(corrs < corr.thresh)]
-  
-  if(return == "all"){
-    return(corrs)
-  }
-  if(return == "bad"){
-    return(bad.corrs)
-  }
-  if(return == "good"){
-    return(good.corrs)
-  }
-}

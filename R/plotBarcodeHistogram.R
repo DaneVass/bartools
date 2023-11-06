@@ -1,4 +1,4 @@
-#' plotBarcodesStackedBar
+#' plotBarcodeHistogram
 #'
 #' Generate proportional stacked bar plot of barcodes from raw count object with n most frequent barcodes labelled.
 #'
@@ -16,7 +16,7 @@
 #' @examples
 #' plotBarcodesStackedBar(test.dge)
 
-plotBarcodesStackedBar <-
+plotBarcodeHistogram <-
   function(dgeObject,
            topN = 10,
            seedColors = 1,
@@ -69,7 +69,7 @@ plotBarcodesStackedBar <-
     barcode_freqs$barcode <- factor(barcode_freqs$barcode,
                                     levels = barcode_order$barcode)
 
-    qual_col_pals = brewer.pal.info[brewer.pal.info$category == 'qual', ]
+    qual_col_pals = RColorBrewer::brewer.pal.info[brewer.pal.info$category == 'qual', ]
     col_vector = unlist(mapply(
       brewer.pal,
       qual_col_pals$maxcolors,

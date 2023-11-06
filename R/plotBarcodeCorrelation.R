@@ -21,9 +21,7 @@ plotBarcodeCorrelation <- function(dgeObject,
                                    upper = TRUE,
                                    clustered = TRUE,
                                    title = "Sample Correlation") {
-  if (methods::is(dgeObject)[1] != "DGEList") {
-    stop("Please supply a valid DGEList object as input")
-  }
+  inputChecks(dgeObject)
   counts <- dgeObject$counts
 
   # generate correlation matrix

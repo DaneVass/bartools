@@ -2,14 +2,14 @@
 #'
 #' Read BARtab counts table from single-cell sample
 #'
-#' @param counts_path Path to BARtab counts.tsv file
+#' @param countsPath Path to BARtab counts.tsv file
 #'
 #' @return Returns a data frame in long format of cell IDs, barcodes and barcode UMI counts
 #'
 #' @export
-readBartabCounts <- function(counts_path) {
+readBartabCounts <- function(countsPath) {
   # read in barcode-cell pairs
-  counts <- read.delim(counts_path, header = TRUE)
+  counts <- read.delim(countsPath, header = TRUE)
   if (ncol(counts) != 3) {
     stop("Data is not in the expected format. Expects columns <gene, cell, count>.")
   }
@@ -48,8 +48,8 @@ aggregateBarcodes <- function(counts) {
 #' Filter barcodes from single-cell sample
 #'
 #' @param counts Dataframe with barcodes and UMI counts per cell
-#' @param umi_count_filter Minimum number of UMIs per barcode per cell
-#' @param umi_fraction_filter Minimum fraction of UMIs per barcode per cell compared to dominant barcode in cell (barcode supported by most UMIs)
+#' @param umiCountFilter Minimum number of UMIs per barcode per cell
+#' @param umiFractionFilter Minimum fraction of UMIs per barcode per cell compared to dominant barcode in cell (barcode supported by most UMIs)
 #'
 #' @return Returns a data frame with one row per cell ID
 #'
@@ -57,16 +57,16 @@ aggregateBarcodes <- function(counts) {
 #
 filterBarcodes <-
   function(counts,
-           umi_count_filter = 1,
-           umi_fraction_filter = 0.3) {
+           umiCountFilter = 1,
+           umiFractionFilter = 0.3) {
     counts_filtered <- counts %>%
-      filter(bc.umi.count >= umi_count_filter)
+      filter(bc.umi.count >= umiCountFilter)
 
     counts_filtered <- counts_filtered %>%
       group_by(cellid) %>%
       mutate(max_count = max(bc.umi.count)) %>%
       arrange(cellid) %>%
-      filter(bc.umi.count / umi_fraction_filter >= max_count)
+      filter(bc.umi.count / umiFractionFilter >= max_count)
 
     return(counts_filtered)
   }
@@ -227,9 +227,9 @@ plotUmiFilterThresholds <- function(counts) {
 #' Plot filtered read percentages from a BARtab run folder
 #'
 #' @param dir directory where BARtab was successfuly run on barcode count datasets
-#' @param pattern.log regex string to specify filter stage log files
+#' @param patternLog regex string to specify filter stage log files
 #' @param pattern.value grep on this string in log files
-#' @param full.names Logical. Return full names of files detected by regex search
+#' @param fullNames Logical. Return full names of files detected by regex search
 #' @param recursive Logical. TRUE will recurse regex search into subdirectories#'
 #' @param normalised Logical. log10 normalise counts
 #' @param plot Logical. Generate plots. False returns raw data
@@ -241,15 +241,15 @@ plotUmiFilterThresholds <- function(counts) {
 
 plotBARtabFilterQC <- function(dir = NULL,
                                recursive = T,
-                               pattern.log = "*filter.log",
+                               patternLog = "*filter.log",
                                pattern.value = "reads",
-                               full.names = T,
+                               fullNames = T,
                                normalised = F,
                                plot = T,
                                title = "BARtab Filter QC"){
 
   # get log files from directory
-  logs <- list.files(dir, pattern = pattern.log, full.names = full.names, recursive = recursive)
+  logs <- list.files(dir, pattern = patternLog, fullNames = fullNames, recursive = recursive)
 
   # setup output data.frame to store filter information
   final.df <- data.frame(sample = as.character(), input = as.numeric(), output = as.numeric(), discarded = as.numeric(), pct.kept = as.numeric())
@@ -311,8 +311,8 @@ plotBARtabFilterQC <- function(dir = NULL,
 #' Plot mapped read percentages from a BARtab run folder
 #'
 #' @param dir directory where BARtab was successfuly run on barcode count datasets
-#' @param pattern.log regex string to specify filter stage log files
-#' @param full.names Logical. Return full names of files detected by regex search
+#' @param patternLog regex string to specify filter stage log files
+#' @param fullNames Logical. Return full names of files detected by regex search
 #' @param recursive Logical. TRUE will recurse regex search into subdirectories#'
 #' @param plot Logical. Generate plots. False returns raw data
 #' @param title Optional. title of plots.
@@ -323,13 +323,13 @@ plotBARtabFilterQC <- function(dir = NULL,
 
 plotBARtabMapQC <- function(dir = NULL,
                             recursive = T,
-                            pattern.log = "*bowtie.log",
-                            full.names = T,
+                            patternLog = "*bowtie.log",
+                            fullNames = T,
                             plot = T,
                             title = "BARtab Mapping QC"){
 
   # get log files from directory
-  logs <- list.files(dir, pattern = pattern.log, full.names = full.names, recursive = recursive)
+  logs <- list.files(dir, pattern = patternLog, fullNames = fullNames, recursive = recursive)
 
   # setup output data.frame to store filter information
   final.df <- data.frame(sample = as.character(), percent = as.numeric())
