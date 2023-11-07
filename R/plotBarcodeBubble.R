@@ -59,7 +59,7 @@ plotBarcodeBubble <- function(dgeObject,
   # but not barcode systems like DRAG and is thus optional but default behavior.
   if (orderBarcodes) {
     barcodes.proportional <-
-      barcodes.proportional[str_sort(rownames(barcodes.proportional), numeric = T),]
+      barcodes.proportional[stringr::str_sort(rownames(barcodes.proportional), numeric = T),]
     barcodes.proportional <- as.data.frame(barcodes.proportional)
   }
   barcodes.proportional$Position <-

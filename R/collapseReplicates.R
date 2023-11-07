@@ -23,7 +23,7 @@
 collapseReplicates <-
   function (dgeObject,
             group,
-            sampleNames,
+            sampleNames = NULL,
             renameCols = TRUE,
             showReps = FALSE,
             method = "mean") {
@@ -37,7 +37,9 @@ collapseReplicates <-
     }
 
     group <- dgeObject$samples[[group]]
-    sampleNames <- dgeObject$samples[[sampleNames]]
+    if (!is.null(sampleNames)) {
+      sampleNames <- dgeObject$samples[[sampleNames]]
+    }
 
     if (!is.factor(group)) {
       group <- factor(group)
@@ -69,7 +71,7 @@ collapseReplicates <-
     dimnames(counts) <- dimnames(collapsed)
     collapsed$counts <- counts
 
-    if (!missing(sampleNames)) {
+    if (!is.null(sampleNames)) {
       collapsed$samples$collapsed_samples <-
         sapply(sp, function(i)
           paste(sampleNames[i],

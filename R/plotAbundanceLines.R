@@ -10,15 +10,16 @@
 #' computes the median abundance of each barcode for two specific conditions,
 #' then do a line plot for both conditions
 #'
-#' @param dge DGEList object containing raw counts of barcodes
-#' @param condition sample condition of interest
-#' @param conditionNames vector of size 2. Gives the name of the two conditions in conditions to plot
-#' @param keep percentage of highest abundant barcode to keep. Rest of barcodes is filtered and not used in plots.
-#' @param plotType which barcodes are plotted. 'DEG' plot the 10 most differentially abundant barcodes.
-#' 'counts' plots the 5 top highest abundant barcodes for each condition.
-#' 'log2FC' plots the barcodes with the highest absolute log2FC (number of barcodes to plot is given by nBarcodes)
-#' @param nBarcodes number of barcodes to plot when using 'log2FC' plot type.
-#' @param title desired plot title
+#' @param dgeObject DGEList object with barcode counts.
+#' @param group Column name in sample metadata to group samples by (string).
+#' @param conditions Names of 2 conditions in group column to compare (vector of strings).
+#' @param keep percentage of highest abundant barcode to keep (decimal). Rest of barcodes is filtered and not used in plots. Default = `0.9`.
+#' @param plotType (string) `DEG` plots the 10 most differentially abundant barcodes.
+#' `counts` plots the 5 top highest abundant barcodes for each condition.
+#' `log2FC` plots the barcodes with the highest absolute log2FC (number of barcodes to plot is given by nBarcodes).
+#' Default = `DEG`.
+#' @param nBarcodes Number of barcodes to plot when using 'log2FC' plot type (integer). Default = `10`.
+#' @param title Optional, plot title (string).
 #'
 #' @return Returns a lineplot
 #'
@@ -26,61 +27,65 @@
 #'
 #' @examples
 #' data(test.dge)
-#' plotAbundanceLines(dge = test.dge, condition = test.dge$samples$group,
-#' conditionNames = c("T0","10_High_dose"), plotType = 'counts', title = 'test')
+#' plotAbundanceLines(test.dge, group = "group",
+#' conditions = c("T0","10_High_dose"), plotType = "counts")
 
 plotAbundanceLines <-
-  function(dge,
-           condition,
-           conditionNames,
+  function(dgeObject,
+           group,
+           conditions,
            plotType = "DEG",
            keep = 0.9,
            nBarcodes = 10,
            title = "") {
-    counts <- t(as.data.frame(dge$counts))
+
+    inputChecks(dgeObject, conditions = conditions, groups = group)
+
+    counts <- t(as.data.frame(dgeObject$counts))
 
     # compute the mean for each barcode at each condition for the different mice
     df <-
-      stats::aggregate(as.data.frame(counts), list(condition), stats::median)
+      stats::aggregate(as.data.frame(counts), list(group), stats::median)
     rownames(df) <- df$Group.1
     df$Group.1 <- NULL
 
     # keep the most expressed barcodes (%keep), remove rows with 0 values, then compute the log2 fold change. Only nBarcodes with the highest absolute FC are plotted.
     df <- as.data.frame(t(df))
-    df <- df[names(df) %in% conditionNames]
+    df <- df[names(df) %in% conditions]
     filtered_df <-
-      utils::head(df[order(df[, 1], df[, 2], decreasing = T), ], nrow(df) * keep)
+      utils::head(df[order(df[, 1], df[, 2], decreasing = T),], nrow(df) * keep)
 
     ##Go through each row and determine if a value is zero
     row_sub = apply(filtered_df, 1, function(row)
       all(row != 0))
     ##Subset as usual
-    filtered_df <- filtered_df[row_sub, ]
+    filtered_df <- filtered_df[row_sub,]
 
     if (plotType == "log2FC") {
       # compute the absolute log2 fold change for all barcodes for conditions
       filtered_df$abslog2FC <-
         abs(log2(filtered_df[, 1] / filtered_df[, 2]))
       filtered_df <-
-        utils::head(filtered_df[order(filtered_df$abslog2FC, decreasing = T), ], nBarcodes)
+        utils::head(filtered_df[order(filtered_df$abslog2FC, decreasing = T),], nBarcodes)
       filtered_df$abslog2FC <- NULL
       legend_title <- "Highest log2FC barcodes"
     }
 
     if (plotType == "counts") {
       highest_barcodes <-
-        c(rownames(utils::head(df[order(df[, 1], decreasing = T), ], 5)),
-          rownames(utils::head(df[order(df[, 2], decreasing = T), ], 5)))
-      filtered_df <- df[rownames(df) %in% highest_barcodes, ]
+        c(rownames(utils::head(df[order(df[, 1], decreasing = T),], 5)),
+          rownames(utils::head(df[order(df[, 2], decreasing = T),], 5)))
+      filtered_df <- df[rownames(df) %in% highest_barcodes,]
       legend_title <- "Highest count barcodes"
     }
 
     if (plotType == "DEG") {
       DEG_samples <-
-        rownames(dge$samples[condition %in% conditionNames, ])
-      DEG_group <- condition[condition %in% conditionNames]
+        rownames(dgeObject$samples[group %in% conditions,])
+      DEG_group <- group[group %in% conditions]
 
-      DEG_counts <- dge$counts[, colnames(dge$counts) %in% DEG_samples]
+      DEG_counts <-
+        dgeObject$counts[, colnames(dgeObject$counts) %in% DEG_samples]
       DGE.obj <-
         edgeR::DGEList(counts = DEG_counts, group = DEG_group)
 
@@ -88,7 +93,7 @@ plotAbundanceLines <-
       cpm <- edgeR::cpm(DGE.obj)
       countCheck <- cpm > 1
       keep <- which(rowSums(countCheck) >= 2)
-      DGE.obj.filtered <- DGE.obj[keep,]
+      DGE.obj.filtered <- DGE.obj[keep, ]
 
       # normalisation - trimmed mean value
       DEG.obj.final <-
@@ -96,10 +101,11 @@ plotAbundanceLines <-
       DEG.obj.final <-
         edgeR::estimateCommonDisp(DEG.obj.final, verbose = TRUE)
       DEG.obj.final <- edgeR::estimateTagwiseDisp(DEG.obj.final)
-      DEG.res <- edgeR::exactTest(DEG.obj.final, pair = conditionNames)
+      DEG.res <-
+        edgeR::exactTest(DEG.obj.final, pair = conditions)
       DEG.barcodes <-
-        rownames(utils::head(DEG.res$table[order(DEG.res$table$PValue, decreasing = F), ], nBarcodes))
-      filtered_df <- df[rownames(df) %in% DEG.barcodes, ]
+        rownames(utils::head(DEG.res$table[order(DEG.res$table$PValue, decreasing = F),], nBarcodes))
+      filtered_df <- df[rownames(df) %in% DEG.barcodes,]
       legend_title <- "Differentially abundant barcodes"
     }
 

@@ -23,7 +23,7 @@ plotBarcodeCounts <-
     counts <- dgeObject$counts
 
     # sort barcodes alpha-numerically
-    counts <- counts[str_sort(rownames(counts), numeric = T), ]
+    counts <- counts[stringr::str_sort(rownames(counts), numeric = T), ]
 
     rowsums <- rowSums(counts)
 

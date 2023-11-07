@@ -30,17 +30,17 @@ getDominantBarcodes <- function(dgeObject, threshold = 0.05) {
 
   # select all barcodes above threshold per sample
   barcodes.proportional.dominant <- barcodes.proportional %>%
-    rownames_to_column("barcode") %>%
-    pivot_longer(-barcode, names_to = "sample", values_to = "proportion") %>%
-    filter(proportion > threshold) %>%
-    arrange(desc(proportion))
+    tibble::rownames_to_column("barcode") %>%
+    tidyr::pivot_longer(-barcode, names_to = "sample", values_to = "proportion") %>%
+    dplyr::filter(proportion > threshold) %>%
+    dplyr::arrange(desc(proportion))
 
   samps <- colnames(barcodes.proportional)
 
   dominant.barcodes <- lapply(samps, function(x) {
     barcodes.proportional.dominant %>%
-      filter(sample == x) %>%
-      pull(barcode)
+      dplyr::filter(sample == x) %>%
+      dplyr::pull(barcode)
   })
   names(dominant.barcodes) <- samps
 

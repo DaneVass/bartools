@@ -22,6 +22,9 @@ plotReadCounts <-
            legend = TRUE,
            order = TRUE) {
     inputChecks(dgeObject, groups = group)
+
+    counts <- dgeObject$counts
+
     if (!is.null(group)) {
       cols <- as.factor(dgeObject$samples[[group]])
     } else {

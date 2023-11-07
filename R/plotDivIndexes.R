@@ -12,28 +12,30 @@
 #' @param div Optional, precomputed diversity metrics calculated by `calcDivIndexes()`.
 #' @param group Optional, column name in sample metadata to group samples by (string).
 #' @param metric Diversity metric to plot (string). One of "shannon", "simpson", "invsimpson" or "gini". Default = `shannon`.
-#' @param type Plot as bar graph or point (string). Default = `bar`.
+#' @param type Plot as bar, point or box plot (string). Default = `bar`.
 #'
 #' @return Returns a plot of calculated diversity index per sample
 #' @importFrom vegan diversity
 #' @importFrom ineq Gini
 #' @export
 #' @examples
-#' plotDivIndexes(counts = test.dge$counts)
+#' data(test.dge)
+#' plotDivIndexes(counts = test.dge)
 
 plotDivIndexes <-
   function(dgeObject,
            div = NULL,
            metric = "shannon",
            type = "bar",
-           group = NULL) {
+           group = NULL,
+           color = NULL) {
     inputChecks(dgeObject, groups = group)
 
     # check metric
     if (!metric %in% c("shannon", "simpson", "invsimpson", "gini")) {
       stop("Metric argument must be one of shannon, simpson, invsimpson, or gini.")
     }
-    if (!type %in% c("bar", "point")) {
+    if (!type %in% c("bar", "point", "box")) {
       stop("Type must be one of bar or point.")
     }
 
@@ -45,26 +47,39 @@ plotDivIndexes <-
     if (!is.null(group)) {
       div[group] <- dgeObject$samples[[group]]
     }
+    if (is.null(group) & type == "box") {
+      stop("Provide a group variable for a box plot.")
+    }
 
     # barplot
     if (type == "bar") {
       p <-
         ggplot2::ggplot(div, aes_string(x = "name", y = metric, fill = group)) +
-        ggplot2::geom_bar(stat = "identity")
+        ggplot2::geom_bar(stat = "identity") +
+        ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(
+          unique(div[[group]])
+        ))))
     }
 
     if (type == "point") {
       p <-
         ggplot2::ggplot(div, aes_string(x = "name", y = metric, color = group)) +
-        ggplot2::geom_point(stat = "identity", size = 3)
+        ggplot2::geom_point(size = 3) +
+        ggplot2::scale_color_manual(values = rev(ggpubr::get_palette("npg", length(
+          unique(div[[group]])
+        ))))
+    }
+
+    if (type == "box") {
+      p <-
+        ggplot2::ggplot(div, aes_string(x = group, y = metric, fill = group)) +
+        ggplot2::geom_boxplot() +
+        ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(
+          unique(div[[group]])
+        ))))
     }
 
     p <- p +
-      ggplot2::scale_color_manual(values = rev(ggpubr::get_palette("npg", length(
-        unique(div$group)
-      )))) +
-      ggplot2::theme(panel.grid.major.x = ggplot2::element_line(colour =
-                                                                  "grey70")) +
       ggplot2::labs(title = (paste(
         "Diversity Index:", as.character(metric)
       ))) +

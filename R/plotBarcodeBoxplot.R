@@ -28,6 +28,7 @@ plotBarcodeBoxplot <- function(dgeObject,
                                point = FALSE,
                                violin = FALSE,
                                returnData = FALSE) {
+
   inputChecks(dgeObject, barcodes = barcodes, groups = group, conditions = conditions)
 
   counts.raw <- as.data.frame(dgeObject$counts)
@@ -128,7 +129,8 @@ plotBarcodeBoxplot <- function(dgeObject,
   }
   p <- p +
     ggplot2::ylab("CPM") +
-    ggplot2::theme_bw()
+    ggplot2::theme_bw() +
+    ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 
   if (!is.null(trans)) {
     p <- p + ggplot2::scale_y_continuous(trans = trans) +

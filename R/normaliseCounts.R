@@ -8,7 +8,7 @@
 #' @param method method of normalization. One of `CPM`, `TMM`, `TMMwsp`, `upperquartile` or `RLE` (string). See `edgeR::calcNormFactors()`.
 #' @param threshold Threshold to apply to counts before normalisation (integer). Default = `0`.
 #'
-#' @return Returns a data.frame object containing normalised barcode counts
+#' @return Returns a DGEList object containing normalised barcode counts
 #' @export
 #'
 #' @examples
@@ -21,7 +21,6 @@ normaliseCounts <-
            method = "CPM",
            threshold = 0) {
     inputChecks(dgeObject)
-
 
     # check method
     if (!method %in% c("CPM", "RLE", "TMM", "upperquartile", "TMMwsp")) {
@@ -43,11 +42,14 @@ normaliseCounts <-
 
     # default is raw CPM
     if (method == "CPM") {
-      norm.counts <- as.data.frame(edgeR::cpm(dgeObject))
+      norm.counts <- edgeR::cpm(dgeObject)
     } else {
       norm.counts <-
-        as.data.frame(cpm(edgeR::calcNormFactors(dgeObject$counts, method = method)))
+        cpm(edgeR::calcNormFactors(dgeObject$counts, method = method))
     }
 
-    return(norm.counts)
+    dgeObject.norm <- dgeObject
+    dgeObject.norm$counts <- norm.counts
+
+    return(dgeObject.norm)
   }

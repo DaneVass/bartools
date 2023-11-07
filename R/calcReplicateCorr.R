@@ -41,7 +41,7 @@ calcReplicateCorr <-
     if (length(singletons) > 0) {
       message(paste0(
         "Following groups have only one technical replicate: ",
-        paste(singletons, collapse = ", ")
+        paste(names(singletons), collapse = ", ")
       ))
     }
     multiple_replicates <-
@@ -49,7 +49,7 @@ calcReplicateCorr <-
     if (length(multiple_replicates) > 0) {
       message(paste0(
         "Following groups have more than 2 replicates: ",
-        paste(multiple_replicates, collapse = ", ")
+        paste(names(multiple_replicates), collapse = ", ")
       ))
     }
     paired <- which(table(dgeObject$samples[, group]) == 2)
@@ -68,7 +68,7 @@ calcReplicateCorr <-
       # adj.r2 <- summary(fit)$adj.r.squared
       # corr <- sqrt(adj.r2)
 
-      return(cor(data[, 1] ~ data[, 2], method = method))
+      return(cor(data[, 1], data[, 2], method = method))
     })
 
     names(corrs) <- unique(names(paired))

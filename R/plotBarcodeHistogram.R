@@ -26,6 +26,10 @@ plotBarcodeHistogram <-
 
     inputChecks(dgeObject, samples = c(samples, orderSamples))
 
+    if (topN > 74) {
+      message("Warning: number of labelled barcodes larger than number of colors in palette (74)")
+    }
+
     counts <- as.data.frame(dgeObject$counts)
 
     if (is.null(samples)) {
@@ -47,35 +51,36 @@ plotBarcodeHistogram <-
       counts %>%
       as.data.frame() %>%
       tibble::rownames_to_column(var = "barcode") %>%
-      pivot_longer(-barcode) %>%
+      tidyr::pivot_longer(-barcode) %>%
       dplyr::rename("count" = value, "sample" = name) %>%
-      group_by(sample) %>%
-      mutate(freq = count / sum(count)) %>%
-      ungroup()
+      dplyr::group_by(sample) %>%
+      dplyr::mutate(freq = count / sum(count)) %>%
+      dplyr::ungroup()
 
     # order barcodes based on maximum frequency across samples
     barcode_order <- barcode_freqs %>%
-      filter(sample %in% orderSamples) %>%
+      dplyr::filter(sample %in% orderSamples) %>%
       dplyr::select(barcode, freq) %>%
-      group_by(barcode) %>%
-      slice_max(
+      dplyr::group_by(barcode) %>%
+      dplyr::slice_max(
         order_by = freq,
         n = 1,
         with_ties = F
       ) %>%
-      arrange(freq)
+      dplyr::arrange(freq)
 
     # set order of barcodes for plotting as factor levels
     barcode_freqs$barcode <- factor(barcode_freqs$barcode,
                                     levels = barcode_order$barcode)
 
-    qual_col_pals = RColorBrewer::brewer.pal.info[brewer.pal.info$category == 'qual', ]
+    qual_col_pals = RColorBrewer::brewer.pal.info[RColorBrewer::brewer.pal.info$category == 'qual', ]
     col_vector = unlist(mapply(
-      brewer.pal,
+      RColorBrewer::brewer.pal,
       qual_col_pals$maxcolors,
       rownames(qual_col_pals)
     ))
 
+    # TODO make sure that topN barcodes have different colors -> sample separately
     n <- length(unique(barcode_freqs$barcode))
 
     # map colors to barcodes
@@ -84,8 +89,8 @@ plotBarcodeHistogram <-
 
     # set which barcodes to label
     bc_labels <- barcode_freqs %>%
-      arrange(desc(freq)) %>%
-      pull(barcode) %>%
+      dplyr::arrange(desc(freq)) %>%
+      dplyr::pull(barcode) %>%
       unique() %>%
       head(topN) %>%
       as.character()

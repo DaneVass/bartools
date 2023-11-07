@@ -44,13 +44,13 @@ inputChecks <-
 
     # check if selected conditions are in group column
     if (!is.null(conditions)) {
-      if (is.null(group)) {
+      if (is.null(groups)) {
         stop("Specify column to group by if selecting conditions.")
       }
-      if (!all(conditions %in% dgeObject$samples[[group]])) {
+      if (!all(conditions %in% dgeObject$samples[[groups]])) {
         stop(paste(
           "Following conditions are not in group column:",
-          paste0(conditions[!conditions %in% dgeObject$samples[[group]]], collapse = ", ")
+          paste0(conditions[!conditions %in% dgeObject$samples[[groups]]], collapse = ", ")
         ))
       }
     }
@@ -67,23 +67,23 @@ inputChecks <-
 #'
 #' @export
 #'
-cluster_cormat <- function(cormat) {
-  dd <- stats::as.dist((1 - cormat) / 2)
+cluster_cormat <- function(correlation_mat) {
+  dd <- stats::as.dist((1 - correlation_mat) / 2)
   hc <- stats::hclust(dd)
-  cormat <- cormat[hc$order, hc$order]
-  return(cormat)
+  correlation_mat <- correlation_mat[hc$order, hc$order]
+  return(correlation_mat)
 }
 
 #' Get upper triangle
 #'
 #' change lower triangle values in a mirrored matrix to NA
 #'
-#' @param cormat matrix of correlation values
+#' @param correlation_mat matrix of correlation values
 #'
 #' @return Returns a matrix of correlation values with lower triangle values changed to NA
 #' @export
 #'
-get_upper_tri <- function(cormat) {
-  cormat[lower.tri(cormat)] <- NA
-  return(cormat)
+get_upper_tri <- function(correlation_mat) {
+  correlation_mat[lower.tri(correlation_mat)] <- NA
+  return(correlation_mat)
 }
