@@ -17,7 +17,7 @@ readBartabCounts <- function(countsPath) {
     stop("Data is not in the expected format. Expects columns <gene, cell, count>.")
   }
   counts <- counts[, c("cell", "gene", "count")]
-  names(counts) <- c("cellid", "barcode", "bc.umi.count")
+  colnames(counts) <- c("cellid", "barcode", "bc.umi.count")
   return(counts)
 }
 
@@ -32,8 +32,8 @@ readBartabCounts <- function(countsPath) {
 #' @export
 #
 aggregateBarcodes <- function(counts) {
-  bc.counts <- as.data.frame(dcast(
-    setDT(counts),
+  bc.counts <- as.data.frame(data.table::dcast(
+    data.table::setDT(counts),
     cellid ~ .,
     value.var = c("barcode", "bc.umi.count"),
     fun.aggregate = function(x) {
@@ -60,13 +60,13 @@ filterBarcodes <-
            umiCountFilter = 1,
            umiFractionFilter = 0.3) {
     counts_filtered <- counts %>%
-      filter(bc.umi.count >= umiCountFilter)
+      dplyr::filter(bc.umi.count >= umiCountFilter)
 
     counts_filtered <- counts_filtered %>%
-      group_by(cellid) %>%
-      mutate(max_count = max(bc.umi.count)) %>%
-      arrange(cellid) %>%
-      filter(bc.umi.count / umiFractionFilter >= max_count)
+      dplyr::group_by(cellid) %>%
+      dplyr::mutate(max_count = max(bc.umi.count)) %>%
+      dplyr::arrange(cellid) %>%
+      dplyr::filter(bc.umi.count / umiFractionFilter >= max_count)
 
     return(counts_filtered)
   }
@@ -102,27 +102,27 @@ plotBarcodesPerCell <- function(counts, fraction = TRUE) {
 
   lineagePerCell.dist.df <- lineagePerCell.dist.df %>%
     dplyr::count(number_of_lineage_barcodes) %>%
-    mutate(frac = n / nrow(lineagePerCell.dist.df))
+    dplyr::mutate(frac = n / nrow(lineagePerCell.dist.df))
 
   if (fraction) {
     p <- lineagePerCell.dist.df %>%
-      ggplot(aes(x = number_of_lineage_barcodes, y = frac))
+      ggplot2::ggplot(aes(x = number_of_lineage_barcodes, y = frac))
   } else {
     p <- lineagePerCell.dist.df %>%
-      ggplot(aes(x = number_of_lineage_barcodes, y = n))
+      ggplot2::ggplot(aes(x = number_of_lineage_barcodes, y = n))
   }
   p <- p +
-    theme(
+    ggplot2::theme(
       axis.text = element_text(size = 18, face = "bold"),
       axis.title = element_text(size = 16, face = "bold")
     ) +
-    geom_bar(stat = "identity",
-             fill = "blue",
-             width = .75) +
-    xlab("# Barcodes") +
-    ggtitle(paste("Number of barcodes detected per cell")) +
-    theme_bw() +
-    scale_x_continuous(breaks = integer_breaks())
+    ggplot2::geom_bar(stat = "identity",
+                      fill = "blue",
+                      width = .75) +
+    ggplot2::xlab("# Barcodes") +
+    ggplot2::ggtitle(paste("Number of barcodes detected per cell")) +
+    ggplot2::theme_bw() +
+    ggplot2::scale_x_continuous(breaks = integer_breaks())
 
   if (fraction) {
     p <- p +
@@ -150,30 +150,30 @@ plotBarcodesPerCell <- function(counts, fraction = TRUE) {
 plotUmiPerBarcode <- function(counts, fraction = TRUE) {
   # Number of UMIs supporting the most frequent barcode
   max.umi.per.cell <- counts %>%
-    group_by(cellid) %>%
-    summarise(max = max(bc.umi.count))
+    dplyr::group_by(cellid) %>%
+    dplyr::summarise(max = max(bc.umi.count))
 
   max.umi.per.cell <- max.umi.per.cell %>%
     dplyr::count(max) %>%
-    mutate(frac = n / nrow(max.umi.per.cell))
+    dplyr::mutate(frac = n / nrow(max.umi.per.cell))
 
   if (fraction) {
     p <- max.umi.per.cell %>%
-      ggplot(aes(x = max, y = frac))
+      ggplot2::ggplot(aes(x = max, y = frac))
   } else {
     p <- max.umi.per.cell %>%
-      ggplot(aes(x = max, y = n))
+      ggplot2::ggplot(aes(x = max, y = n))
   }
   p <- p +
-    theme(
+    ggplot2::theme(
       axis.text = element_text(size = 18, face = "bold"),
       axis.title = element_text(size = 16, face = "bold")
     ) +
-    geom_bar(stat = "identity", width = .75) +
-    xlab("# UMI") +
-    ggtitle("Number of UMI supporting the most frequent barcode") +
-    theme_bw() +
-    scale_x_continuous(breaks = integer_breaks())
+    ggplot2::geom_bar(stat = "identity", width = .75) +
+    ggplot2::xlab("# UMI") +
+    ggplot2::ggtitle("Number of UMI supporting the most frequent barcode") +
+    ggplot2::theme_bw() +
+    ggplot2::scale_x_continuous(breaks = integer_breaks())
 
   if (fraction) {
     p <- p +
@@ -198,25 +198,24 @@ plotUmiPerBarcode <- function(counts, fraction = TRUE) {
 #' @export
 #'
 plotUmiFilterThresholds <- function(counts) {
-
   max.umi.per.cell <- counts %>%
     # get UMI count of dominant barcode per cell
-    group_by(cellid) %>%
-    summarise(max = max(bc.umi.count)) %>%
+    dplyr::group_by(cellid) %>%
+    dplyr::summarise(max = max(bc.umi.count)) %>%
     # cummulative count of cells
-    group_by(max) %>%
-    summarise(count_max = n()) %>%
-    arrange(desc(max)) %>%
-    mutate(cumsum_count_max = cumsum(count_max))
+    dplyr::group_by(max) %>%
+    dplyr::summarise(count_max = dplyr::n()) %>%
+    dplyr::arrange(desc(max)) %>%
+    dplyr::mutate(cumsum_count_max = cumsum(count_max))
 
   p <-
-    ggplot(max.umi.per.cell, aes(x = max, y = cumsum_count_max)) +
-    geom_bar(stat = "identity", width = .75) +
-    ylab("# cells") +
-    xlab("UMI threshold") +
-    ggtitle("Number of cells with barcodes annotated given UMI threshold") +
-    theme_bw() +
-    scale_x_continuous(breaks = integer_breaks())
+    ggplot2::ggplot(max.umi.per.cell, aes(x = max, y = cumsum_count_max)) +
+    ggplot2::geom_bar(stat = "identity", width = .75) +
+    ggplot2::ylab("# cells") +
+    ggplot2::xlab("UMI threshold") +
+    ggplot2::ggtitle("Number of cells with barcodes annotated given UMI threshold") +
+    ggplot2::theme_bw() +
+    ggplot2::scale_x_continuous(breaks = integer_breaks())
 
   return(p)
 }
@@ -246,37 +245,56 @@ plotBARtabFilterQC <- function(dir = NULL,
                                fullNames = T,
                                normalised = F,
                                plot = T,
-                               title = "BARtab Filter QC"){
-
+                               title = "BARtab Filter QC") {
   # get log files from directory
-  logs <- list.files(dir, pattern = patternLog, fullNames = fullNames, recursive = recursive)
+  logs <-
+    list.files(dir,
+               pattern = patternLog,
+               fullNames = fullNames,
+               recursive = recursive)
 
   # setup output data.frame to store filter information
-  final.df <- data.frame(sample = as.character(), input = as.numeric(), output = as.numeric(), discarded = as.numeric(), pct.kept = as.numeric())
+  final.df <-
+    data.frame(
+      sample = as.character(),
+      input = as.numeric(),
+      output = as.numeric(),
+      discarded = as.numeric(),
+      pct.kept = as.numeric()
+    )
 
   # loop over log files and pull out relevant filtering stats
-  for (log in logs){
-
+  for (log in logs) {
     # get samplename
-    samp <- utils::tail(stringr::str_split(log, pattern = "/")[[1]], 1)
-    samp <- utils::head(stringr::str_split(samp, pattern = "\\.")[[1]][1],1)
+    samp <-
+      utils::tail(stringr::str_split(log, pattern = "/")[[1]], 1)
+    samp <-
+      utils::head(stringr::str_split(samp, pattern = "\\.")[[1]][1], 1)
 
     # get values
     filtered.reads <- grep(pattern.value, readLines(log), value = T)
-    filtered.uniq <- stringr::str_extract(filtered.reads, '[0-9]{3,20}')
+    filtered.uniq <-
+      stringr::str_extract(filtered.reads, '[0-9]{3,20}')
     input <- as.numeric(filtered.uniq[1])
     output <- as.numeric(filtered.uniq[2])
     discarded <- as.numeric(filtered.uniq[3])
-    pct.kept <- 100*(output/input)
+    pct.kept <- 100 * (output / input)
     # concatenate to dataframe
-    df <- data.frame(sample = samp, input = input, output = output, discarded = discarded, pct.kept = pct.kept)
+    df <-
+      data.frame(
+        sample = samp,
+        input = input,
+        output = output,
+        discarded = discarded,
+        pct.kept = pct.kept
+      )
     final.df <- rbind(final.df, df)
   }
 
   # factorise samplenames
-  final.df$sample <- as.factor(gsub("-", "_",final.df$sample))
+  final.df$sample <- as.factor(gsub("-", "_", final.df$sample))
 
-  if (plot){
+  if (plot) {
     # plot data if requested
     plot.dat <- final.df
     plot.dat$pct.kept <- NULL
@@ -284,17 +302,17 @@ plotBARtabFilterQC <- function(dir = NULL,
     plot.dat <- reshape2::melt(plot.dat)
 
     # normalise if requested
-    if(normalised){
-      p <- ggplot(plot.dat, aes(fill=variable, y=value, x=sample)) +
-        geom_bar(position="fill", stat="identity") +
+    if (normalised) {
+      p <- ggplot(plot.dat, aes(fill = variable, y = value, x = sample)) +
+        geom_bar(position = "fill", stat = "identity") +
         ggplot2::coord_flip() +
         ggplot2::theme_bw() +
         ggplot2::scale_fill_manual(values = c("dodgerblue2", "lightblue")) +
         ggplot2::ggtitle("Percentage of barcode reads kept post filtering")
       print(p)
     } else {
-      p <- ggplot(plot.dat, aes(fill=variable, y=value, x=sample)) +
-        geom_bar(position="stack", stat="identity") +
+      p <- ggplot(plot.dat, aes(fill = variable, y = value, x = sample)) +
+        geom_bar(position = "stack", stat = "identity") +
         ggplot2::coord_flip() +
         ggplot2::theme_bw() +
         ggplot2::scale_fill_manual(values = c("dodgerblue2", "lightblue")) +
@@ -326,51 +344,57 @@ plotBARtabMapQC <- function(dir = NULL,
                             patternLog = "*bowtie.log",
                             fullNames = T,
                             plot = T,
-                            title = "BARtab Mapping QC"){
-
+                            title = "BARtab Mapping QC") {
   # get log files from directory
-  logs <- list.files(dir, pattern = patternLog, fullNames = fullNames, recursive = recursive)
+  logs <-
+    list.files(dir,
+               pattern = patternLog,
+               fullNames = fullNames,
+               recursive = recursive)
 
   # setup output data.frame to store filter information
-  final.df <- data.frame(sample = as.character(), percent = as.numeric())
+  final.df <-
+    data.frame(sample = as.character(), percent = as.numeric())
 
-  for (log in logs){
-
+  for (log in logs) {
     # get samplename from log
-    samp <- tail(stringr::str_split(log, pattern = "/")[[1]],1)
+    samp <- tail(stringr::str_split(log, pattern = "/")[[1]], 1)
     samp <- stringr::str_split(samp, pattern = "_", n = 2)[[1]][1]
 
     # filter alignment info from logfile
     aligned.list <- list(grep("#", readLines(log), value = T))
     aligned.uniq <- aligned.list[[1]][2]
-    aligned.uniq <- stringr::str_extract(aligned.uniq, '\\([0-9][0-9].[0-9][0-9]%\\)')
+    aligned.uniq <-
+      stringr::str_extract(aligned.uniq, '\\([0-9][0-9].[0-9][0-9]%\\)')
     aligned.uniq <- gsub("\\(", "", aligned.uniq)
     aligned.uniq <- gsub("\\)", "", aligned.uniq)
     aligned.uniq <- gsub("%", "", aligned.uniq)
-    df <- data.frame(sample = samp, percent = as.numeric(aligned.uniq))
+    df <-
+      data.frame(sample = samp, percent = as.numeric(aligned.uniq))
     final.df <- rbind(final.df, df)
   }
 
   # factorise sample group
-  final.df$sample <- as.factor(gsub("-", "_",final.df$sample))
-  final.df$group <- as.factor(gsub("_PCR[12]$", "",final.df$sample))
-  final.df$group <- as.factor(gsub("_[12]$", "",final.df$sample))
+  final.df$sample <- as.factor(gsub("-", "_", final.df$sample))
+  final.df$group <- as.factor(gsub("_PCR[12]$", "", final.df$sample))
+  final.df$group <- as.factor(gsub("_[12]$", "", final.df$sample))
 
   colour_breaks <- c(0, 20, 40, 60, 80, 100)
   colours <- c("darkblue", "lightblue", "yellow", "orange", "red2")
 
   # plot data
   if (plot) {
-    p <- ggplot2::ggplot(final.df, ggplot2::aes(sample, percent, fill = percent)) +
+    p <-
+      ggplot2::ggplot(final.df, ggplot2::aes(sample, percent, fill = percent)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::coord_flip() +
       ggplot2::theme_bw() +
       ggplot2::ggtitle("Percentage of barcode reads aligning to the reference library") +
       #ggplot2::theme(legend.position = "none") +
       scale_fill_gradientn(
-        limits  = range(0,100),
+        limits  = range(0, 100),
         colours = colours[c(1, seq_along(colours), length(colours))],
-        values  = c(0, scales::rescale(colour_breaks, from = range(0,100)), 1),
+        values  = c(0, scales::rescale(colour_breaks, from = range(0, 100)), 1),
       )
 
     suppressWarnings(print(p))
@@ -378,4 +402,3 @@ plotBARtabMapQC <- function(dir = NULL,
     return(final.df)
   }
 }
-
