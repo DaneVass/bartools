@@ -48,12 +48,12 @@ compareAbundance <-
     keep <- which(rowSums(countCheck) >= 2)
     dgeObject$counts <- dgeObject$counts[keep,]
 
-    dge = DGEList(counts = dgeObject$counts)
-    dge = calcNormFactors(dge, method = 'TMM')
+    dge <- DGEList(counts = dgeObject$counts)
+    dge <- calcNormFactors(dge, method = 'TMM')
     design <- model.matrix(~ cdt)
     colnames(design) <- levels(cdt)
 
-    dge = estimateDisp(dge, design)
+    dge <- estimateDisp(dge, design)
 
     # fits a generalized linear model (GLM) to the DGEList object
     fit <- glmFit(dge, design)
@@ -64,10 +64,10 @@ compareAbundance <-
     condition1_variable <- if (grepl("^[[:digit:]]", condition1)) paste0("char_", condition1) else condition1
     condition2_variable <- if (grepl("^[[:digit:]]", condition2)) paste0("char_", condition2) else condition2
 
-    pair_vector = sprintf("%s-%s", condition1_variable, condition2_variable) # Samples to be compared
-    pair_contrast = makeContrasts(contrasts = pair_vector, levels = design)
+    pair_vector <- sprintf("%s-%s", condition1_variable, condition2_variable) # Samples to be compared
+    pair_contrast <- makeContrasts(contrasts = pair_vector, levels = design)
     # performs the likelihood ratio test based on the fitted model fit with the specified contrast
-    lrt = glmLRT(fit, contrast = pair_contrast) # Likelihood ratio test
+    lrt <- glmLRT(fit, contrast = pair_contrast) # Likelihood ratio test
 
     #print(summary(decideTestsDGE(lrt)))
 
