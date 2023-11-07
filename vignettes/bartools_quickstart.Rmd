@@ -1,6 +1,6 @@
 ---
 title: "bartools: quickstart guide"
-author: "Dane Vassiliadis"
+author: "Dane Vassiliadis, Henrietta Holze"
 output: 
   rmarkdown::html_document:
     toc: true
@@ -66,11 +66,19 @@ samplesheet <- read.csv(
 samplesheet
 ```
 
-# TODO READ EXCEL AS SAMPLE SHEET
-```{r}
+To read in a sample sheet in excel format:
 
+```{r eval = FALSE}
+samplesheet <-
+  readxl::read_excel(
+    "samplesheet.xlsx"
+  )
+samplesheet <- as.data.frame(samplesheet)
+rownames(samplesheet) <- samplesheet$sample
+samplesheet
 ```
 
+Whatever format your sample sheet is in, make sure that the rownames are your unique sample names. 
 
 Load in the counts as specified in the samplesheet into a DGEList object.
 The function expects file locations to be specified either as character vector of filenames, or as a column named files in the samplesheet.

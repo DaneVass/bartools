@@ -174,14 +174,20 @@ sc@meta.data <- sc@meta.data %>%
 table(sc$detected)
 ```
 
+We can repeat the QC plot to check how many barcodes were detected in a cell, including no barcodes detected. 
 
 ```{r}
 plotBarcodesPerCell(sc@meta.data, aggregated = T)
 ```
 
 
+We can visualize the distribution of number of cells per clone.
 
-Plot distribution of cells per clone - ordered
+
+For that, plot all clones, ordered by their size. A clone is here defined as barcode or unique combination of barcodes. 
+
+Usually, more than one barcode detected in a cell could mean a doublet. The number of cells for those clones tend to be low. Seeing more cells per clone with more than one barcode suggests it is truly from two integration events.
+
 
 ```{r}
 plotCellsPerGroup(
@@ -194,7 +200,7 @@ plotCellsPerGroup(
 )
 ```
 
-Calculate clusters enriched for different clones - hypergeometric tests
+To check whether a clone is enriched in a cluster or cell type, we can perform a hypergeometric test.
 
 ```{r}
 plotClusterEnrichment(
