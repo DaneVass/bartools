@@ -88,18 +88,18 @@ integer_breaks <- function(n = 5, ...) {
 #' @param counts Dataframe with barcodes and UMI counts per cell
 #' @param fraction Boolean, whether to plot fraction or number of cells
 #' @param aggregated Counts were aggregated per cell, with `;` as separator (boolean). Default = `FALSE`.
-#' @param missing Optional, string representing no detected barcode. NA is always treated as not detected.
+#' @param notDetected Optional, string representing no detected barcode. NA is always treated as not detected.
 #'
 #' @return Returns a plot
 #'
 #' @export
 
-plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, missing = NULL) {
+plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, notDetected = "") {
   if (aggregated) {
     # in case barcodes were previously already aggregated per cell
     lineagePerCell.dist.df <- counts %>%
       dplyr::select(cellid, barcode) %>%
-      dplyr::mutate(barcode = ifelse(barcode == missing, NA, barcode)) %>%
+      dplyr::mutate(barcode = ifelse(barcode == notDetected, NA, barcode)) %>%
       dplyr::mutate(number_of_lineage_barcodes = str_count(barcode, pattern = ";") + 1) %>%
       dplyr::mutate(number_of_lineage_barcodes = ifelse(is.na(number_of_lineage_barcodes), 0, number_of_lineage_barcodes)) %>%
       dplyr::select(-barcode)

@@ -127,25 +127,29 @@ library(Seurat)
 Import filtered Cell Ranger scRNA expression matrix into Seurat.
 
 ```{r}
-expression.data <- Read10X(data.dir = "../../bartools_sc_example/GEX_filtered_feature_bc_matrix/", strip.suffix = T)
-sc <- CreateSeuratObject(counts = expression.data, 
-                         min.cells = 3, 
-                         min.features = 200, 
-                         project = "bartools_example")
+expression.data <-
+  Read10X(data.dir = "../../bartools_sc_example/GEX_filtered_feature_bc_matrix/", strip.suffix = T)
+sc <- CreateSeuratObject(
+  counts = expression.data,
+  min.cells = 3,
+  min.features = 200,
+  project = "bartools_example"
+)
 sc
 ```
 
 Add SPLINTR barcode annotation to metadata.
-Make sure the cell IDs match. Potentially "-1" suffix needs to be added. 
+Make sure the cell IDs match. Potentially suffix needs to be added to the BARtab results (e.g. `-1`). 
 
 ```{r}
 head(colnames(sc))
+```
+
+
+```{r}
 rownames(counts_agg) <- counts_agg$cellid
 sc <- AddMetaData(sc, counts_agg)
 head(sc@meta.data)
-
-length(which(is.na(sc$barcode)))
-length(which(!is.na(sc$barcode)))
 ```
 
 Barcode annotation results. 
@@ -167,43 +171,50 @@ Group barcode metadata into detected and not.detected
 sc@meta.data <- sc@meta.data %>%
   dplyr::mutate(detected = ifelse(is.na(barcode), "not.detected", "detected"))
 
-sc@meta.data <- sc@meta.data %>%
-  dplyr::mutate(barcode = ifelse(is.na(barcode), "not.detected", barcode))
-
 table(sc$detected)
 ```
 
 
 ```{r}
-plotBarcodesPerCell(sc@meta.data, aggregated = T, missing = "not.detected")
+plotBarcodesPerCell(sc@meta.data, aggregated = T)
 ```
 
 
 
-<!-- Plot distribution of cells per clone - ordered -->
-<!-- not sure what the color is supposed to be -->
-<!-- ```{r} -->
-<!-- plotCellsPerGroup(sc, group = "barcode", order = T, threshold = 200, plot = T, label = T) -->
-<!-- ``` -->
+Plot distribution of cells per clone - ordered
 
-<!-- Calculate clusters enriched for different clones  - hypergeometric tests -->
+```{r}
+plotCellsPerGroup(
+  sc,
+  group = "barcode",
+  order = T,
+  threshold = 200,
+  plot = T,
+  label = T
+)
+```
 
-<!-- Need to have cluster annotation for this -->
+Calculate clusters enriched for different clones - hypergeometric tests
 
-<!-- ```{r} -->
-<!-- plotClusterEnrichment(sc.obj = sc.filter,  -->
-<!--                     group = "barcode",  -->
-<!--                     factor = "BC_1614",  -->
-<!--                     idents = "seurat_clusters",  -->
-<!--                     threshold = 0.01, -->
-<!--                     order = T, -->
-<!--                     plot = T) -->
-<!-- ``` -->
+```{r}
+plotClusterEnrichment(
+  sc,
+  group = "barcode",
+  factor = "BC_1614",
+  idents = "seurat_clusters",
+  threshold = 0.01,
+  order = T,
+  plot = T
+)
+```
 
 
-<!-- ```{r} -->
-<!-- plotCellsInClusters(sc.filter, group = "barcode", factor = "BC_1614", plot.pct = T) -->
-<!-- ``` -->
+```{r}
+plotCellsInClusters(sc,
+                    group = "barcode",
+                    factor = "BC_1614",
+                    plot.pct = T)
+```
 
 
 ## 5. Session Info
