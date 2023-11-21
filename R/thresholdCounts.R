@@ -3,39 +3,38 @@
 #' Filter barcodes meeting a given absolute (total read count) or relative (proportion based) abundance level
 #' Optionally plot number of barcodes detected using this threshold in each sample.
 #'
-#' @param dge DGEList object to be thresholded.
-#' @param type Threshold type to use. Must be one of "absolute" or "relative". Default = "absolute".
-#' @param threshold The threshold to use. If type = "relative", must a float between 0 & 1. Default = 10
-#' @param min.samps Minimum number of samples a barcode must meet threshold to remain in dataset. Default = 1.
-#' @param plot Logical. Draw plots of dataset? Default = F
-#' @param group DGEList metadata field to color samples by
-#' @param order Boolean. Order samples by group?
+#' @param dgeObject DGEList object with barcode counts.
+#' @param type Threshold type to use (string). Must be one of "absolute" or "relative". Default = `absolute`.
+#' @param threshold The threshold to use. If type = "relative", must a float between 0 & 1. Default = `10`
+#' @param minSamples Minimum number of samples a barcode must meet threshold to remain in dataset (integer). Default = `1`.
+#' @param plot Return plot instead of filtered data (boolean). Default = `FALSE`.
+#' @param group Optional, column name in sample metadata to color samples by (string).
+#' @param order Order samples by group (boolean). Default = `TRUE`.
 #' @return Returns a filtered DGEList object.
 #'
 #' @export
 #' @examples
-#' thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = FALSE)
+#' thresholdCounts(test.dge, type = "absolute", threshold = 10)
+#' thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = TRUE)
 
-thresholdCounts <- function(dge,
+thresholdCounts <- function(dgeObject,
                             threshold = 10,
                             type = "absolute",
-                            min.samps = 1,
+                            minSamples = 1,
                             plot = FALSE,
                             group = NULL,
                             order = TRUE) {
+  inputChecks(dgeObject, groups = group)
   # check obj
-  if (class(dge)[1] != "DGEList") {
-    stop("counts must be in DGEList format")
-  }
 
   # check threshold type
   if (!type %in% c("absolute", "relative")) {
     stop("type must be one of 'absolute' or 'relative'")
   }
 
-  # check min.samps
-  if (min.samps < 0 | min.samps > ncol(dge)) {
-    stop("min.samps must be greater than 0 and less than ncol(dge)")
+  # check minSamples
+  if (minSamples < 0 | minSamples > ncol(dgeObject)) {
+    stop("minSamples must be greater than 0 and less or equal to ncol(dgeObject)")
   }
 
   # check threshold values
@@ -61,51 +60,51 @@ thresholdCounts <- function(dge,
 
   # report dimensions pre and post
   message("DGEList dimensions pre-threshold")
-  print(dim(dge$counts))
+  print(dim(dgeObject$counts))
 
   # filter DGEList based on thresholds
   if (type == "absolute") {
-    keeprows = rowSums(dge$counts >= threshold) >= as.numeric(min.samps)
-    dge <- dge[keeprows,]
+    keeprows = rowSums(dgeObject$counts >= threshold) >= as.numeric(minSamples)
+    dgeObject <- dgeObject[keeprows, ]
   }
 
   if (type == "relative") {
     # convert everything to a proportion
-    barcodes.proportional <- as.data.frame(test.dge$counts)
+    barcodes.proportional <- as.data.frame(dgeObject$counts)
     barcodes.proportional <-
       sweep(barcodes.proportional,
             2,
             colSums(barcodes.proportional),
             `/`)
-    keeprows = rowSums(barcodes.proportional >= threshold) >= as.numeric(min.samps)
-    dge <- dge[keeprows,]
+    keeprows = rowSums(barcodes.proportional >= threshold) >= as.numeric(minSamples)
+    dgeObject <- dgeObject[keeprows, ]
   }
 
   message("DGEList dimensions post-threshold")
-  print(dim(dge$counts))
+  print(dim(dgeObject$counts))
 
   if (plot == FALSE) {
     # add number of detected barcodes above threshold to sample metadata
     above.threshold.counts <-
       data.frame(Sample = factor(), BC.count = c())
 
-    for (sample in colnames(dge$counts)) {
-      above.threshold = length(which(dge$counts[, sample] >= threshold))
+    for (sample in colnames(dgeObject$counts)) {
+      above.threshold = length(which(dgeObject$counts[, sample] >= threshold))
       d <-
         data.frame(Sample = factor(sample), BC.count = above.threshold)
       above.threshold.counts <- rbind(above.threshold.counts, d)
     }
 
     # add metadata to object
-    dge$samples <- cbind(dge$samples, above.threshold.counts)
-    return(dge)
+    dgeObject$samples <- cbind(dgeObject$samples, above.threshold.counts)
+    return(dgeObject)
 
   } else {
     above.threshold.counts <-
       data.frame(Sample = factor(), BC.count = c())
 
-    for (sample in colnames(dge$counts)) {
-      above.threshold = length(which(dge$counts[, sample] >= threshold))
+    for (sample in colnames(dgeObject$counts)) {
+      above.threshold = length(which(dgeObject$counts[, sample] >= threshold))
       d <-
         data.frame(Sample = factor(sample), BC.count = above.threshold)
       above.threshold.counts <- rbind(above.threshold.counts, d)
@@ -117,7 +116,7 @@ thresholdCounts <- function(dge,
         ggplot2::geom_bar(stat = "identity")
     } else {
       above.threshold.counts$group <-
-        dge$samples[, which(colnames(dge$samples) == group)]
+        dgeObject$samples[[group]]
 
       above.threshold.counts$group <-
         as.factor(above.threshold.counts$group)
@@ -135,19 +134,20 @@ thresholdCounts <- function(dge,
         ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(
           unique(above.threshold.counts$group)
         ))))
+      g <- g + labs(fill = group)
     }
     g <- g +
       ggplot2::theme(panel.grid.major.x = ggplot2::element_line(colour =
                                                                   "grey70")) +
       ggplot2::labs(
         title = paste(
-          dim(dge$counts)[[1]][1],
+          dim(dgeObject$counts)[[1]][1],
           " Total barcodes above ",
           type,
           " threshold = ",
           threshold,
           " in at least ",
-          min.samps,
+          minSamples,
           " samples",
           sep = ""
         )
@@ -156,6 +156,7 @@ thresholdCounts <- function(dge,
       ggplot2::ylab("Number of barcodes") +
       ggplot2::theme_bw() +
       ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
+
     return(g)
   }
 }

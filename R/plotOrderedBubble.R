@@ -2,28 +2,26 @@
 #'
 #' Generate ordered proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 #'
-#' @param counts dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.
-#' @param proportionCutoff barcodes represented at a percentage within any sample above this threshold will be labelled
-#' @param labelBarcodes Boolean, whether to label barcodes with a proportion larger than proportionCutoff in any sample
-#' @param title desired plot title
-#' @param orderSample name of sample to order by
-#' @param samples Dataframe containing sample metadata sheet with samples as row names.
-#' @param group metadata field to annotate samples on bubble plot
-#' @param displaySamples vector of samples to display - keep the order of vector
-#' @param displayBarcodes vector of barcodes to display
-#' @param colorDominant only color clones with frequency above proportionCutoff. Others colored grey
-#' @param filterCutoff barcodes below this threshold in orderSample will be filtered in all samples
-#' @param legend Boolean, whether to show a legend of bubble sizes
+#' @param dgeObject DGEList object with barcode counts.
+#' @param orderSample Name of sample to order by (string).
+#' @param proportionCutoff barcodes represented at a percentage within any sample above this threshold will be labelled (decimal). Default = `10`.
+#' @param labelBarcodes Label barcodes with a proportion larger than proportionCutoff in any sample (boolean). Default = `TRUE`.
+#' @param title Plot title (string). Default = `Proportional Bubble Plot`.
+#' @param group Optional, column name in sample metadata to group samples by (string).
+#' @param displaySamples Optional, vector of samples to display - keep the order of vector.
+#' @param displayBarcodes Optional, vector of barcodes to display.
+#' @param colorDominant Only color clones with frequency above `proportionCutoff` and others grey (boolean). Default = `FALSE`.
+#' @param filterCutoff Barcodes below this threshold in `orderSample` will be filtered in all samples (boolean). Default = `TRUE`.
+#' @param legend Show a legend of bubble sizes (boolean). Default = `TRUE`.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @export
 #' @examples
-#' plotOrderedBubble(test.dge$counts, orderSample = "T0-1", filterCutoff = 0.001)
+#' plotOrderedBubble(test.dge, orderSample = "T0-1", filterCutoff = 0.001, group = "Treatment")
 
-plotOrderedBubble <- function(counts,
+plotOrderedBubble <- function(dgeObject,
                               title = "Proportional Bubble Plot",
                               orderSample = NULL,
-                              samples = NULL,
                               group = NULL,
                               displaySamples = NULL,
                               displayBarcodes = NULL,
@@ -33,58 +31,19 @@ plotOrderedBubble <- function(counts,
                               labelBarcodes = TRUE,
                               legend = TRUE) {
   ###### check inputs ##########
-  if (methods::is(counts)[1] == "DGEList") {
-    # if no samplesheet is provided, extract it from DGE object
-    if (is.null(samples)) {
-      samples <- as.data.frame(counts$samples)
-    }
-    counts <- as.data.frame(counts$counts)
-  }
-  else {
-    counts <- as.data.frame(counts)
-  }
+  inputChecks(dgeObject, groups = group, samples = c(orderSample, displaySamples), barcodes = displayBarcodes)
+
+  counts <- as.data.frame(dgeObject$counts)
+  samples <- as.data.frame(dgeObject$samples)
+
   # check parameters
 
   if (is.null(orderSample)) {
     stop("Please provide sample to order by")
   }
 
-  if (!is.null(group) & is.null(samples)) {
-    stop("If grouping samples, samples must be provided or present in DGE object")
-  }
-
   if (!is.null(group) & !all(group %in% colnames(samples))) {
     stop("Group must be column in samples")
-  }
-
-  if (!orderSample %in% colnames(counts)) {
-    stop("Sample to order by is not present in counts data")
-  }
-
-  if (!is.null(displaySamples)) {
-    # check that sample names are in count object
-    missingSamples <-
-      setdiff(displaySamples, colnames(counts))
-    if (length(missingSamples) > 0) {
-      stop(paste(
-        "Samples",
-        paste(missingSamples, collapse = ", "),
-        "not found in count object"
-      ))
-    }
-  }
-
-  if (!is.null(displayBarcodes)) {
-    # check that sample names are in count object
-    missingBarcodes <-
-      setdiff(displayBarcodes, rownames(counts))
-    if (length(missingBarcodes) > 0) {
-      stop(paste(
-        "Barcodes",
-        paste(missingBarcodes, collapse = ", "),
-        "not found in count object"
-      ))
-    }
   }
 
   # this will avoid plotting any barcode labels
