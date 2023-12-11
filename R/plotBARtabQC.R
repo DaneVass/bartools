@@ -26,18 +26,19 @@ readBartabCounts <- function(countsPath) {
 #' Aggregate barcodes and barcode UMIs per cell
 #'
 #' @param counts Dataframe with barcodes and UMI counts per cell
+#' @param sep Separator between barcodes (string). Default = `;`.
 #'
 #' @return Returns a data frame with one row per cell ID
 #'
 #' @export
 #
-aggregateBarcodes <- function(counts) {
+aggregateBarcodes <- function(counts, sep = ";") {
   bc.counts <- as.data.frame(data.table::dcast(
     data.table::setDT(counts),
     cellid ~ .,
     value.var = c("barcode", "bc.umi.count"),
     fun.aggregate = function(x) {
-      paste(x, collapse = ";")
+      paste(x, collapse = sep)
     }
   ))
   return(bc.counts)
@@ -87,20 +88,22 @@ integer_breaks <- function(n = 5, ...) {
 #'
 #' @param counts Dataframe with barcodes and UMI counts per cell
 #' @param fraction Boolean, whether to plot fraction or number of cells
-#' @param aggregated Counts were aggregated per cell, with `;` as separator (boolean). Default = `FALSE`.
+#' @param aggregated Counts were aggregated per cell (boolean). Default = `FALSE`.
+#' @param sep Separating character used for aggregation (string). Default = `;`.
 #' @param notDetected Optional, string representing no detected barcode. NA is always treated as not detected.
 #'
 #' @return Returns a plot
 #'
 #' @export
 
-plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, notDetected = "") {
+plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, notDetected = "", sep = ";") {
   if (aggregated) {
     # in case barcodes were previously already aggregated per cell
     lineagePerCell.dist.df <- counts %>%
+      tibble::rownames_to_column("cellid") %>%
       dplyr::select(cellid, barcode) %>%
       dplyr::mutate(barcode = ifelse(barcode == notDetected, NA, barcode)) %>%
-      dplyr::mutate(number_of_lineage_barcodes = str_count(barcode, pattern = ";") + 1) %>%
+      dplyr::mutate(number_of_lineage_barcodes = stringr::str_count(barcode, pattern = sep) + 1) %>%
       dplyr::mutate(number_of_lineage_barcodes = ifelse(is.na(number_of_lineage_barcodes), 0, number_of_lineage_barcodes)) %>%
       dplyr::select(-barcode)
   } else {

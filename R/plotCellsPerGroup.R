@@ -18,6 +18,7 @@
 #' @param plot Logical. Plot results or return data.
 #' @param label Logical. Label group levels above cell number threshold. if ggrepel is installed will use geom_text_repel
 #' instead of geom_text
+#' @param sep Separating character used for aggregation (string). Default = `;`.
 #'
 #' @return Returns a plot of cell number by barcode test results or underlying plot data
 #' @export
@@ -30,7 +31,8 @@ plotCellsPerGroup <- function(sc.obj = NULL,
                               trans = NULL,
                               threshold = 100,
                               plot = TRUE,
-                              label = TRUE) {
+                              label = TRUE,
+                              sep = ";") {
   # check inputs
   if (is.null(sc.obj)) {
     stop("Please supply a Seurat or SingleCellExperiment object")
@@ -68,7 +70,7 @@ plotCellsPerGroup <- function(sc.obj = NULL,
     factor(unlist(lapply(
       strsplit(
         as.character(bc.tally$Var1),
-        split = ";",
+        split = sep,
         perl = T
       ), length
     )))
