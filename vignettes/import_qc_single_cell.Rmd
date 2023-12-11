@@ -152,19 +152,6 @@ sc <- AddMetaData(sc, counts_agg)
 head(sc@meta.data)
 ```
 
-Barcode annotation results. 
-
-
-## 4. Analyze and visualize barcoded scRNA-seq data
-
-```{r}
-message("Percentage of cells with no barcode detected")
-length(which(is.na(sc$barcode))) / ncol(sc) * 100
-
-message("Percentage of cells with a barcode detected")
-length(which(!is.na(sc$barcode))) / ncol(sc) * 100
-```
-
 Group barcode metadata into detected and not.detected
 
 ```{r}
@@ -174,10 +161,25 @@ sc@meta.data <- sc@meta.data %>%
 table(sc$detected)
 ```
 
+## 4. Analyze and visualize barcoded scRNA-seq data
+
+```{r}
+sc <- readRDS("../../bartools_sc_example/sc_filtered_normalised_seurat.rds")
+```
+
+
+```{r}
+message("Percentage of cells with no barcode detected")
+length(which(is.na(sc$barcode))) / ncol(sc) * 100
+
+message("Percentage of cells with a barcode detected")
+length(which(!is.na(sc$barcode))) / ncol(sc) * 100
+```
+
 We can repeat the QC plot to check how many barcodes were detected in a cell, including no barcodes detected. 
 
 ```{r}
-plotBarcodesPerCell(sc@meta.data, aggregated = T)
+plotBarcodesPerCell(sc@meta.data, aggregated = T, sep = ",")
 ```
 
 
@@ -196,7 +198,8 @@ plotCellsPerGroup(
   order = T,
   threshold = 200,
   plot = T,
-  label = T
+  label = T,
+  sep = ","
 )
 ```
 
@@ -206,7 +209,8 @@ To check whether a clone is enriched in a cluster or cell type, we can perform a
 plotClusterEnrichment(
   sc,
   group = "barcode",
-  factor = "BC_1614",
+  # factor = "BC_1614",
+  factor = "mCHERRY_Barcode_12904",
   idents = "seurat_clusters",
   threshold = 0.01,
   order = T,
@@ -218,7 +222,8 @@ plotClusterEnrichment(
 ```{r}
 plotCellsInClusters(sc,
                     group = "barcode",
-                    factor = "BC_1614",
+                    # factor = "BC_1614",
+                    factor = "mCHERRY_Barcode_12904",
                     plot.pct = T)
 ```
 
