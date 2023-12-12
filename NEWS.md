@@ -1,3 +1,7 @@
+# bartools 1.0.0
+
+- Updated function parameter inputs
+
 # bartools 0.2.5
 
 -   Added single cell QC plotting functions plotCellsPerGroup, plotMetrics, plotClusterEnrichment, plotCellsinClusters
