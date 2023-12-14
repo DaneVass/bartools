@@ -43,6 +43,8 @@ plotAbundanceLines <-
 
     counts <- t(as.data.frame(dgeObject$counts))
 
+    group <- dgeObject$samples[[group]]
+
     # compute the mean for each barcode at each condition for the different mice
     df <-
       stats::aggregate(as.data.frame(counts), list(group), stats::median)
