@@ -4,7 +4,7 @@
 #' @description
 #' Plots boxplot of counts for selected barcodes from DGEList object.
 #'
-#' @param dgeObject DGEList object with barcode counts.
+#' @param dgeObject DGEList object with normalized barcode counts.
 #' @param barcodes Barcodes to be plotted (vector of strings).
 #' @param group Optional, column name in sample metadata to facet data on (string).
 #' @param conditions Optional, specific levels of group to be plotted (vector of strings).
@@ -12,6 +12,8 @@
 #' @param point Whether to include points (boolean). Default = `FALSE`.
 #' @param violin Whether to include violin plots in addition to box plots (boolean). Default = `FALSE`.
 #' @param returnData Whether to return data instead of plot (boolean). Default = `FALSE`.
+#' @param normalizeMethod Method for normalizing counts (string). One of `CPM`, `TMM`, `TMMwsp`, `upperquartile`, `RLE` or `NULL` for no normalization. See `edgeR::calcNormFactors()`. Default = `CPM`.
+#'
 #'
 #' @return Returns a boxplot
 #' @export
@@ -27,11 +29,19 @@ plotBarcodeBoxplot <- function(dgeObject,
                                trans = NULL,
                                point = FALSE,
                                violin = FALSE,
-                               returnData = FALSE) {
+                               returnData = FALSE,
+                               normalizeMethod = "CPM") {
 
   inputChecks(dgeObject, barcodes = barcodes, groups = group, conditions = conditions)
 
-  counts.raw <- as.data.frame(dgeObject$counts)
+  if (!is.null(normalizeMethod) & normalizeMethod != "NULL") {
+    ylabel <- normalizeMethod
+    dgeObject <- normaliseCounts(dgeObject = dgeObject, method = normalizeMethod)
+  } else {
+    ylabel <- "counts"
+  }
+
+  counts <- dgeObject$counts
 
   if (is.null(barcodes)) {
     stop("Please provide some barcodes to plot")
@@ -48,10 +58,9 @@ plotBarcodeBoxplot <- function(dgeObject,
   }
 
   sample = dgeObject$samples
-  counts.cpm <- cpm(counts.raw)
 
   dat <-
-    counts.cpm[which(rownames(counts.cpm) %in% barcodes), , drop = F]
+    counts[which(rownames(counts) %in% barcodes), , drop = F]
   dat <- reshape2::melt(dat)
   colnames(dat) <- c("barcodes", "sample", "value")
 
@@ -128,13 +137,13 @@ plotBarcodeBoxplot <- function(dgeObject,
 
   }
   p <- p +
-    ggplot2::ylab("CPM") +
+    ggplot2::ylab(ylabel) +
     ggplot2::theme_bw() +
     ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 45, hjust = 1))
 
   if (!is.null(trans)) {
     p <- p + ggplot2::scale_y_continuous(trans = trans) +
-      ggplot2::ylab(paste(trans, "CPM"))
+      ggplot2::ylab(paste(trans, ylabel))
   }
 
   return(p)
