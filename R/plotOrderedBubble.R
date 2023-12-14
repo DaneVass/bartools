@@ -12,6 +12,7 @@
 #' @param displayBarcodes Optional, vector of barcodes to display.
 #' @param colorDominant Only color clones with frequency above `proportionCutoff` and others grey (boolean). Default = `FALSE`.
 #' @param filterCutoff Barcodes below this threshold in `orderSample` will be filtered in all samples (boolean). Default = `TRUE`.
+#' @param pseudoCount Whether to add a pseudo count of 1 to all counts to display barcodes absent in T0 (boolean). Requires counts to be normalized. Default = `FALSE`.
 #' @param legend Show a legend of bubble sizes (boolean). Default = `TRUE`.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -29,7 +30,8 @@ plotOrderedBubble <- function(dgeObject,
                               colorDominant = FALSE,
                               filterCutoff = NULL,
                               labelBarcodes = TRUE,
-                              legend = TRUE) {
+                              legend = TRUE,
+                              pseudoCount = FALSE) {
   ###### check inputs ##########
   inputChecks(dgeObject, groups = group, samples = c(orderSample, displaySamples), barcodes = displayBarcodes)
 
@@ -49,6 +51,10 @@ plotOrderedBubble <- function(dgeObject,
   # this will avoid plotting any barcode labels
   if (labelBarcodes == FALSE) {
     proportionCutoff = 100
+  }
+
+  if (pseudoCount == TRUE) {
+    counts <- counts + 1
   }
 
   # transform CPM into percentage within sample
