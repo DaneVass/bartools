@@ -264,7 +264,7 @@ plotBARtabFilterQC <- function(dir = NULL,
   logs <-
     list.files(dir,
                pattern = patternLog,
-               fullNames = fullNames,
+               full.names = fullNames,
                recursive = recursive)
 
   # setup output data.frame to store filter information
@@ -363,7 +363,7 @@ plotBARtabMapQC <- function(dir = NULL,
   logs <-
     list.files(dir,
                pattern = patternLog,
-               fullNames = fullNames,
+               full.names = fullNames,
                recursive = recursive)
 
   # setup output data.frame to store filter information
