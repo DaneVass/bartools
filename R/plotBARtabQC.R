@@ -241,7 +241,7 @@ plotUmiFilterThresholds <- function(counts) {
 #'
 #' @param dir directory where BARtab was successfuly run on barcode count datasets
 #' @param patternLog regex string to specify filter stage log files
-#' @param pattern.value grep on this string in log files
+#' @param patternValue grep on this string in log files
 #' @param fullNames Logical. Return full names of files detected by regex search
 #' @param recursive Logical. TRUE will recurse regex search into subdirectories#'
 #' @param normalised Logical. log10 normalise counts
@@ -255,7 +255,7 @@ plotUmiFilterThresholds <- function(counts) {
 plotBARtabFilterQC <- function(dir = NULL,
                                recursive = T,
                                patternLog = "*filter.log",
-                               pattern.value = "reads",
+                               patternValue = "reads",
                                fullNames = T,
                                normalised = F,
                                plot = T,
@@ -286,7 +286,7 @@ plotBARtabFilterQC <- function(dir = NULL,
       utils::head(stringr::str_split(samp, pattern = "\\.")[[1]][1], 1)
 
     # get values
-    filtered.reads <- grep(pattern.value, readLines(log), value = T)
+    filtered.reads <- grep(patternValue, readLines(log), value = T)
     filtered.uniq <-
       stringr::str_extract(filtered.reads, '[0-9]{3,20}')
     input <- as.numeric(filtered.uniq[1])
