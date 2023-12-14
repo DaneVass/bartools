@@ -340,7 +340,7 @@ plotBARtabFilterQC <- function(dir = NULL,
 
 #' plotBARtabMapQC
 #'
-#' Plot mapped read percentages from a BARtab run folder
+#' Plot mapped read percentages from a BARtab run folder. Shows reads with at least one alignment.
 #'
 #' @param dir directory where BARtab was successfuly run on barcode count datasets
 #' @param patternLog regex string to specify filter stage log files
