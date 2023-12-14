@@ -14,6 +14,7 @@
 #' @param colAnnot List of vectors assigning colours to each level of metadata.
 #' @param discrete Show presence/absence of barcodes instead of abundance (boolean). Default = `FALSE`.
 #' @param discreteThreshold Threshold for presence of barcode in samples (decimal). Default = `1`.
+#' @param labelTopBarcodes Label top barcodes within a sample (boolean). Default = `TRUE`.
 #'
 #' @return Returns a heatmap
 #' @export
@@ -29,7 +30,8 @@ plotBarcodeHeatmap <-
            group = NULL,
            colAnnot = NULL,
            discrete = FALSE,
-           discreteThreshold = 1) {
+           discreteThreshold = 1,
+           labelTopBarcodes = TRUE) {
     if (methods::is(dgeObject)[1] != "DGEList") {
       stop("Please supply a valid DGEList object as input")
     }
@@ -65,37 +67,38 @@ plotBarcodeHeatmap <-
     } else {
       ha <- NULL
     }
+
+    if (labelTopBarcodes == T) {
+      cell_fun <- function(j, i, x, y, w, h, fill) {
+        if (tab[i, j] %in% utils::head(sort(tab[, j], decreasing = TRUE), n = topN)) {
+          grid::grid.text("*", x, y, vjust = 0.8)
+        }
+      }
+    } else {
+      cell_fun <- NULL
+    }
     if (discrete) {
       tab2 <-
         ifelse(counts[rownames(counts) %in% bc, ] > discreteThreshold, 1, 0)
-      col <- c("1" = "red", "0" = "blue")
+      col <- c("1" = "blue", "0" = "gray80")
 
-      suppressMessages(
         ComplexHeatmap::Heatmap(
           as.matrix(tab2),
           name = "Presence",
           show_row_names = showBarcodes,
-          cell_fun = function(j, i, x, y, w, h, fill) {
-            if (tab[i, j] %in% utils::head(sort(tab[, j], decreasing = TRUE), n = topN)) {
-              grid::grid.text("*", x, y, vjust = 0.8)
-            }
-          },
+          cell_fun = cell_fun,
           top_annotation = ha,
           col = col,
-          heatmap_legend_param = list(labels = c("Yes", "No"))
+          heatmap_legend_param = list("Presence" = c("Yes", "No"))
         )
-      )
+
     } else{
       suppressMessages(
         ComplexHeatmap::Heatmap(
           as.matrix(tab),
           name = name,
           show_row_names = showBarcodes,
-          cell_fun = function(j, i, x, y, w, h, fill) {
-            if (tab[i, j] %in% utils::head(sort(tab[, j], decreasing = TRUE), n = topN)) {
-              grid::grid.text("*", x, y, vjust = 0.8)
-            }
-          },
+          cell_fun = cell_fun,
           top_annotation = ha
         )
       )
