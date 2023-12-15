@@ -205,11 +205,12 @@ plotClusterEnrichment(
   test.sce,
   group = "barcode",
   factor = "BC_1614",
-  idents = "seurat_clusters",
+  clusters = "seurat_clusters",
   threshold = 0.01,
   order = T,
   plot = T
 )
+
 ```
 
 
@@ -217,7 +218,7 @@ plotClusterEnrichment(
 plotCellsInClusters(test.sce, 
                     group = "barcode", 
                     factor = "BC_12904", 
-                    idents = "seurat_clusters")
+                    clusters = "seurat_clusters")
 ```
 
 
