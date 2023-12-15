@@ -66,12 +66,10 @@ plotBarcodeBubble <- function(dgeObject,
     as.factor(seq(1, length(rownames(counts))))
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
 
-  # high prop barcodes
-  # TODO
-  Highbarcodes <-
-    dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) - 2)],
-                      dplyr::any_vars(. > proportionCutoff))
-
+  # identify all barcodes to label
+  Highbarcodes <- barcodes.proportional %>%
+    dplyr::select(-c(Barcode, Position)) %>%
+    dplyr::filter(if_any(where(is.numeric), ~ .x > proportionCutoff))
 
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff
