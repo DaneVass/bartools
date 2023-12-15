@@ -7,8 +7,8 @@
 plotBARtabMapQC(
   dir = NULL,
   recursive = T,
-  pattern.log = "*bowtie.log",
-  full.names = T,
+  patternLog = "*bowtie.log",
+  fullNames = T,
   plot = T,
   title = "BARtab Mapping QC"
 )
@@ -18,9 +18,9 @@ plotBARtabMapQC(
 
 \item{recursive}{Logical. TRUE will recurse regex search into subdirectories#'}
 
-\item{pattern.log}{regex string to specify filter stage log files}
+\item{patternLog}{regex string to specify filter stage log files}
 
-\item{full.names}{Logical. Return full names of files detected by regex search}
+\item{fullNames}{Logical. Return full names of files detected by regex search}
 
 \item{plot}{Logical. Generate plots. False returns raw data}
 
@@ -30,5 +30,5 @@ plotBARtabMapQC(
 Returns a plot / dataset containing BARtab Filtering stage QC data
 }
 \description{
-Plot mapped read percentages from a BARtab run folder
+Plot mapped read percentages from a BARtab run folder. Shows reads with at least one alignment.
 }

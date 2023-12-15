@@ -4,17 +4,17 @@
 \alias{normaliseCounts}
 \title{Normalise barcode counts}
 \usage{
-normaliseCounts(dge, method = "CPM", threshold = 0)
+normaliseCounts(dgeObject, method = "CPM", threshold = 0)
 }
 \arguments{
-\item{dge}{DGEList object containing raw barcode counts to be normalised}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{method}{method of normalization. One of cpm, tmm, tmmwsp, upperquartile or rle. see edgeR::calcNormFactors()}
+\item{method}{method of normalization. One of `CPM`, `TMM`, `TMMwsp`, `upperquartile` or `RLE` (string). See `edgeR::calcNormFactors()`.}
 
-\item{threshold}{Threshold to apply to counts before normalisation}
+\item{threshold}{Threshold to apply to counts before normalisation (integer). Default = `0`.}
 }
 \value{
-Returns a data.frame object containing normalised barcode counts
+Returns a DGEList object containing normalised barcode counts
 }
 \description{
 Normalise barcode counts within a DGEList object

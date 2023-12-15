@@ -5,7 +5,7 @@
 \title{Plot sample read counts}
 \usage{
 plotReadCounts(
-  counts,
+  dgeObject,
   group = NULL,
   log10 = FALSE,
   legend = TRUE,
@@ -13,15 +13,15 @@ plotReadCounts(
 )
 }
 \arguments{
-\item{counts}{data.frame of barcode count x sample}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{group}{a character vector of containing grouping information. Must be equal the number of columns of counts. Can pass a metadata column from DGEList object.}
+\item{group}{Optional, column name in sample metadata to group samples by (string).}
 
-\item{log10}{Boolean. log10 transform output?}
+\item{log10}{log10 transform output (boolean). Default = `FALSE`.}
 
-\item{legend}{Boolean. Include legend?}
+\item{legend}{Include legend (boolean). Default = `TRUE`.}
 
-\item{order}{Boolean. Order samples by group?}
+\item{order}{Order samples by group (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a plot of the read counts per column (sample) in a data frame
@@ -30,6 +30,6 @@ Returns a plot of the read counts per column (sample) in a data frame
 Simple plot of total read counts per sample
 }
 \examples{
-plotReadCounts(test.dge$counts, group = test.dge$samples$Treatment)
+plotReadCounts(test.dge, group = "Treatment")
 
 }

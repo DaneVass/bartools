@@ -5,45 +5,44 @@
 \title{Boxplot of selected barcodes}
 \usage{
 plotBarcodeBoxplot(
-  dge.obj,
+  dgeObject,
   barcodes = NULL,
   group = NULL,
   conditions = NULL,
   trans = NULL,
   point = FALSE,
-  violin = FALSE
+  violin = FALSE,
+  returnData = FALSE,
+  normalizeMethod = "CPM"
 )
 }
 \arguments{
-\item{dge.obj}{DGE object containing counts and sample information}
+\item{dgeObject}{DGEList object with normalized barcode counts.}
 
-\item{barcodes}{a vector of barcodes to be plotted}
+\item{barcodes}{Barcodes to be plotted (vector of strings).}
 
-\item{group}{metadata field to facet data on}
+\item{group}{Optional, column name in sample metadata to facet data on (string).}
 
-\item{conditions}{specific levels of group to be plotted. If NULL all levels are plotted}
+\item{conditions}{Optional, specific levels of group to be plotted (vector of strings).}
 
-\item{trans}{From ggplot2. For continuous scales, the name of a transformation object or the object itself.}
+\item{trans}{Optional, transformation of y-axis, e.g. `log10` (string).}
 
-\item{point}{From ggplot2. Include plot points?}
+\item{point}{Whether to include points (boolean). Default = `FALSE`.}
 
-\item{violin}{From ggplot2. Include violin plot?}
+\item{violin}{Whether to include violin plots in addition to box plots (boolean). Default = `FALSE`.}
+
+\item{returnData}{Whether to return data instead of plot (boolean). Default = `FALSE`.}
+
+\item{normalizeMethod}{Method for normalizing counts (string). One of `CPM`, `TMM`, `TMMwsp`, `upperquartile`, `RLE` or `NULL` for no normalization. See `edgeR::calcNormFactors()`. Default = `CPM`.}
 }
 \value{
 Returns a boxplot
 }
 \description{
-Takes a dataframe of barcode counts,
-select specific barcodes in the dataframe
-and boxplot their counts
-}
-\details{
-plotBCBoxplot
-
-Boxplot of selected barcodes
+Plots boxplot of counts for selected barcodes from DGEList object.
 }
 \examples{
 data(test.dge)
-plotBarcodeBoxplot(test.dge, barcodes = "BC_190202", group = "Treatment", 
+plotBarcodeBoxplot(test.dge, barcodes = "BC_190202", group = "Treatment",
 conditions = c("Vehicle", "Low_dose", "High_dose"))
 }

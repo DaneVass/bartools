@@ -4,23 +4,23 @@
 \alias{plotBarcodeCounts}
 \title{Plot total counts per barcode in library}
 \usage{
-plotBarcodeCounts(counts, order = F, log10 = F)
+plotBarcodeCounts(dgeObject, order = FALSE, log10 = FALSE)
 }
 \arguments{
-\item{counts}{data.frame of barcode count x sample}
+\item{dgeObject}{DGE object with barcode counts}
 
-\item{order}{Logical. Order the dataset be decreasing abundance}
+\item{order}{Order the dataset by decreasing abundance (boolean). Default = `FALSE`.}
 
-\item{log10}{Logical. log10 transform the data. Adds a pseudocount of 1}
+\item{log10}{log10 transform the data. Adds a pseudocount of 1 (boolean). Default = `FALSE`.}
 }
 \value{
 Returns a plot of the read counts per barcode (row) in a data frame
 }
 \description{
-Simple plot of total read counts per barcode in library
+Simple plot of total read counts per barcode across samples.
 }
 \examples{
-plotBarcodeCounts(test.dge$counts)
-plotBarcodeCounts(test.dge$counts, order = TRUE)
-plotBarcodeCounts(test.dge$counts, order = TRUE, log10 = TRUE)
+data(test.d)
+plotBarcodeCounts(test.dge)
+plotBarcodeCounts(test.dge, order = TRUE, log10 = TRUE)
 }

@@ -5,49 +5,44 @@
 \title{Plot barcode heatmap}
 \usage{
 plotBarcodeHeatmap(
-  counts,
-  N,
+  dgeObject,
+  topN = 5,
   name = "CPM",
-  show_bc = FALSE,
-  samples = NULL,
+  showBarcodes = FALSE,
   group = NULL,
-  col_annot = NULL,
-  discrete = F,
-  discrete_threshold = 1
+  colAnnot = NULL,
+  discrete = FALSE,
+  discreteThreshold = 1,
+  labelTopBarcodes = TRUE
 )
 }
 \arguments{
-\item{counts}{Dataframe containing cpm counts}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{N}{Number of top barcodes per sample}
+\item{topN}{Number of top barcodes per sample to show (integer). Default = `5`.}
 
-\item{name}{String of the heatmap scale name}
+\item{name}{String of the heatmap scale name (string). Default = `CPM`.}
 
-\item{show_bc}{Boolean to show barcode names on the heatmap}
+\item{showBarcodes}{Show barcode names on the heatmap (boolean). Default = `FALSE`.}
 
-\item{samples}{Dataframe containing sample metadata sheet}
+\item{group}{Optional, column name in sample metadata to group samples by (string).}
 
-\item{group}{metadata fields to annotate samples}
+\item{colAnnot}{List of vectors assigning colours to each level of metadata.}
 
-\item{col_annot}{list of vectors assigning colours to each level of metadata}
+\item{discrete}{Show presence/absence of barcodes instead of abundance (boolean). Default = `FALSE`.}
 
-\item{discrete}{Boolean to show presence/absence of barcodes instead of abundance}
+\item{discreteThreshold}{Threshold for presence of barcode in samples (decimal). Default = `1`.}
 
-\item{discrete_threshold}{Threshold for presence of barcode in samples}
+\item{labelTopBarcodes}{Label top barcodes within a sample (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a heatmap
 }
 \description{
-Takes a dataframe of the barcode counts, and selects the N most abundant barcodes per sample.
-Most abundant barcodes are gathered in a list and a heatmap for those barcodes is plotted for all samples.
-Stars indicate the most abundant barcodes per sample.
-}
-\details{
-plotBarcodeHeatmap
-
-Plot a heatmap of the N most abundant barcodes per sample
+Takes a DGEList with barcode counts, selects the n most abundant barcodes per sample and plots a heatmap.
+Stars indicate the most abundant barcodes in the respective sample.
 }
 \examples{
-plotBarcodeHeatmap(counts = cpm(test.dge$counts),N = 5,show_bc = TRUE,samples = test.dge$samples)
+data(test.dge)
+plotBarcodeHeatmap(test.dge)
 }

@@ -5,38 +5,38 @@
 \title{plotBarcodeBubble}
 \usage{
 plotBarcodeBubble(
-  counts,
+  dgeObject,
   title = "Proportional Bubble Plot",
-  samples = NULL,
   group = NULL,
   displaySamples = NULL,
   displayBarcodes = NULL,
   proportionCutoff = 10,
   colorDominant = FALSE,
   labelBarcodes = TRUE,
+  orderBarcodes = TRUE,
   legend = TRUE
 )
 }
 \arguments{
-\item{counts}{dataframe containing raw counts of barcodes. Expects barcodes as row names and samples as columns. Alternatively, DGE object.}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{title}{desired plot title}
+\item{title}{Plot title (string). Default = `Proportional Bubble Plot`.}
 
-\item{samples}{Dataframe containing sample metadata sheet with samples as row names.}
+\item{group}{Optional, column name in sample metadata to group samples by (string).}
 
-\item{group}{metadata field to annotate samples on bubble plot}
+\item{displaySamples}{Optional, vector of sample names to display, preserves the order of vector (vector of strings).}
 
-\item{displaySamples}{vector of samples to display - keep the order of vector}
+\item{displayBarcodes}{Optional, vector of barcodes to display (vector of strings).}
 
-\item{displayBarcodes}{vector of barcodes to display}
+\item{proportionCutoff}{Barcodes represented at a percentage within any sample above this threshold will be labelled (decimal). Default = `10`.}
 
-\item{proportionCutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
+\item{colorDominant}{Only color clones with frequency above `proportionCutoff` and others colored grey (boolean). Default = `FALSE`.}
 
-\item{colorDominant}{only color clones with frequency above proportionCutoff. Others colored grey}
+\item{labelBarcodes}{Label barcodes with a proportion larger than `proportionCutoff` in any sample (boolean). Default = `TRUE`.}
 
-\item{labelBarcodes}{Boolean, whether to label barcodes with a proportion larger than proportionCutoff in any sample}
+\item{orderBarcodes}{Order barcodes alphanumerical (boolean). For SPLINTR that represents abundance in  original barcode library. Default `TRUE`.}
 
-\item{legend}{Boolean, whether to show a legend of bubble sizes}
+\item{legend}{Show a legend of bubble sizes (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -45,5 +45,6 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
+data(test.dge)
 plotBarcodeBubble(test.dge$counts, proportionCutoff = 10)
 }

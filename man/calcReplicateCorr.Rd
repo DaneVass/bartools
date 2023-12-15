@@ -4,16 +4,27 @@
 \alias{calcReplicateCorr}
 \title{Calculate correlation between technical replicates}
 \usage{
-calcReplicateCorr(dge, group, corr.thresh = 0.8, return = "all")
+calcReplicateCorr(
+  dgeObject,
+  group = NULL,
+  corrThreshold = 0.8,
+  return = "all",
+  method = "pearson",
+  ignoreZero = FALSE
+)
 }
 \arguments{
-\item{dge}{DGEList object containing technical replicates to be compared}
+\item{dgeObject}{DGEList object with barcode counts with technical replicates.}
 
-\item{group}{grouping variable from metadata containing technical replicate information}
+\item{group}{Column name in sample metadata with replicate information (string). Correlation can only be calculated between pairs of replicates.}
 
-\item{corr.thresh}{threshold distinguishing good vs bad correlation between technical replicates}
+\item{corrThreshold}{Threshold distinguishing good vs bad correlation between technical replicates (decimal). Default = `0.8`.}
 
-\item{return}{which values to return. One of "good", "bad", "all"}
+\item{return}{Which values to return, one of `good`, `bad`, `all` (string). Default = `all`.}
+
+\item{method}{Method for correlation, one of `spearman`, `pearson` (string). Default = `pearson`.}
+
+\item{ignoreZero}{Remove barcodes where both replicates have 0 counts before calculating correlation (boolean). Including zeros can increase the spearman correlation, especially for samples with few barcodes detected. Default = `FALSE`.}
 }
 \value{
 Returns a plot of the read counts per barcode (row) in a data frame

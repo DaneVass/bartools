@@ -2,30 +2,31 @@
 % Please edit documentation in R/plotBarcodeCumSum.R
 \name{plotBarcodeCumSum}
 \alias{plotBarcodeCumSum}
-\title{Barcode cumulative sum plot of a list of samples against and ordered by sample1}
+\title{Barcode cumulative sum plot of a list of samples against and ordered by reference sample}
 \usage{
-plotBarcodeCumSum(counts, sample1 = NULL, samples = NULL)
+plotBarcodeCumSum(dgeObject, referenceSample = NULL, samples = NULL)
 }
 \arguments{
-\item{counts}{Dataframe containing cpm counts}
+\item{dgeObject}{DGE object containing CPM counts}
 
-\item{sample1}{sample to compare others against}
+\item{referenceSample}{sample to compare others against}
 
-\item{samples}{vector of sample names to be plotted against sample1}
+\item{samples}{vector of sample names to be plotted against reference sample}
 }
 \value{
 Returns a plot of the cumulative sum of read counts per barcode
 }
 \description{
 Takes a dataframe of the barcode cpm counts, calculate the relative abundance of each barcode in each sample.
-Then, barcodes of all samples are ordered for sample1 in decreasing order and the cumulative sum is calculated for
-each sample. Cumulative sum is then plotted against sample1.
+Then, barcodes of all samples are ordered for the reference sample in decreasing order and the cumulative sum is calculated for
+each sample. Cumulative sum is then plotted against the reference sample
 }
 \details{
 plotBarcodeCumSum
 
-Plot the cumulative sum of barcode cpm counts for a list of samples against and ordered by sample1.
+Plot the cumulative sum of barcode CPM counts for a list of samples against and ordered by sample1.
 }
 \examples{
-plotBarcodeCumSum(counts = test.dge$counts, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
+data(test.dge)
+plotBarcodeCumSum(counts = test.dge, sample1 = 'T0-1', samples = c('T0-1','S9-1', 'S8-1'))
 }

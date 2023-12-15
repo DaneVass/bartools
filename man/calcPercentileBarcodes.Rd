@@ -4,20 +4,20 @@
 \alias{calcPercentileBarcodes}
 \title{calcPercentileBarcodes}
 \usage{
-calcPercentileBarcodes(counts.obj, percentile = 0.95)
+calcPercentileBarcodes(dgeObject, percentile = 0.95)
 }
 \arguments{
-\item{counts.obj}{DGEList object containing raw or normalised barcode counts}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{percentile}{desired percentile value}
+\item{percentile}{Desired percentile value (decimal). Default = `0.95` (i.e. 95%).}
 }
 \value{
-Returns a list object containing nth percentile tables of barcode counts per sample
+Returns a list object containing Nth percentile tables of barcode counts per sample
 }
 \description{
 Calculate barcodes comprising the Nth percentile for each sample & generate cumulative sum plots
 }
 \examples{
 data(test.dge)
-calcPercentileBarcodes(test.dge, percentile = .95)
+calcPercentileBarcodes(test.dge, percentile = 0.95)
 }

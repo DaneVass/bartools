@@ -5,31 +5,32 @@
 \title{Lineplot of barcode abundances in two conditions}
 \usage{
 plotAbundanceLines(
-  dge,
-  condition,
-  condition_names,
-  plot_type = "DEG",
+  dgeObject,
+  group,
+  conditions,
+  plotType = "DEG",
   keep = 0.9,
-  nbarcode = 10,
+  nBarcodes = 10,
   title = ""
 )
 }
 \arguments{
-\item{dge}{DGEList object containing raw counts of barcodes}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{condition}{sample condition of interest}
+\item{group}{Column name in sample metadata to group samples by (string).}
 
-\item{condition_names}{vector of size 2. Gives the name of the two conditions in conditions to plot}
+\item{conditions}{Names of 2 conditions in group column to compare (vector of strings).}
 
-\item{plot_type}{which barcodes are plotted. 'DEG' plot the 10 most differentially abundant barcodes.
-'counts' plots the 5 top highest abundant barcodes for each condition.
-'log2FC' plots the barcodes with the highest absolute log2FC (number of barcodes to plot is given by nbarcode)}
+\item{plotType}{(string) `DEG` plots the 10 most differentially abundant barcodes.
+`counts` plots the 5 top highest abundant barcodes for each condition.
+`log2FC` plots the barcodes with the highest absolute log2FC (number of barcodes to plot is given by nBarcodes).
+Default = `DEG`.}
 
-\item{keep}{percentage of highest abundant barcode to keep. Rest of barcodes is filtered and not used in plots.}
+\item{keep}{percentage of highest abundant barcode to keep (decimal). Rest of barcodes is filtered and not used in plots. Default = `0.9`.}
 
-\item{nbarcode}{number of barcodes to plot when using 'log2FC' plot type.}
+\item{nBarcodes}{Number of barcodes to plot when using 'log2FC' plot type (integer). Default = `10`.}
 
-\item{title}{desired plot title}
+\item{title}{Optional, plot title (string).}
 }
 \value{
 Returns a lineplot
@@ -46,6 +47,6 @@ Lineplot of the barcode abundances in two different experimental settings
 }
 \examples{
 data(test.dge)
-plotAbundanceLines(dge = test.dge, condition = test.dge$samples$group,
-condition_names = c("T0","10_High_dose"), plot_type = 'counts', title = 'test')
+plotAbundanceLines(test.dge, group = "group",
+conditions = c("T0","10_High_dose"), plotType = "counts")
 }

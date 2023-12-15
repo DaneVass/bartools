@@ -14,7 +14,7 @@ plotCellsInClusters(
 )
 }
 \arguments{
-\item{sc.obj}{single cell object in Seurat or SingleCellExperiment format containing idents and group metadata}
+\item{sc.obj}{Single cell Seurat or SingleCellExperiment object containing idents and group metadata.}
 
 \item{group}{a column of metadata}
 
@@ -22,15 +22,15 @@ plotCellsInClusters(
 
 \item{idents}{a column of metadata defining the cluster identities of each cell. default = "seurat_clusters"}
 
-\item{plot.pct}{Logical. Plot percentages (TRUE) or raw numbers (FALSE). default = TRUE}
+\item{plot.pct}{Logical. Plot percentages (TRUE) or raw numbers (FALSE). Default = `TRUE`}
 
-\item{plot}{Logical. Plot or return raw data. default = TRUE}
+\item{plot}{Logical. Plot or return raw data. Default = `TRUE`.}
 }
 \value{
 Returns a histogram or underlying plot data
 }
 \description{
-Takes a single cell object, a grouping variable, a factor within the group to test, 
+Takes a single cell object, a grouping variable, a factor within the group to test,
 and an ident class (i.e. clusters). Plots percentage or raw number of cells within factor
 present per level of ident (i.e. per cluster)
 }
