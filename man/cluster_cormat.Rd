@@ -7,7 +7,7 @@
 cluster_cormat(correlation_mat)
 }
 \arguments{
-\item{cormat}{matrix of correlation values}
+\item{correlation_mat}{matrix of correlation values}
 }
 \value{
 Returns a matrix of correlation values with columns and rows hierarchically clustered

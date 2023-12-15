@@ -20,15 +20,14 @@
 #' @export
 #' @examples
 #' data(test.dge)
-#' plotDivIndexes(counts = test.dge)
+#' plotDivIndexes(test.dge, group="Treatment", type="box")
 
 plotDivIndexes <-
   function(dgeObject,
            div = NULL,
            metric = "shannon",
            type = "bar",
-           group = NULL,
-           color = NULL) {
+           group = NULL) {
     inputChecks(dgeObject, groups = group)
 
     # check metric
@@ -55,26 +54,27 @@ plotDivIndexes <-
     if (type == "bar") {
       p <-
         ggplot2::ggplot(div, aes_string(x = "name", y = metric, fill = group)) +
-        ggplot2::geom_bar(stat = "identity") +
-        ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(
-          unique(div[[group]])
-        ))))
+        ggplot2::geom_bar(stat = "identity")
     }
 
     if (type == "point") {
       p <-
         ggplot2::ggplot(div, aes_string(x = "name", y = metric, color = group)) +
-        ggplot2::geom_point(size = 3) +
-        ggplot2::scale_color_manual(values = rev(ggpubr::get_palette("npg", length(
-          unique(div[[group]])
-        ))))
+        ggplot2::geom_point(size = 3)
     }
 
     if (type == "box") {
       p <-
         ggplot2::ggplot(div, aes_string(x = group, y = metric, fill = group)) +
-        ggplot2::geom_boxplot() +
+        ggplot2::geom_boxplot()
+    }
+
+    if (!is.null(group)) {
+      p <- p +
         ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(
+          unique(div[[group]])
+        )))) +
+        ggplot2::scale_color_manual(values = rev(ggpubr::get_palette("npg", length(
           unique(div[[group]])
         ))))
     }

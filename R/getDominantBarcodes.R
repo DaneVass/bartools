@@ -7,10 +7,10 @@
 #' then returns a list of barcodes meeting a threshold abundance per sample.
 #'
 #' @param dgeObject DGEList object with barcode counts.
-#' @param threshold Proportion threshold to call dominant barcodes (decimal). Default = `0.05` (i.e. 5%).
+#' @param threshold Proportion threshold to call dominant barcodes (decimal). Default = `0.05` (i.e. 5 percent).
 #'
 #' @return Returns a named list containing vectors of dominant barcodes per sample
-#'
+#' @importFrom magrittr "%>%"
 #' @export
 #'
 #' @examples
@@ -33,7 +33,7 @@ getDominantBarcodes <- function(dgeObject, threshold = 0.05) {
     tibble::rownames_to_column("barcode") %>%
     tidyr::pivot_longer(-barcode, names_to = "sample", values_to = "proportion") %>%
     dplyr::filter(proportion > threshold) %>%
-    dplyr::arrange(desc(proportion))
+    dplyr::arrange(dplyr::desc(proportion))
 
   samps <- colnames(barcodes.proportional)
 

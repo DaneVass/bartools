@@ -73,7 +73,7 @@ calcReplicateCorr <-
       # adj.r2 <- summary(fit)$adj.r.squared
       # corr <- sqrt(adj.r2)
 
-      return(cor(data[, 1], data[, 2], method = method))
+      return(stats::cor(data[, 1], data[, 2], method = method))
     })
 
     names(corrs) <- unique(names(paired))

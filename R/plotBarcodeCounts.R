@@ -11,7 +11,7 @@
 #' @export
 #'
 #' @examples
-#' data(test.d)
+#' data(test.dge)
 #' plotBarcodeCounts(test.dge)
 #' plotBarcodeCounts(test.dge, order = TRUE, log10 = TRUE)
 

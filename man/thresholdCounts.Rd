@@ -37,6 +37,7 @@ Filter barcodes meeting a given absolute (total read count) or relative (proport
 Optionally plot number of barcodes detected using this threshold in each sample.
 }
 \examples{
+data(test.dge)
 thresholdCounts(test.dge, type = "absolute", threshold = 10)
 thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = TRUE)
 }

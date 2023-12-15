@@ -27,6 +27,8 @@ Imports:
     ggpubr,
     dplyr,
     tidyr,
+    tibble,
+    tidyselect,
     magrittr,
     forcats,
     reshape2,

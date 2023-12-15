@@ -33,5 +33,6 @@ Returns a stacked bar plot of barcode frequencies within samples
 Generate proportional stacked bar plot of barcodes from raw count object with n most frequent barcodes labelled.
 }
 \examples{
-plotBarcodesStackedBar(test.dge)
+data(test.dge)
+plotBarcodeHistogram(test.dge)
 }

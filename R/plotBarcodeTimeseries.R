@@ -12,8 +12,8 @@
 #' @export
 
 #' @examples
-#' data(test.counts)
-#' plotBarcodeTimeseries(test.dge$counts[,1:4], name = "Proportional Timeseries Plot", seed = 5)
+#' data(test.dge)
+#' plotBarcodeTimeseries(test.dge[,1:4], name = "Proportional Timeseries Plot", seed = 5)
 
 plotBarcodeTimeseries <-
   function(counts,

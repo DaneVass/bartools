@@ -20,7 +20,7 @@ Returns a plot of the read counts per barcode (row) in a data frame
 Simple plot of total read counts per barcode across samples.
 }
 \examples{
-data(test.d)
+data(test.dge)
 plotBarcodeCounts(test.dge)
 plotBarcodeCounts(test.dge, order = TRUE, log10 = TRUE)
 }

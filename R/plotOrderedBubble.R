@@ -16,8 +16,10 @@
 #' @param legend Show a legend of bubble sizes (boolean). Default = `TRUE`.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
+#' @importFrom magrittr "%>%"
 #' @export
 #' @examples
+#' data(test.dge)
 #' plotOrderedBubble(test.dge, orderSample = "T0-1", filterCutoff = 0.001, group = "Treatment")
 
 plotOrderedBubble <- function(dgeObject,
@@ -80,7 +82,7 @@ plotOrderedBubble <- function(dgeObject,
   # identify all barcodes to label
   Highbarcodes <- barcodes.proportional %>%
     dplyr::select(-c(Barcode, Position)) %>%
-    dplyr::filter(if_any(where(is.numeric), ~ .x > proportionCutoff))
+    dplyr::filter(dplyr::if_any(tidyselect::where(is.numeric), ~ .x > proportionCutoff))
 
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff

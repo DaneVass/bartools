@@ -14,13 +14,14 @@
 #' @param groups Optional, one or multiple column names in sample metadata to color samples by (string or vector of strings).
 #' @param ntop number of top most variable barcodes to be used in PCA calculation (integer). Default = `500`.
 #' @param returnData Return a data.frame of PCA calculation instead of plot (boolean). Default = `FALSE`.
-#' @param dimensions Principle components to plot (vector of integers of length 2). Default = `c(1, 2)`.
+#' @param pcs Principle components to plot (vector of integers of length 2). Default = `c(1, 2)`.
 #' @param batch Optional, metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA.
 #'
 #' @return Returns a plot of the first two principal components in the dataset
 #' @export
 #'
 #' @examples
+#' data(test.dge)
 #' plotBarcodePCA(test.dge, groups = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
 
 plotBarcodePCA <-

@@ -14,7 +14,7 @@
 #'
 #' @examples
 #' data(test.dge)
-#' plotBarcodeDistance(test.dge$counts)
+#' plotBarcodeDistance(test.dge)
 
 plotBarcodeDistance <- function(dgeObject,
                                 method = "euclidean",

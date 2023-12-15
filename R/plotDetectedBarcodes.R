@@ -14,6 +14,7 @@
 #' @export
 #'
 #' @examples
+#' data(test.dge)
 #' plotDetectedBarcodes(test.dge, percentile = .95)
 #' plotDetectedBarcodes(test.dge, plot = FALSE)
 

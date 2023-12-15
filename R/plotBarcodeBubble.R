@@ -14,6 +14,7 @@
 #' @param orderBarcodes Order barcodes alphanumerical (boolean). For SPLINTR that represents abundance in  original barcode library. Default `TRUE`.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
+#' @importFrom magrittr "%>%"
 #' @export
 #' @examples
 #' data(test.dge)
@@ -69,7 +70,7 @@ plotBarcodeBubble <- function(dgeObject,
   # identify all barcodes to label
   Highbarcodes <- barcodes.proportional %>%
     dplyr::select(-c(Barcode, Position)) %>%
-    dplyr::filter(if_any(where(is.numeric), ~ .x > proportionCutoff))
+    dplyr::filter(dplyr::if_any(tidyselect::where(is.numeric), ~ .x > proportionCutoff))
 
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff

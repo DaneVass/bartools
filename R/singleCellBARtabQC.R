@@ -9,7 +9,7 @@
 #' @export
 readBartabCounts <- function(countsPath) {
   # read in barcode-cell pairs
-  counts <- read.delim(countsPath, header = TRUE)
+  counts <- utils::read.delim(countsPath, header = TRUE)
   if (ncol(counts) != 3) {
     stop("Data is not in the expected format. Expects columns <gene, cell, count>.")
   }
@@ -53,9 +53,10 @@ aggregateBarcodes <- function(counts, sep = ";") {
 #' @param umiFractionFilter Minimum fraction of UMIs per barcode per cell compared to dominant barcode in cell (barcode supported by most UMIs)
 #'
 #' @return Returns a data frame with one row per cell ID
-#'
+#' @importFrom magrittr "%>%"
 #' @export
 #
+
 filterBarcodes <-
   function(counts,
            umiCountFilter = 1,
@@ -93,6 +94,7 @@ integer_breaks <- function(n = 5, ...) {
 #' @param notDetected Optional, string representing no detected barcode. NA is always treated as not detected.
 #'
 #' @return Returns a plot
+#' @importFrom magrittr "%>%"
 #'
 #' @export
 
@@ -168,6 +170,7 @@ plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, not
 #' @param fraction Boolean, whether to plot fraction or number of cells
 #'
 #' @return Returns a plot
+#' @importFrom magrittr "%>%"
 #'
 #' @export
 
@@ -218,7 +221,7 @@ plotUmiPerBarcode <- function(counts, fraction = TRUE) {
 #' @param counts Dataframe with barcodes and UMI counts per cell
 #'
 #' @return Returns a plot
-#'
+#' @importFrom magrittr "%>%"
 #' @export
 #'
 plotUmiFilterThresholds <- function(counts) {
@@ -229,7 +232,7 @@ plotUmiFilterThresholds <- function(counts) {
     # cummulative count of cells
     dplyr::group_by(max) %>%
     dplyr::summarise(count_max = dplyr::n()) %>%
-    dplyr::arrange(desc(max)) %>%
+    dplyr::arrange(dplyr::desc(max)) %>%
     dplyr::mutate(cumsum_count_max = cumsum(count_max))
 
   p <-

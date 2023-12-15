@@ -31,5 +31,5 @@ Plot sample distances between barcode sets / samples
 }
 \examples{
 data(test.dge)
-plotBarcodeDistance(test.dge$counts)
+plotBarcodeDistance(test.dge)
 }

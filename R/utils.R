@@ -61,11 +61,9 @@ inputChecks <-
 #'
 #' cluster a correlation matrix using hierarchical clustering
 #'
-#' @param cormat matrix of correlation values
+#' @param correlation_mat matrix of correlation values
 #'
 #' @return Returns a matrix of correlation values with columns and rows hierarchically clustered
-#'
-#' @export
 #'
 cluster_cormat <- function(correlation_mat) {
   dd <- stats::as.dist((1 - correlation_mat) / 2)
@@ -81,7 +79,6 @@ cluster_cormat <- function(correlation_mat) {
 #' @param correlation_mat matrix of correlation values
 #'
 #' @return Returns a matrix of correlation values with lower triangle values changed to NA
-#' @export
 #'
 get_upper_tri <- function(correlation_mat) {
   correlation_mat[lower.tri(correlation_mat)] <- NA

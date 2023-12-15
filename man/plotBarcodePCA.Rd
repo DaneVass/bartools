@@ -22,9 +22,9 @@ plotBarcodePCA(
 
 \item{returnData}{Return a data.frame of PCA calculation instead of plot (boolean). Default = `FALSE`.}
 
-\item{batch}{Optional, metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA.}
+\item{pcs}{Principle components to plot (vector of integers of length 2). Default = `c(1, 2)`.}
 
-\item{dimensions}{Principle components to plot (vector of integers of length 2). Default = `c(1, 2)`.}
+\item{batch}{Optional, metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA.}
 }
 \value{
 Returns a plot of the first two principal components in the dataset
@@ -40,5 +40,6 @@ plotBarcodePCA
 Plot the first two principal components of the barcode dataset
 }
 \examples{
+data(test.dge)
 plotBarcodePCA(test.dge, groups = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
 }

@@ -46,5 +46,5 @@ Generate proportional bubbleplots from raw count object with barcodes labelled a
 }
 \examples{
 data(test.dge)
-plotBarcodeBubble(test.dge$counts, proportionCutoff = 10)
+plotBarcodeBubble(test.dge, proportionCutoff = 10)
 }

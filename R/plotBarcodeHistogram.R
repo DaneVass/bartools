@@ -10,12 +10,12 @@
 #' @param alphaLowFreq Alpha of barcodes not in top n barcodes (decimal). Default = `1`.
 #'
 #' @return Returns a stacked bar plot of barcode frequencies within samples
-#'
+#' @importFrom magrittr "%>%"
 #' @export
 #'
 #' @examples
-#' plotBarcodesStackedBar(test.dge)
-
+#' data(test.dge)
+#' plotBarcodeHistogram(test.dge)
 plotBarcodeHistogram <-
   function(dgeObject,
            topN = 10,
@@ -89,14 +89,14 @@ plotBarcodeHistogram <-
 
     # set which barcodes to label
     bc_labels <- barcode_freqs %>%
-      dplyr::arrange(desc(freq)) %>%
+      dplyr::arrange(dplyr::desc(freq)) %>%
       dplyr::pull(barcode) %>%
       unique() %>%
-      head(topN) %>%
+      utils::head(topN) %>%
       as.character()
 
     label_values <-
-      setNames(as.list(cols_vector), unique(barcode_freqs$barcode))
+      stats::setNames(as.list(cols_vector), unique(barcode_freqs$barcode))
 
     p <- barcode_freqs %>%
       ggplot(aes(

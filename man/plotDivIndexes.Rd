@@ -9,8 +9,7 @@ plotDivIndexes(
   div = NULL,
   metric = "shannon",
   type = "bar",
-  group = NULL,
-  color = NULL
+  group = NULL
 )
 }
 \arguments{
@@ -37,5 +36,5 @@ Plots common diversity indices per sample
 }
 \examples{
 data(test.dge)
-plotDivIndexes(counts = test.dge)
+plotDivIndexes(test.dge, group="Treatment", type="box")
 }

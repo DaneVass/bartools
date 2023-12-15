@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @examples
+#' data(test.dge)
 #' thresholdCounts(test.dge, type = "absolute", threshold = 10)
 #' thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = TRUE)
 

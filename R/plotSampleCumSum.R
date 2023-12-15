@@ -7,6 +7,8 @@
 #' @param samples Sample names
 #'
 #' @return Returns a cumulative sum plot
+#' 
+#' @importFrom magrittr "%>%"
 #' @export
 
 plotSampleCumSum <- function(dgeObject,
@@ -20,16 +22,16 @@ plotSampleCumSum <- function(dgeObject,
 
   counts <- counts %>%
     as.data.frame() %>%
-    rownames_to_column("Barcode") %>%
-    pivot_longer(-Barcode, names_to = "sample", values_to = "count")
+    tibble::rownames_to_column("Barcode") %>%
+    tidyr::pivot_longer(-Barcode, names_to = "sample", values_to = "count")
 
   counts <- counts %>%
-    arrange(desc(count)) %>%
-    group_by(sample) %>%
-    mutate(freq = count / sum(count)) %>%
+    arrange(dplyr::desc(count)) %>%
+    dplyr::group_by(sample) %>%
+    dplyr::mutate(freq = count / sum(count)) %>%
     # remove all samples not detected within sample
-    filter(freq > 0) %>%
-    mutate(rank = row_number(), cumsum = cumsum(freq))
+    dplyr::filter(freq > 0) %>%
+    dplyr::mutate(rank = dplyr::row_number(), cumsum = cumsum(freq))
 
   # shuffle points so samples are not hidden
   counts[sample(1:nrow(counts)),]  %>%
