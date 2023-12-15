@@ -31,8 +31,8 @@ cellular barcoding methodology that utiilses random DNA barcodes.
 
 ### Installation
 
-You can install the development version of bartools from
-[GitHub](https://github.com/):
+You can install bartools from
+[GitHub](https://github.com/DaneVass/bartools):
 
 ``` r
 # first install Bioconductor dependencies
