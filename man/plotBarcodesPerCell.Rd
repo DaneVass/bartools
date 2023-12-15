@@ -13,7 +13,7 @@ plotBarcodesPerCell(
 )
 }
 \arguments{
-\item{counts}{Dataframe with barcodes and UMI counts per cell}
+\item{counts}{Dataframe with barcodes and UMI counts per cell or SingleCellExperiment or Seurat object}
 
 \item{fraction}{Boolean, whether to plot fraction or number of cells}
 

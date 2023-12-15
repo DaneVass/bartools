@@ -1,3 +1,10 @@
+#' Test BARtab single cell barcode annotation
+#'
+#' A table of cell id, barcode, UMI counts
+#'
+#' @format A data frame with 3000 rows and 3 variables:
+"test.bartab.sc"
+
 #' Test barcode SCE object
 #'
 #' A SingleCellExperiment object containing single cell RNA-seq data for 100 cells
