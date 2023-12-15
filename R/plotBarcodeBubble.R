@@ -17,7 +17,7 @@
 #' @export
 #' @examples
 #' data(test.dge)
-#' plotBarcodeBubble(test.dge$counts, proportionCutoff = 10)
+#' plotBarcodeBubble(test.dge, proportionCutoff = 10)
 
 plotBarcodeBubble <- function(dgeObject,
                               title = "Proportional Bubble Plot",

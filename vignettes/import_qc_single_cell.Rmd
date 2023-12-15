@@ -17,11 +17,6 @@ editor_options:
     wrap: sentence
 ---
 
-# TODO
-create example dataset: counts.tsv, cell-barcode-anno.tsv, seurat object
-add description of example dataset. 
-
-
 # Import and QC of single-cell barcode data
 
 This vignette shows how to
@@ -37,6 +32,7 @@ If the QC thresholds need to be revised, follow section 1.
 
 ```{r setup}
 library(bartools)
+library(magrittr)
 knitr::opts_chunk$set(dev="png")
 ```
 

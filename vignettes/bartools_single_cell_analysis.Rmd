@@ -9,7 +9,7 @@ output:
     highlight: tango 
 date: September 05, 2023
 vignette: >
-  %\VignetteIndexEntry{import-qc-single-cell}
+  %\VignetteIndexEntry{bartools-single-cell-analysis}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 
@@ -29,14 +29,14 @@ Dimensionality reduction and clustering were previously performed using `Seurat`
 
 ### Load the `bartools` package
 
-```{r setup}
+```{r, eval = FALSE}
 library(bartools)
 knitr::opts_chunk$set(dev="png")
 ```
 
 ### Load the `test.sce` dataset
 
-```{r setup}
+```{r}
 data(test.sce)
 test.sce
 ```
@@ -101,13 +101,13 @@ the `idents` parameter defines a second grouping variable, present as a column o
 
 ### Cell cycle phase across clusters
 ```{r}
-plotCellsInClusters(test.sce, group = "Phase", factor = "G1", idents = "seurat_clusters")
+plotCellsInClusters(test.sce, group = "Phase", factor = "G1", clusters = "seurat_clusters")
 ```
 
 The `plotCellsInClusters` framework can extend to any discrete variables present in the dataset. Here we examine the representation of lineage barcode BC_12904 across clusters
 
 ```{r}
-plotCellsInClusters(test.sce, group = "barcode", factor = "BC_12904", idents = "seurat_clusters")
+plotCellsInClusters(test.sce, group = "barcode", factor = "BC_12904", clusters = "seurat_clusters")
 ```
 
 ## 4. Determine enrichment within clusters - plotClusterEnrichment
@@ -124,7 +124,7 @@ plotClusterEnrichment(
   test.sce,
   group = "Phase",
   factor = "G2M",
-  idents = "seurat_clusters",
+  clusters = "seurat_clusters",
   threshold = 0.01,
   order = T,
   plot = T
