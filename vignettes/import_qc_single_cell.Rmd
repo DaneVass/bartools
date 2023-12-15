@@ -58,16 +58,17 @@ To follow along with this vignette the raw counts tables and sample metadata are
 
 ## 2. QC and filter barcodes
 
-First, we load the results of BARtab. 
+First, we load the results of BARtab. Below is an example of how we can load this data using the `readBartabCounts` function. 
 
-```{r}
-counts_path <- "~/Dropbox/PostDoc_PeterMac/Manuscripts/2022_bartools_manuscript/datasets/barcoded_single_cell/BARtab_out/counts/unmapped.counts.tsv"
+```{r, eval = FALSE}
+counts_path <- "full/path/to/BARtab/umi.counts.tsv"
+counts <- readBartabCounts(counts_path)
 ```
 
+For now, users can follow along with this vignette using the test dataset included in `bartools`
+
 ```{r}
-counts <- readBartabCounts(counts_path)
-counts <- head(counts, 3000)
-write.delim(counts2, "~/Dropbox/PostDoc_PeterMac/Scripts/bartools/inst/extdata/test.bartab.counts.tsv")
+data(test.bartab.sc)
 ```
 
 This unfiltered barcode counts table is in long format and potentially has multiple rows per cell ID if multiple barcodes per cell are detected. 
@@ -174,7 +175,7 @@ length(which(!is.na(test.sce$barcode))) / ncol(test.sce) * 100
 We can repeat the QC plot to check how many barcodes were detected in a cell, including no barcodes detected.
 
 ```{r}
-plotBarcodesPerCell(test.sce@colData, aggregated = T, sep = ",")
+plotBarcodesPerCell(test.sce, aggregated = T, sep = ",")
 ```
 
 We can visualize the distribution of number of cells per clone.
@@ -189,7 +190,7 @@ plotCellsPerGroup(
   test.sce,
   group = "barcode",
   order = T,
-  threshold = 200,
+  threshold = 5,
   plot = T,
   label = T,
   sep = ","
@@ -202,8 +203,7 @@ To check whether a clone is enriched in a cluster or cell type, we can perform a
 plotClusterEnrichment(
   test.sce,
   group = "barcode",
-  # factor = "BC_1614",
-  factor = "mCHERRY_Barcode_12904",
+  factor = "BC_1614",
   idents = "seurat_clusters",
   threshold = 0.01,
   order = T,
@@ -213,11 +213,10 @@ plotClusterEnrichment(
 
 
 ```{r}
-plotCellsInClusters(test.sce,
-                    group = "barcode",
-                    # factor = "BC_1614",
-                    factor = "mCHERRY_Barcode_12904",
-                    plot.pct = T)
+plotCellsInClusters(test.sce, 
+                    group = "barcode", 
+                    factor = "BC_12904", 
+                    idents = "seurat_clusters")
 ```
 
 

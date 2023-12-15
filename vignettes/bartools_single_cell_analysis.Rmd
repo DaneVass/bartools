@@ -46,6 +46,7 @@ test.sce
 
 Single cell RNA sequencing datasets can reveal transcriptional differences between groups of cells / celltypes that are of biological importance. The `plotMetrics` function takes a single cell object in Seurat or SingleCellExperiment format and plots a desired continuous variable (e.g. number of transcripts or genes detected per cell) split across any groups of interest. These groups could be clusters, celltypes or, with lineage barcode information, individual clones. Thus, `plotMetrics` allows us to go one step further and examine biological differences between individual groups of cells. 
 
+Here,
 the `group` parameter defines a grouping variable, present as a column of metadata in the single cell object. 
 the `factor` parameter defines a continuous variable to plot per level of the `group` parameter. 
 the `threshold` parameter defines the minimum number of cells required for each level of the `group` parameter. 
@@ -75,6 +76,10 @@ We may also be interested in basic metrics like how many cells comprise a groupi
 
 Groups above a user defined threshold are highlighted.
 
+Here, 
+the `group` parameter defines a grouping variable, present as a column of metadata in the single cell object. 
+the `threshold` parameter defines the minimum number of cells. Levels of the `group` parameter above this threshold will be labelled.
+
 ### plot cells per cluster
 ```{r}
 plotCellsPerGroup(test.sce, group = "seurat_clusters", threshold = 5)
@@ -87,6 +92,12 @@ plotCellsPerGroup(test.sce, group = "barcode", threshold = 3)
 
 ## 3. Plot distribution of cells across clusters - plotCellsInClusters
 We may also be interested in the distribution of cells within certain groups across levels of another group. For example we may want to reveal the proportion of cells in a certain cell cycle phase across louvain clusters within a single cell dataset. The `plotCellsInClusters` function allows users to examine these questions. 
+
+Here,
+the `group` parameter defines a grouping variable, present as a column of metadata in the single cell object. 
+the `factor` parameter defines a level of `group` to calculate percentage abundance within each level of `idents`. 
+the `idents` parameter defines a second grouping variable, present as a column of metadata in the single cell object.
+
 
 ### Cell cycle phase across clusters
 ```{r}
@@ -101,6 +112,12 @@ plotCellsInClusters(test.sce, group = "barcode", factor = "BC_12904", idents = "
 
 ## 4. Determine enrichment within clusters - plotClusterEnrichment
 To check whether a clone is enriched in a cluster or cell type, we can perform a hypergeometric test using the `plotClusterEnrichment` function. Here we test for enrichment of cells in G2M cell cycle phase across louvain clusters.
+
+Here,
+the `group` parameter defines a grouping variable, present as a column of metadata in the single cell object. 
+the `factor` parameter defines a level of the `group` parameter to test for enrichment within each level of `idents`. 
+the `idents` parameter defines a second grouping variable to test for enrichment of `factor` at each level.
+the `threshold` parameter defines a p-value threshold for the hypergeometric test.
 
 ```{r}
 plotClusterEnrichment(
