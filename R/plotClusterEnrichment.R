@@ -72,8 +72,16 @@ plotClusterEnrichment <- function(sc.obj = NULL,
 
   factor.rows <- which(meta[,`group`, drop = TRUE] == as.character(factor))
   test.cells <- rownames(meta[factor.rows,])
+
   test.cells.total <- length(test.cells)
-  clusters_levels <- levels(meta[,`clusters`])
+  clusters_levels <- levels(meta[, `clusters`])
+  low.n <- which(data.frame(table(meta[, `clusters`]))$Freq == 0)
+  labels <- data.frame(table(meta[, `clusters`]))$Var1[low.n]
+  message(paste(
+    "The following ident levels had no observations and were removed:",
+    as.character(labels)
+  ))
+  clusters_levels <- clusters_levels[-low.n]
 
   # loop phyper tests for factor enrichment over each level of clusters
   cluster.hyper.tests <- lapply(clusters_levels, function(x) {
