@@ -11,6 +11,7 @@ calcPercentileBarcodes(dgeObject, percentile = 0.95)
 
 \item{percentile}{Desired percentile value (decimal). Default = `0.95` (i.e. 95%).}
 }
+}
 \value{
 Returns a list object containing Nth percentile tables of barcode counts per sample
 }
