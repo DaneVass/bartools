@@ -73,10 +73,10 @@ plotClusterEnrichment <- function(sc.obj = NULL,
   factor.rows <- which(meta[,`group`, drop = TRUE] == as.character(factor))
   test.cells <- rownames(meta[factor.rows,])
   test.cells.total <- length(test.cells)
-  clusters <- levels(meta[,`clusters`])
+  clusters_levels <- levels(meta[,`clusters`])
 
   # loop phyper tests for factor enrichment over each level of clusters
-  cluster.hyper.tests <- lapply(clusters, function(x) {
+  cluster.hyper.tests <- lapply(clusters_levels, function(x) {
     cluster.all.rows <- which(meta[,`clusters`, drop = TRUE] == as.character(x))
     cluster.total.cells <- nrow(meta[cluster.all.rows,])
     cluster.test.rows <- which(meta[cluster.all.rows,`group`, drop = TRUE] == as.character(factor))
@@ -102,7 +102,7 @@ plotClusterEnrichment <- function(sc.obj = NULL,
   )
 
   # generate output data
-  names(cluster.hyper.tests) <- paste("cluster", clusters, sep = "_")
+  names(cluster.hyper.tests) <- paste("cluster", clusters_levels, sep = "_")
   plot.dat <- data.frame(unlist(cluster.hyper.tests),
                          row.names = names(cluster.hyper.tests),
                          neglog10pval = -log10(unlist(cluster.hyper.tests)),
