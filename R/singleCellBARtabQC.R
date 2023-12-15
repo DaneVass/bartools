@@ -86,7 +86,7 @@ integer_breaks <- function(n = 5, ...) {
 #'
 #' Plot number of detected barcodes per cell.
 #'
-#' @param counts Dataframe with barcodes and UMI counts per cell
+#' @param counts Dataframe with barcodes and UMI counts per cell or SingleCellExperiment or Seurat object
 #' @param fraction Boolean, whether to plot fraction or number of cells
 #' @param aggregated Counts were aggregated per cell (boolean). Default = `FALSE`.
 #' @param sep Separating character used for aggregation (string). Default = `;`.
@@ -97,6 +97,16 @@ integer_breaks <- function(n = 5, ...) {
 #' @export
 
 plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, notDetected = "", sep = ";") {
+
+  # get metadata and ident class
+  if (class(counts)[1] == "Seurat") {
+    counts <- counts@meta.data
+    aggregated <- TRUE
+  } else if (class(counts)[1] == "SingleCellExperiment") {
+    counts <- counts@colData
+    aggregated <- TRUE
+  }
+
   if (aggregated) {
     # in case barcodes were previously already aggregated per cell
     lineagePerCell.dist.df <- counts %>%
