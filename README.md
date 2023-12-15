@@ -65,5 +65,5 @@ barcode reads from raw sequence files. See the github for
 ### Contact
 
 The bartools package was developed by [Dane
-Vassiliadis](https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis).
+Vassiliadis](https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis) and [Henrietta Holze](https://github.com/HenriettaHolze).
 Please post any issues at <https://github.com/DaneVass/bartools/issues>
