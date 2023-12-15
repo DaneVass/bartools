@@ -28,6 +28,8 @@ plotCellsInClusters <- function(sc.obj,
                                 clusters = "seurat_clusters",
                                 plot.pct = T,
                                 plot = T) {
+
+  idents <- clusters
   # check inputs
   if (is.null(sc.obj)) {
     stop("Please supply a Seurat or SingleCellExperiment object")
@@ -53,11 +55,11 @@ plotCellsInClusters <- function(sc.obj,
     stop("Group variable is not column in metadata")
   }
   # factor must be in group column
-  if (!factor %in% meta[[group]]) {
+  if (!factor %in% meta[group]) {
     stop("Factor is not present in group column")
   }
   # clusters must be column in metadata
-  if (!clusters %in% colnames(meta)) {
+  if (!idents %in% colnames(meta)) {
     stop("Clusters variable is not column in metadata")
   }
   if (length(factor) > 1) {
@@ -67,21 +69,21 @@ plotCellsInClusters <- function(sc.obj,
   # get number of seurat clusters. NB plotting is 0 indexed so total - 1
   clusters <-
     data.frame(clusters = as.factor(seq(0, max(
-      as.numeric(meta[, clusters]) - 1
+      as.numeric(meta[, idents]) - 1
     ), 1)))
-  colnames(clusters) <- as.character(clusters)
+  colnames(clusters) <- as.character(idents)
   # get and count cells of interest
   meta.bc <- as.data.frame(meta[!is.na(meta[, `group`]), ])
   # get cells in group that are factor
   meta.select <- meta.bc[which(meta.bc[, `group`] == factor), ]
 
-  # group by and tally clusters (i,e. clusters)
-  clusters <- sym(clusters)
+  # group by and tally clusters (i,e. idents)
+  idents <- sym(idents)
   meta.bc.group <-
-    dplyr::tally(dplyr::group_by(meta.select,!!clusters))
+    dplyr::tally(dplyr::group_by(meta.select,!!idents))
   print(meta.bc.group)
 
-  # join counts per cluster (ident) of group factor into table of clusters (clusters)
+  # join counts per cluster (ident) of group factor into table of clusters (idents)
   dat <-
     dplyr::left_join(clusters, meta.bc.group, by = "seurat_clusters")
   dat[is.na(dat)] = 0
@@ -94,9 +96,9 @@ plotCellsInClusters <- function(sc.obj,
     if (isTRUE(plot.pct)) {
       p <-
         ggplot(dat, aes(
-          x = !!clusters,
+          x = !!idents,
           y = Percentage,
-          fill = !!clusters
+          fill = !!idents
         )) +
         geom_histogram(stat = "identity") +
         scale_fill_manual(values = scales::hue_pal()(nrow(clusters))) +
@@ -104,9 +106,9 @@ plotCellsInClusters <- function(sc.obj,
         ggtitle(paste("Percentage of cells in clusters:", group, factor))
     } else {
       p <- ggplot(dat, aes(
-        x = !!clusters,
+        x = !!idents,
         y = n,
-        fill = !!clusters
+        fill = !!idents
       )) +
         geom_histogram(stat = "identity") +
         scale_fill_manual(values = scales::hue_pal()(nrow(clusters))) +
