@@ -76,17 +76,17 @@ This unfiltered barcode counts table is in long format and potentially has multi
 We assess the quality of the data by looking at the number of barcodes detected per cell and the number of UMIs supporting the most frequent barcode per cell. 
 
 ```{r}
-plotBarcodesPerCell(counts)
+plotBarcodesPerCell(test.bartab.sc)
 ```
 
 ```{r}
-plotUmiPerBarcode(counts)
+plotUmiPerBarcode(test.bartab.sc)
 ```
 
 In order to identify a suitable threshold for the minimum number of UMIs supporting a barcode, we can plot the cummulative sum of how many cells would pass each threshold. 
 
 ```{r}
-plotUmiFilterThresholds(counts)
+plotUmiFilterThresholds(test.bartab.sc)
 ```
 
 If we would remove barcodes that are supported by a single UMI, we would lose half the cells. Therefore, we do not filter based on minimum number of UMIs.
@@ -94,7 +94,7 @@ If we would remove barcodes that are supported by a single UMI, we would lose ha
 However, we can remove minor barcodes from cells, i.e. barcodes that have less than half the number of supporting UMIs than the major barcode in the cell. 
 
 ```{r}
-counts_filtered <- filterBarcodes(counts, umiCountFilter = 2, umiFractionFilter = 0.5)
+counts_filtered <- filterBarcodes(test.bartab.sc, umiCountFilter = 2, umiFractionFilter = 0.5)
 ```
 
 The following plot shows that the number of cells with multiple barcodes detected is now reduced. 
@@ -147,6 +147,7 @@ sc <- Seurat::AddMetaData(sc, counts_agg)
 ### Barcode metadata import into SingleCellExperiment
 
 ```{r}
+date(test.sce)
 colData(test.sce)[c("barcode", "bc.umi.count")] <-
   counts_agg[colnames(test.sce), c("barcode", "bc.umi.count")]
 head(colData(test.sce))
