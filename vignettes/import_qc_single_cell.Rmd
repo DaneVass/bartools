@@ -147,7 +147,7 @@ sc <- Seurat::AddMetaData(sc, counts_agg)
 ### Barcode metadata import into SingleCellExperiment
 
 ```{r}
-date(test.sce)
+data(test.sce)
 colData(test.sce)[c("barcode", "bc.umi.count")] <-
   counts_agg[colnames(test.sce), c("barcode", "bc.umi.count")]
 head(colData(test.sce))
