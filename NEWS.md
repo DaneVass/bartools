@@ -1,6 +1,9 @@
 # bartools 1.0.0
 
-- Updated function parameter inputs
+- Updated function parameter inputs across whole package
+- Updated quickstart vignette, added single-cell vignette
+- Added functions aggregateBarcodes, filterBarcodes, plotUmiFilterThresholds, plotUmiPerBarcode, readBartabCounts, plotBarcodesPerCell for single-cell data and plotSampleCumSum for bulk data
+- removed deprecated plotLibraryCumSum, plotLibraryDiversity, proportionalBubbleplot
 
 # bartools 0.2.5
 
