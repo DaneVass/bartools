@@ -103,7 +103,7 @@ plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, not
     counts <- counts@meta.data
     aggregated <- TRUE
   } else if (class(counts)[1] == "SingleCellExperiment") {
-    counts <- counts@colData
+    counts <- as.data.frame(counts@colData)
     aggregated <- TRUE
   }
 
