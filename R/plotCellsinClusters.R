@@ -53,7 +53,7 @@ plotCellsInClusters <- function(sc.obj,
     stop("Group variable is not column in metadata")
   }
   # factor must be in group column
-  if (!factor %in% meta[group]) {
+  if (!factor %in% meta[[group]]) {
     stop("Factor is not present in group column")
   }
   # clusters must be column in metadata
