@@ -11,6 +11,7 @@ getDominantBarcodes(dgeObject, threshold = 0.05)
 
 \item{threshold}{Proportion threshold to call dominant barcodes (decimal). Default = `0.05` (i.e. 5%).}
 }
+}
 \value{
 Returns a named list containing vectors of dominant barcodes per sample
 }
