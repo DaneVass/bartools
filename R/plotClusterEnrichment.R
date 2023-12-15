@@ -11,7 +11,7 @@
 #' and an ident class (i.e. clusters). Per level of ident performs hypergeometric testing
 #' for enrichment of group factor
 #'
-#' @param sc.obj single cell object in Seurat or SingleCellExperiment format containing clusters and group metadata
+#' @param sc.obj Single cell Seurat or SingleCellExperiment object containing clusters and group metadata.
 #' @param group a column of metadata (string). Default = `barcode`.
 #' @param factor a level of group to test for enrichment per cluster, e.g. a specific barcode (string).
 #' @param clusters a column of metadata defining the cluster identities of each cell (string). Default = `seurat_clusters`
