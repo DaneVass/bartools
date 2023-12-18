@@ -8,8 +8,8 @@
 <meta name="description" content="bartools">
 <title>bartools: quickstart guide • bartools</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="bartools: quickstart guide">
 <meta property="og:description" content="bartools">
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">bartools</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,6 +42,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/bartools_quickstart.html">bartools: quickstart guide</a>
+    <a class="dropdown-item" href="../articles/bartools_single_cell_analysis.html">bartools: scRNA-seq analysis guide</a>
+    <a class="dropdown-item" href="../articles/import_qc_single_cell.html">bartools: import and QC single-cell barcode data</a>
   </div>
 </li>
 <li class="nav-item">
@@ -66,7 +68,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>bartools: quickstart guide</h1>
                         <h4 data-toc-skip class="author">Dane
-Vassiliadis</h4>
+Vassiliadis, Henrietta Holze</h4>
             
             <h4 data-toc-skip class="date">June 27, 2019</h4>
       
@@ -80,14 +82,26 @@ Vassiliadis</h4>
 <h2 id="bartools-quickstart-guide">Bartools Quickstart Guide<a class="anchor" aria-label="anchor" href="#bartools-quickstart-guide"></a>
 </h2>
 <div class="section level3">
-<h3 id="load-the-bartools-package">0. Load the <code>bartools</code> package<a class="anchor" aria-label="anchor" href="#load-the-bartools-package"></a>
+<h3 id="install-and-load-the-bartools-package">0. Install and load the <code>bartools</code> package<a class="anchor" aria-label="anchor" href="#install-and-load-the-bartools-package"></a>
 </h3>
+<p>You can install bartools from <a href="https://github.com/DaneVass/bartools" class="external-link">GitHub</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># first install Bioconductor dependencies</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"edgeR"</span>, <span class="st">"limma"</span>, <span class="st">"ComplexHeatmap"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># then install bartools via GitHub</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"devtools"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"DaneVass/bartools"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">bartools</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: edgeR</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required package: limma</span></span></code></pre>
 <pre><code><span><span class="co">## Loading required package: ggplot2</span></span></code></pre>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html" class="external-link">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>dev<span class="op">=</span><span class="st">"png"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -116,7 +130,7 @@ control.</p>
 diseased mice and sequenced in technical replicate.</p>
 <p>To follow along with this vignette the raw counts tables and sample
 metadata are included in the <code>bartools</code> package.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -127,34 +141,43 @@ sheet as shown below. This is the easiest way to generate a
 <code>DGEList</code> object containing the count information and
 metadata of interest for a set of barcode sequencing samples. An example
 of this process is shown below.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">samplesheet</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
-<span>      <span class="st">"extdata"</span>,</span>
-<span>      <span class="st">"test_sampletable.csv"</span>,</span>
-<span>      package <span class="op">=</span> <span class="st">"bartools"</span>,</span>
-<span>      mustWork <span class="op">=</span> <span class="cn">T</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    header <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>    stringsAsFactors <span class="op">=</span> <span class="cn">F</span></span>
-<span>  <span class="op">)</span></span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">samplesheet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span></span>
+<span>    <span class="st">"extdata"</span>,</span>
+<span>    <span class="st">"test_sampletable.csv"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"bartools"</span>,</span>
+<span>    mustWork <span class="op">=</span> <span class="cn">T</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  header <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  stringsAsFactors <span class="op">=</span> <span class="cn">F</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">samplesheet</span></span></code></pre></div>
+<p>To read in a sample sheet in excel format:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">samplesheet</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span></span>
+<span>    <span class="st">"samplesheet.xlsx"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">samplesheet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">samplesheet</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">samplesheet</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">samplesheet</span><span class="op">$</span><span class="va">sample</span></span>
+<span><span class="va">samplesheet</span></span></code></pre></div>
+<p>Whatever format your sample sheet is in, make sure that the rownames
+are your unique sample names.</p>
 <p>Load in the counts as specified in the samplesheet into a DGEList
 object. The function expects file locations to be specified either as
 character vector of filenames, or as a column named files in the
 samplesheet.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dge</span> <span class="op">&lt;-</span></span>
-<span>  <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/readDGE.html" class="external-link">readDGE</a></span><span class="op">(</span></span>
-<span>    files <span class="op">=</span> <span class="va">samplesheet</span>,</span>
-<span>    group <span class="op">=</span> <span class="va">samplesheet</span><span class="op">$</span><span class="va">treatment</span>,</span>
-<span>    labels <span class="op">=</span> <span class="va">samplesheet</span><span class="op">$</span><span class="va">sample</span>,</span>
-<span>    header <span class="op">=</span> <span class="cn">T</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dge</span> <span class="op">&lt;-</span> <span class="fu">edgeR</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/readDGE.html" class="external-link">readDGE</a></span><span class="op">(</span></span>
+<span>  files <span class="op">=</span> <span class="va">samplesheet</span>,</span>
+<span>  group <span class="op">=</span> <span class="va">samplesheet</span><span class="op">$</span><span class="va">treatment</span>,</span>
+<span>  labels <span class="op">=</span> <span class="va">samplesheet</span><span class="op">$</span><span class="va">sample</span>,</span>
+<span>  header <span class="op">=</span> <span class="cn">F</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>This results in the creation of a DGEList object containing counts
 and metadata information for each sample.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load the test dataset </span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">)</span></span>
 <span><span class="va">test.dge</span></span></code></pre></div>
@@ -211,84 +234,127 @@ appropriate threshold to apply to the data to maximise signal to noise
 and retain true and informative barcodes.</p>
 <p>We can test different thresholding parameters, such as absolute
 thresholds on total read counts as below.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Remove rows with no data</span></span>
-<span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"absolute"</span>, threshold <span class="op">=</span> <span class="fl">1</span>, min.samps <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                plot <span class="op">=</span> <span class="cn">T</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Remove barcodes (rows) with no data</span></span>
+<span><span class="va">test.dge</span> <span class="op">&lt;-</span> <span class="va">test.dge</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">test.dge</span><span class="op">$</span><span class="va">counts</span><span class="op">)</span> <span class="op">!=</span> <span class="fl">0</span>, <span class="op">]</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>  <span class="va">test.dge</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  minSamples <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"absolute"</span>, threshold <span class="op">=</span> <span class="fl">10</span>, min.samps <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                plot <span class="op">=</span> <span class="cn">T</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>  <span class="va">test.dge</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  minSamples <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 1462   38</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-5-2.png" width="700"></p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"absolute"</span>, threshold <span class="op">=</span> <span class="fl">10</span>, min.samps <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>                plot <span class="op">=</span> <span class="cn">T</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-8-2.png" width="700"></p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>  <span class="va">test.dge</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  minSamples <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 387  38</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-5-3.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-8-3.png" width="700"></p>
 <p>Or relative thresholds based on proportion within a sample.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Remove rows with no data</span></span>
-<span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"relative"</span>, threshold <span class="op">=</span> <span class="fl">1e-10</span>, min.samps <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                plot <span class="op">=</span> <span class="cn">T</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>  <span class="va">test.dge</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"relative"</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1e-10</span>,</span>
+<span>  minSamples <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"relative"</span>, threshold <span class="op">=</span> <span class="fl">1e-5</span>, min.samps <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                plot <span class="op">=</span> <span class="cn">T</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>  <span class="va">test.dge</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"relative"</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1e-5</span>,</span>
+<span>  minSamples <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 1381   38</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"relative"</span>, threshold <span class="op">=</span> <span class="fl">1e-5</span>, min.samps <span class="op">=</span> <span class="fl">3</span>, </span>
-<span>                plot <span class="op">=</span> <span class="cn">T</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-9-2.png" width="700"></p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>  <span class="va">test.dge</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"relative"</span>,</span>
+<span>  threshold <span class="op">=</span> <span class="fl">1e-5</span>,</span>
+<span>  minSamples <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 322  38</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-6-3.png" width="700"></p>
-<p>Here we will continue with an absolute threshold of 2.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">dge.filtered</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span><span class="va">test.dge</span>, type <span class="op">=</span> <span class="st">"absolute"</span>, threshold <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                                min.samps <span class="op">=</span> <span class="fl">2</span>, plot <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-9-3.png" width="700"></p>
+<p>Here we will continue with an absolute threshold of 10.</p>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dge.filtered</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="../reference/thresholdCounts.html">thresholdCounts</a></span><span class="op">(</span></span>
+<span>    <span class="va">test.dge</span>,</span>
+<span>    type <span class="op">=</span> <span class="st">"absolute"</span>,</span>
+<span>    threshold <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    minSamples <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    plot <span class="op">=</span> <span class="cn">F</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## DGEList dimensions pre-threshold</span></span></code></pre>
-<pre><code><span><span class="co">## [1] 1639   38</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 1490   38</span></span></code></pre>
 <pre><code><span><span class="co">## DGEList dimensions post-threshold</span></span></code></pre>
 <pre><code><span><span class="co">## [1] 1316   38</span></span></code></pre>
 <p>We then normalise samples to sequencing depth to counts per million
 using <code><a href="../reference/normaliseCounts.html">normaliseCounts()</a></code>.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dge.cpmnorm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/normaliseCounts.html">normaliseCounts</a></span><span class="op">(</span><span class="va">dge.filtered</span>, method <span class="op">=</span> <span class="st">"CPM"</span><span class="op">)</span></span></code></pre></div>
 <p>We can plot the raw and normalised sequencing depth to get an idea of
 depth discrepancies between PCR replicates.</p>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># raw counts per sample</span></span>
-<span><span class="fu"><a href="../reference/plotReadCounts.html">plotReadCounts</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">$</span><span class="va">counts</span>, group <span class="op">=</span> <span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<span><span class="fu"><a href="../reference/plotReadCounts.html">plotReadCounts</a></span><span class="op">(</span><span class="va">dge.filtered</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># normalised counts per sample</span></span>
-<span><span class="fu"><a href="../reference/plotReadCounts.html">plotReadCounts</a></span><span class="op">(</span><span class="va">dge.cpmnorm</span>, group <span class="op">=</span> <span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
-<p>For lentiviral based barcoding experiments, such as this one, it is
-common for the library to exhibit a degree of skewness based on the
-cloning method. This means that some barcodes are represented in the
-library more than others and so have a greater chance to be transduced
-into multiple cells.<br></p>
+<span><span class="fu"><a href="../reference/plotReadCounts.html">plotReadCounts</a></span><span class="op">(</span><span class="va">dge.cpmnorm</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p>For lentiviral based cellular barcoding experiments, such as this
+one, it is common for the library to exhibit a degree of skewness based
+on the cloning method. This means that some barcodes are represented in
+the library more than others and so have a greater chance to be
+transduced into multiple cells.<br></p>
 <p>Most experiments assume that each individual barcode is transduced
 into only one cell, and that each cell is only transduced with one
 barcode. This is ensured using a low multiplicity of infection (MOI)
@@ -299,18 +365,22 @@ per barcode to identify bias in counts in sample vs. frequency of
 barcode in reference library.<br>
 The barcodes are labelled based on their ranked frequency in the
 reference library.</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot detected barcodes ordered by frequency in reference library</span></span>
 <span><span class="fu"><a href="../reference/plotBarcodeCounts.html">plotBarcodeCounts</a></span><span class="op">(</span><span class="va">dge.cpmnorm</span>, log10 <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot log10 barcode counts</span></span>
 <span><span class="fu"><a href="../reference/plotBarcodeCounts.html">plotBarcodeCounts</a></span><span class="op">(</span><span class="va">dge.cpmnorm</span>, log10 <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># order barcodes by count across samples</span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeCounts.html">plotBarcodeCounts</a></span><span class="op">(</span><span class="va">dge.cpmnorm</span>, log10 <span class="op">=</span> <span class="cn">F</span>, order <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-3.png" width="700"></p>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># order barcodes by count across samples with log norm</span></span>
 <span><span class="fu"><a href="../reference/plotBarcodeCounts.html">plotBarcodeCounts</a></span><span class="op">(</span><span class="va">dge.cpmnorm</span>, log10 <span class="op">=</span> <span class="cn">T</span>, order <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-13-1.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-4.png" width="700"></p>
 <p>In the first and second plot individual barcodes on the x-axis are
 ordered based on their frequency in the reference library pool.<br>
 An increased number of counts per barcode toward the left hand side of
@@ -331,50 +401,69 @@ technical duplicates of a sample generated at the library PCR stage is a
 good way to ensure this.</p>
 <p>In our experiment we have 9 samples total, each with two PCR
 technical replicates. Here, we correlate the barcode distributions for
-each pair of technical replicates.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">samps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
+each pair of technical replicates.<br>
+NB: This only works for paired replicates, i.e. not more than 2.</p>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># get all unique samples</span></span>
+<span><span class="co"># column "group" contains information on replicates here</span></span>
+<span><span class="va">unique_samples</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># only plot subset of samples</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">samps</span><span class="op">[</span><span class="fl">4</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="va">dge.filtered</span><span class="op">[</span>, <span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co"># only plot subset of samples. </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">unique_samples</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="co"># subset dge object to get replicates of sample</span></span>
+<span>  <span class="va">replicate_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">)</span><span class="op">[</span><span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span></span>
 <span>  <span class="fu"><a href="../reference/plotBarcodeRegression.html">plotBarcodeRegression</a></span><span class="op">(</span></span>
-<span>    <span class="va">df</span>,</span>
-<span>    samp1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>    samp2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>,</span>
+<span>    <span class="va">dge.filtered</span>,</span>
+<span>    sample1 <span class="op">=</span> <span class="va">replicate_names</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>,</span>
+<span>    sample2 <span class="op">=</span> <span class="va">replicate_names</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>,</span>
 <span>    rug <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>    trans <span class="op">=</span> <span class="st">"log1p"</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## [[2]]</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
-<pre><code><span><span class="co">## </span></span>
-<span><span class="co">## [[3]]</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-14-3.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-15-1.png" width="700"></p>
 <p>We fit a linear model to both technical replicates per sample and
 plot the regression line. Note that we expect a very high correlation
 because these are PCR replicates of the same barcode pool.</p>
 <p>We can also easily get the correlation values between replicates
 using <code>calcReplicateCorr</code>.</p>
 <p>Samples can be filtered for high or low correlation using the
-<code>corr.thresh</code> and <code>return</code> variables.</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">corrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcReplicateCorr.html">calcReplicateCorr</a></span><span class="op">(</span><span class="va">dge.filtered</span>, group <span class="op">=</span> <span class="st">"Group"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">corrs</span> <span class="op">&lt;</span> <span class="fl">0.9</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## named integer(0)</span></span></code></pre>
-<p>Finally sample replicates can be correlated globally using
-<code>plotBarcodeCorrelation</code></p>
+<code>threshold</code> and <code>return</code> variables.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Pearson correlation</span></span>
-<span><span class="fu"><a href="../reference/plotBarcodeCorrelation.html">plotBarcodeCorrelation</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">$</span><span class="va">counts</span>, clustered <span class="op">=</span> <span class="cn">T</span>, upper <span class="op">=</span> <span class="cn">T</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Spearman correlation</span></span>
-<span><span class="fu"><a href="../reference/plotBarcodeCorrelation.html">plotBarcodeCorrelation</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">$</span><span class="va">counts</span>, clustered <span class="op">=</span> <span class="cn">T</span>, upper <span class="op">=</span> <span class="cn">T</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">corrs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcReplicateCorr.html">calcReplicateCorr</a></span><span class="op">(</span><span class="va">dge.filtered</span>, group <span class="op">=</span> <span class="st">"Group"</span><span class="op">)</span></span>
+<span><span class="va">corrs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">corrs</span> <span class="op">&lt;</span> <span class="fl">0.999</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">##  11_Vehicle 2_High_dose   4_Vehicle          T0 </span></span>
+<span><span class="co">##   0.9988324   0.9975019   0.9975590   0.9983700</span></span></code></pre>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">corrs</span></span></code></pre></div>
+<pre><code><span><span class="co">##  1_High_dose 10_High_dose   11_Vehicle   12_Vehicle  13_Low_dose  14_Low_dose </span></span>
+<span><span class="co">##    0.9990488    0.9998575    0.9988324    0.9992809    0.9999569    0.9999779 </span></span>
+<span><span class="co">##  15_Low_dose  16_Low_dose 17_High_dose   18_Vehicle  2_High_dose  3_High_dose </span></span>
+<span><span class="co">##    0.9998939    0.9998964    0.9998268    0.9995622    0.9975019    0.9997354 </span></span>
+<span><span class="co">##    4_Vehicle   5_Low_dose  6_High_dose    7_Vehicle    8_Vehicle   9_Low_dose </span></span>
+<span><span class="co">##    0.9975590    0.9999389    0.9994985    0.9997087    0.9992878    0.9997056 </span></span>
+<span><span class="co">##           T0 </span></span>
+<span><span class="co">##    0.9983700</span></span></code></pre>
+<p>Finally sample replicates can be correlated globally using
+<code>plotBarcodeCorrelation</code>.</p>
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Pearson correlation, full</span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeCorrelation.html">plotBarcodeCorrelation</a></span><span class="op">(</span><span class="va">dge.filtered</span>, clustered <span class="op">=</span> <span class="cn">T</span>, upper <span class="op">=</span> <span class="cn">F</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-17-1.png" width="700"></p>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot</span></span></code></pre></div>
+<pre><code><span><span class="co">## function (x, y, ...) </span></span>
+<span><span class="co">## UseMethod("plot")</span></span>
+<span><span class="co">## &lt;bytecode: 0x107352c40&gt;</span></span>
+<span><span class="co">## &lt;environment: namespace:base&gt;</span></span></code></pre>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Pearson correlation, upper</span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeCorrelation.html">plotBarcodeCorrelation</a></span><span class="op">(</span><span class="va">dge.filtered</span>, clustered <span class="op">=</span> <span class="cn">T</span>, upper <span class="op">=</span> <span class="cn">T</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-17-2.png" width="700"></p>
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Spearman correlation</span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeCorrelation.html">plotBarcodeCorrelation</a></span><span class="op">(</span><span class="va">dge.filtered</span>, clustered <span class="op">=</span> <span class="cn">T</span>, upper <span class="op">=</span> <span class="cn">T</span>, method <span class="op">=</span> <span class="st">"spearman"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-18-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="collapse-pcr-replicates-in-object">Collapse PCR replicates in object<a class="anchor" aria-label="anchor" href="#collapse-pcr-replicates-in-object"></a>
@@ -382,7 +471,7 @@ using <code>calcReplicateCorr</code>.</p>
 <p>Now that we know our samples are of good quality we have no further
 use of the PCR replicate information. From this point onward its a good
 idea to collapse our PCR replicates.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">dge.filtered</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 1316   38</span></span></code></pre>
 <p><code>collapseReplicates</code> can take the average (default
@@ -390,16 +479,15 @@ behavior) or the sum of PCR technical replicates within each sample.
 Here we take the average. Users may want to sum PCR replicates if there
 is evidence of sampling bias across technical repeats (i.e. poor
 correlation score or other evidence).</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dge.filtered.collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/collapseReplicates.html">collapseReplicates</a></span><span class="op">(</span></span>
 <span>  <span class="va">dge.filtered</span>,</span>
-<span>  groupby <span class="op">=</span> <span class="va">dge.filtered</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span>,</span>
-<span>  by <span class="op">=</span> <span class="st">"mean"</span>,</span>
-<span>  show_reps <span class="op">=</span> <span class="cn">F</span></span>
+<span>  group <span class="op">=</span> <span class="st">"group"</span>,</span>
+<span>  method <span class="op">=</span> <span class="st">"mean"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The result is a clean barcode sequencing dataset ready for further
 investigation and visualisation.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## An object of class "DGEList"</span></span>
 <span><span class="co">## $samples</span></span>
@@ -428,28 +516,34 @@ investigation and visualisation.</p>
 <span><span class="co">##   BC_430           0            0          0          0           0           0</span></span>
 <span><span class="co">##         Samples</span></span>
 <span><span class="co">## Tags     15_Low_dose 16_Low_dose 17_High_dose 18_Vehicle 2_High_dose</span></span>
-<span><span class="co">##   BC_1             0           0            0          0           0</span></span>
-<span><span class="co">##   BC_13            0           0            0          0           0</span></span>
-<span><span class="co">##   BC_99            0           0            0          0           0</span></span>
-<span><span class="co">##   BC_120           0           0            0          0           0</span></span>
-<span><span class="co">##   BC_426           0           0            0          0           0</span></span>
-<span><span class="co">##   BC_430           0           0            0        413           0</span></span>
+<span><span class="co">##   BC_1             0           0          0.0        0.0           0</span></span>
+<span><span class="co">##   BC_13            0           0          0.0        0.0           0</span></span>
+<span><span class="co">##   BC_99            0           0          0.0        0.0           0</span></span>
+<span><span class="co">##   BC_120           0           0          0.0        0.0           0</span></span>
+<span><span class="co">##   BC_426           0           0          0.0        0.0           0</span></span>
+<span><span class="co">##   BC_430           0           0          0.5      413.5           0</span></span>
 <span><span class="co">##         Samples</span></span>
 <span><span class="co">## Tags     3_High_dose 4_Vehicle 5_Low_dose 6_High_dose 7_Vehicle 8_Vehicle</span></span>
-<span><span class="co">##   BC_1             0         0          0           0         0         0</span></span>
-<span><span class="co">##   BC_13            0         0          0           0         0         0</span></span>
-<span><span class="co">##   BC_99            0         0          0           0         0         0</span></span>
-<span><span class="co">##   BC_120           0         0          0           0         0         0</span></span>
-<span><span class="co">##   BC_426           0         0          0           0         0         0</span></span>
-<span><span class="co">##   BC_430           0        13          0           0         0         0</span></span>
+<span><span class="co">##   BC_1             0       0.0          0           0       0.0         0</span></span>
+<span><span class="co">##   BC_13            0       0.0          0           0       0.0         0</span></span>
+<span><span class="co">##   BC_99            0       0.0          0           0       0.0         0</span></span>
+<span><span class="co">##   BC_120           0       0.0          0           0       0.0         0</span></span>
+<span><span class="co">##   BC_426           0       0.0          0           0       0.0         0</span></span>
+<span><span class="co">##   BC_430           0      13.5          0           0       0.5         0</span></span>
 <span><span class="co">##         Samples</span></span>
-<span><span class="co">## Tags     9_Low_dose   T0</span></span>
-<span><span class="co">##   BC_1            0  127</span></span>
-<span><span class="co">##   BC_13           0 1146</span></span>
-<span><span class="co">##   BC_99           0 1354</span></span>
-<span><span class="co">##   BC_120          0  234</span></span>
-<span><span class="co">##   BC_426          0   81</span></span>
-<span><span class="co">##   BC_430          0 1022</span></span></code></pre>
+<span><span class="co">## Tags     9_Low_dose     T0</span></span>
+<span><span class="co">##   BC_1            0  127.0</span></span>
+<span><span class="co">##   BC_13           0 1146.0</span></span>
+<span><span class="co">##   BC_99           0 1354.5</span></span>
+<span><span class="co">##   BC_120          0  234.5</span></span>
+<span><span class="co">##   BC_426          0   81.0</span></span>
+<span><span class="co">##   BC_430          0 1022.0</span></span></code></pre>
+<p>If we repeat the above correlation plots we can see general
+similarities across samples</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Pearson correlation, full</span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeCorrelation.html">plotBarcodeCorrelation</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, clustered <span class="op">=</span> <span class="cn">T</span>, upper <span class="op">=</span> <span class="cn">F</span>, method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -464,57 +558,54 @@ examining barcode-seq datasets.</p>
 barcodes/tags are represented by bubbles aligned on a single plane. The
 size of the bubbles reflects the percentage abundance of each barcode
 within a sample.</p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeBubble.html">plotBarcodeBubble</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>, </span>
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeBubble.html">plotBarcodeBubble</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
 <span>                  proportionCutoff <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>                  labelBarcodes <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-21-1.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
 <p>Using the <code>orderSample</code> parameter, bubbleplots can also be
 arranged according to frequency in a particular sample which can help
 with visual comparison of large vs small clones across samples and
 conditions.</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotOrderedBubble.html">plotOrderedBubble</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>, </span>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotOrderedBubble.html">plotOrderedBubble</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
 <span>                  proportionCutoff <span class="op">=</span> <span class="fl">10</span>, </span>
 <span>                  labelBarcodes <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                  orderSample <span class="op">=</span> <span class="st">"T0"</span>, </span>
 <span>                  colorDominant <span class="op">=</span> <span class="cn">F</span>, </span>
-<span>                  samples <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span>, </span>
-<span>                  group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: Transformation introduced infinite values in continuous x-axis</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-22-1.png" width="700"></p>
-<p>Barcodes that fail to meet a defined abundance threshold in any
-sample can be greyed out.</p>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotOrderedBubble.html">plotOrderedBubble</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>, </span>
-<span>                  proportionCutoff <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                  labelBarcodes <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>                  orderSample <span class="op">=</span> <span class="st">"T0"</span>, </span>
-<span>                  colorDominant <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>                  samples <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span>, </span>
-<span>                  group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre>
-<pre><code><span><span class="co">## Warning: Transformation introduced infinite values in continuous x-axis</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-23-1.png" width="700"></p>
-<p>Or filtered from the plot entirely using the
-<code>filterCutoff</code> parameter</p>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotOrderedBubble.html">plotOrderedBubble</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>, </span>
-<span>                  proportionCutoff <span class="op">=</span> <span class="fl">10</span>, </span>
-<span>                  labelBarcodes <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>                  orderSample <span class="op">=</span> <span class="st">"T0"</span>, </span>
-<span>                  colorDominant <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>                  filterCutoff <span class="op">=</span> <span class="fl">0.01</span>,</span>
-<span>                  samples <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span>, </span>
+<span>                  filterCutoff <span class="op">=</span> <span class="fl">0.001</span>,</span>
 <span>                  group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre>
 <p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-24-1.png" width="700"></p>
+<p>Barcodes that fail to meet a defined abundance threshold in any
+sample can be greyed out.</p>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotOrderedBubble.html">plotOrderedBubble</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
+<span>                  proportionCutoff <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>                  labelBarcodes <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                  orderSample <span class="op">=</span> <span class="st">"T0"</span>, </span>
+<span>                  colorDominant <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                  filterCutoff <span class="op">=</span> <span class="fl">0.001</span>, </span>
+<span>                  group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<p>Or filtered from the plot entirely using <code>filterCutoff</code>
+parameters</p>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotOrderedBubble.html">plotOrderedBubble</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
+<span>                  proportionCutoff <span class="op">=</span> <span class="fl">10</span>, </span>
+<span>                  labelBarcodes <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                  orderSample <span class="op">=</span> <span class="st">"T0"</span>, </span>
+<span>                  colorDominant <span class="op">=</span> <span class="cn">T</span>, </span>
+<span>                  filterCutoff <span class="op">=</span> <span class="fl">0.1</span>,</span>
+<span>                  group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Vectorized input to `element_text()` is not officially supported.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Results may be unexpected or may change in future versions of ggplot2.</span></span></code></pre>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="barcode-plot">Barcode Plot<a class="anchor" aria-label="anchor" href="#barcode-plot"></a>
@@ -522,11 +613,17 @@ sample can be greyed out.</p>
 <p>Alternatively, we can focus in on the most abundant barcodes within a
 set of samples to more easily observe how these change in frequency over
 the course of an experiment.</p>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeHistogram.html">plotBarcodeHistogram</a></span><span class="op">(</span>counts.obj <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>,</span>
-<span>                     sample <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">group</span><span class="op">[[</span><span class="fl">10</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>                     top <span class="op">=</span> <span class="fl">50</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-25-1.png" width="700"></p>
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeHistogram.html">plotBarcodeHistogram</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, topN <span class="op">=</span> <span class="fl">10</span>, alphaLowFreq <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: The `guide` argument in `scale_*()` cannot be `FALSE`. This was deprecated in</span></span>
+<span><span class="co">## ggplot2 3.3.4.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use "none" instead.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">bartools</span> package.</span></span>
+<span><span class="co">##   Please report the issue to the authors.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="timeseries-plots">Timeseries Plots<a class="anchor" aria-label="anchor" href="#timeseries-plots"></a>
@@ -536,20 +633,24 @@ of barcode diversity changes over time. In this instance we can use
 <code>plotBarcodeTimeseries</code> to get an idea of the relative
 abundance of the top <em>n</em> barcodes in a sample relative to
 others.</p>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeTimeseries.html">plotBarcodeTimeseries</a></span><span class="op">(</span>counts.obj <span class="op">=</span> <span class="va">dge.filtered.collapsed</span>, top <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeTimeseries.html">plotBarcodeTimeseries</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
+<span>                      top <span class="op">=</span> <span class="fl">50</span>, </span>
+<span>                      seed <span class="op">=</span> <span class="fl">10101</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Using barcode as id variables</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-26-1.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="principal-components-analysis">Principal Components Analysis<a class="anchor" aria-label="anchor" href="#principal-components-analysis"></a>
 </h4>
 <p>A global level PCA analysis is a good way to get a high level
 understanding of the similarities and differences between samples.</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">subset</span> <span class="op">&lt;-</span> <span class="va">dge.filtered.collapsed</span><span class="op">[</span>, <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T0"</span>, <span class="st">"Vehicle"</span>, <span class="st">"High_dose"</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="fu"><a href="../reference/plotBarcodePCA.html">plotBarcodePCA</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">subset</span>, intgroup <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-27-1.png" width="700"></p>
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodePCA.html">plotBarcodePCA</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
+<span>               groups <span class="op">=</span> <span class="st">"Treatment"</span>, </span>
+<span>               ntop <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>               pcs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="heatmaps">Heatmaps<a class="anchor" aria-label="anchor" href="#heatmaps"></a>
@@ -558,15 +659,14 @@ understanding of the similarities and differences between samples.</p>
 heatmap. Here barcodes ranked among the top n most abundant within each
 sample are indicated by an asterisk. This heatmap shows high dose
 samples are generally distinct from the low dose and vehicle group.</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeHeatmap.html">plotBarcodeHeatmap</a></span><span class="op">(</span></span>
-<span>  counts <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/edgeR/man/cpm.html" class="external-link">cpm</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span><span class="op">)</span>,</span>
-<span>  N <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>  show_bc <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>  samples <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span>,</span>
+<span>  <span class="fu"><a href="../reference/normaliseCounts.html">normaliseCounts</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, method <span class="op">=</span> <span class="st">"CPM"</span><span class="op">)</span>, </span>
+<span>  topN <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  showBarcodes <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-28-1.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-30-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -583,10 +683,16 @@ by visualising the data in this way. it can be helpful to examine the
 fraction of barcodes that comprise a sample. These plots calculate the
 cumulative sum of a sample in relation to other samples defined by the
 user.</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeCumSum.html">plotBarcodeCumSum</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>, sample1 <span class="op">=</span> <span class="st">"T0"</span>, </span>
-<span>                  samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-29-1.png" width="700"></p>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">samples</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span> <span class="op">==</span> <span class="st">"Vehicle"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeCumSum.html">plotBarcodeCumSum</a></span><span class="op">(</span></span>
+<span>  <span class="va">dge.filtered.collapsed</span>,</span>
+<span>  referenceSample <span class="op">=</span> <span class="st">"T0"</span>,</span>
+<span>  samples <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span><span class="op">)</span><span class="op">[</span><span class="va">samples</span><span class="op">]</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="identifying-abundant-barcodes-within-samples">Identifying abundant barcodes within samples<a class="anchor" aria-label="anchor" href="#identifying-abundant-barcodes-within-samples"></a>
@@ -594,8 +700,8 @@ user.</p>
 <p>It is important to be able to determine which barcodes are most
 abundant within each sample. <code>bartools</code> allows this to be
 easily calculated according to an abundance threshold.</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">top.bc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDominantBarcodes.html">getDominantBarcodes</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, pct.thresh <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">top.bc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getDominantBarcodes.html">getDominantBarcodes</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, threshold <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span></span>
 <span><span class="va">top.bc</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## $`1_High_dose`</span></span>
 <span><span class="co">## [1] "BC_79755"  "BC_102160" "BC_59493"  "BC_23361"  "BC_53234"  "BC_400391"</span></span>
@@ -613,14 +719,16 @@ easily calculated according to an abundance threshold.</p>
 <span><span class="co">## [1] "BC_8419"   "BC_124796" "BC_102160" "BC_257382"</span></span></code></pre>
 <p>We can then use specific plots to visualise the dominance of specific
 barcodes within and across samples.</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotBarcodeBoxplot.html">plotBarcodeBoxplot</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, </span>
-<span>                   group <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
-<span>                   barcodes <span class="op">=</span> <span class="va">top.bc</span><span class="op">$</span><span class="va">`10_High_dose`</span>, </span>
-<span>                   conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low_dose"</span>, <span class="st">"High_dose"</span>, <span class="st">"Vehicle"</span><span class="op">)</span>, </span>
-<span>                   point <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Multiple barcodes given. Metadata group =  Treatment</span></span></code></pre>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-31-1.png" width="700"></p>
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># plot top barcodes across samples for mouse 10 (High Dose group)</span></span>
+<span><span class="fu"><a href="../reference/plotBarcodeBoxplot.html">plotBarcodeBoxplot</a></span><span class="op">(</span></span>
+<span>  <span class="va">dge.filtered.collapsed</span>,</span>
+<span>  barcodes <span class="op">=</span> <span class="va">top.bc</span><span class="op">$</span><span class="va">`10_High_dose`</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
+<span>  conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Low_dose"</span>, <span class="st">"High_dose"</span>, <span class="st">"Vehicle"</span><span class="op">)</span>,</span>
+<span>  point <span class="op">=</span> <span class="cn">T</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="calculating-and-plotting-percentile-abundance-">Calculating and plotting percentile abundance.<a class="anchor" aria-label="anchor" href="#calculating-and-plotting-percentile-abundance-"></a>
@@ -632,9 +740,8 @@ formally analyse this based on a desired percentile threshold. A common
 threshold is the 95th percentile. This can eliminate small barcodes that
 comprise the tail of the dataset and give a sense of how many clones
 truly comprise each sample</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_barcodes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcPercentileBarcodes.html">calcPercentileBarcodes</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, percentile <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span>
-<span></span>
 <span><span class="va">top_barcodes</span><span class="op">$</span><span class="va">NumBarcodes</span></span></code></pre></div>
 <pre><code><span><span class="co">##          Sample NumBarcodes</span></span>
 <span><span class="co">## 1   1_High_dose          15</span></span>
@@ -649,47 +756,55 @@ truly comprise each sample</p>
 <span><span class="co">## 10   18_Vehicle          27</span></span>
 <span><span class="co">## 11  2_High_dose          12</span></span>
 <span><span class="co">## 12  3_High_dose          10</span></span>
-<span><span class="co">## 13    4_Vehicle          25</span></span>
+<span><span class="co">## 13    4_Vehicle          26</span></span>
 <span><span class="co">## 14   5_Low_dose          11</span></span>
 <span><span class="co">## 15  6_High_dose           9</span></span>
 <span><span class="co">## 16    7_Vehicle          16</span></span>
 <span><span class="co">## 17    8_Vehicle          21</span></span>
 <span><span class="co">## 18   9_Low_dose          19</span></span>
 <span><span class="co">## 19           T0         591</span></span></code></pre>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_barcodes</span><span class="op">$</span><span class="va">TopBarcodeCounts</span><span class="op">$</span><span class="va">`6_High_dose`</span></span></code></pre></div>
 <pre><code><span><span class="co">##           6_High_dose</span></span>
-<span><span class="co">## BC_79755      1313507</span></span>
-<span><span class="co">## BC_8419       1120457</span></span>
-<span><span class="co">## BC_124796     1013931</span></span>
-<span><span class="co">## BC_4564        461928</span></span>
-<span><span class="co">## BC_400391       93601</span></span>
-<span><span class="co">## BC_31610        43251</span></span>
-<span><span class="co">## BC_1478         33933</span></span>
-<span><span class="co">## BC_90135        32480</span></span>
-<span><span class="co">## BC_388103       29467</span></span></code></pre>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<span><span class="co">## BC_79755    1313507.0</span></span>
+<span><span class="co">## BC_8419     1120457.5</span></span>
+<span><span class="co">## BC_124796   1013931.0</span></span>
+<span><span class="co">## BC_4564      461928.0</span></span>
+<span><span class="co">## BC_400391     93601.5</span></span>
+<span><span class="co">## BC_31610      43251.5</span></span>
+<span><span class="co">## BC_1478       33933.5</span></span>
+<span><span class="co">## BC_90135      32480.0</span></span>
+<span><span class="co">## BC_388103     29467.0</span></span></code></pre>
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_barcodes</span><span class="op">$</span><span class="va">TopBarcodes</span><span class="op">$</span><span class="va">`6_High_dose`</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "BC_79755"  "BC_8419"   "BC_124796" "BC_4564"   "BC_400391" "BC_31610" </span></span>
 <span><span class="co">## [7] "BC_1478"   "BC_90135"  "BC_388103"</span></span></code></pre>
 <p>We can compare the number of detected barcodes in the top 95th
 percentile per sample and the total sample.</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotDetectedBarcodes.html">plotDetectedBarcodes</a></span><span class="op">(</span></span>
 <span>  <span class="va">dge.filtered.collapsed</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  group <span class="op">=</span> <span class="st">"Treatment"</span>, </span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-33-1.png" width="700"></p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-35-1.png" width="700"></p>
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotDetectedBarcodes.html">plotDetectedBarcodes</a></span><span class="op">(</span></span>
 <span>  <span class="va">dge.filtered.collapsed</span>,</span>
 <span>  percentile <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-33-2.png" width="700"></p>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-35-2.png" width="700"></p>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotDetectedBarcodes.html">plotDetectedBarcodes</a></span><span class="op">(</span></span>
+<span>  <span class="va">dge.filtered.collapsed</span>,</span>
+<span>  percentile <span class="op">=</span> <span class="fl">0.80</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-35-3.png" width="700"></p>
 <p>These plots show that there are few clones that comprise the majority
 of the dataset per mouse. Also, there are generally fewer clones present
 in the high dose group compared to the vehicle or low dose groups.</p>
@@ -697,46 +812,70 @@ in the high dose group compared to the vehicle or low dose groups.</p>
 <div class="section level4">
 <h4 id="diversity-analysis">Diversity analysis<a class="anchor" aria-label="anchor" href="#diversity-analysis"></a>
 </h4>
-<p>We can examine diversity in a few different ways. The most common are
-Shannon, Simpson, Inverse Simpson and Gini. Each will be applicable in
-different circumstances, however the Shannon diversity index is more
-widely used to compare global diversity amongst populations of barcoded
-cells.</p>
+<p>We can examine within-sample diversity in a few different ways. The
+most common are Shannon, Simpson, Inverse Simpson and Gini. Each will be
+applicable in different circumstances, however the Shannon diversity
+index is more widely used to compare global diversity amongst
+populations of barcoded cells.</p>
 <p><code>calcDivIndexes</code> can be used to determine various
 diversity indices per sample</p>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">diversity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcDivIndexes.html">calcDivIndexes</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">counts</span>, group <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Joining with `by = join_by(name)`</span></span></code></pre>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">diversity</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcDivIndexes.html">calcDivIndexes</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>, group <span class="op">=</span> <span class="st">"Treatment"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning in xtfrm.data.frame(x): cannot xtfrm data frames</span></span></code></pre>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">diversity</span></span></code></pre></div>
-<pre><code><span><span class="co">##            name  shannon   simpson invsimpson      gini     group</span></span>
-<span><span class="co">## 1   1_High_dose 2.348595 0.8444003   6.426747 0.9937724 High_dose</span></span>
-<span><span class="co">## 2  10_High_dose 1.225780 0.6032511   2.520486 0.9976429 High_dose</span></span>
-<span><span class="co">## 3    11_Vehicle 2.651924 0.8814260   8.433552 0.9914723   Vehicle</span></span>
-<span><span class="co">## 4    12_Vehicle 2.413992 0.8399937   6.249754 0.9930458   Vehicle</span></span>
-<span><span class="co">## 5   13_Low_dose 2.018919 0.8131627   5.352250 0.9952925  Low_dose</span></span>
-<span><span class="co">## 6   14_Low_dose 1.519874 0.6814167   3.138896 0.9972048  Low_dose</span></span>
-<span><span class="co">## 7   15_Low_dose 1.832136 0.7746698   4.437931 0.9961414  Low_dose</span></span>
-<span><span class="co">## 8   16_Low_dose 2.778791 0.9048391  10.508519 0.9907846  Low_dose</span></span>
-<span><span class="co">## 9  17_High_dose 1.534413 0.6789847   3.115116 0.9971361 High_dose</span></span>
-<span><span class="co">## 10   18_Vehicle 3.153584 0.9327016  14.859192 0.9864106   Vehicle</span></span>
-<span><span class="co">## 11  2_High_dose 2.256204 0.8510406   6.713237 0.9943148 High_dose</span></span>
-<span><span class="co">## 12  3_High_dose 1.798214 0.6916665   3.243242 0.9959574 High_dose</span></span>
-<span><span class="co">## 13    4_Vehicle 3.122376 0.9318058  14.664008 0.9868933   Vehicle</span></span>
-<span><span class="co">## 14   5_Low_dose 1.704952 0.6350916   2.740414 0.9959314  Low_dose</span></span>
-<span><span class="co">## 15  6_High_dose 1.855001 0.7799122   4.543641 0.9958115 High_dose</span></span>
-<span><span class="co">## 16    7_Vehicle 2.605078 0.8891045   9.017500 0.9922698   Vehicle</span></span>
-<span><span class="co">## 17    8_Vehicle 2.599751 0.8583785   7.061077 0.9915073   Vehicle</span></span>
-<span><span class="co">## 18   9_Low_dose 2.747539 0.8980367   9.807451 0.9909340  Low_dose</span></span>
-<span><span class="co">## 19           T0 5.496351 0.9850705  66.981563 0.7980364        T0</span></span></code></pre>
+<pre><code><span><span class="co">##            name  shannon   simpson invsimpson      gini group</span></span>
+<span><span class="co">## 1   1_High_dose 2.348653 0.8444024   6.426835 0.9937718  &lt;NA&gt;</span></span>
+<span><span class="co">## 2  10_High_dose 1.225855 0.6032568   2.520522 0.9976422  &lt;NA&gt;</span></span>
+<span><span class="co">## 3    11_Vehicle 2.652009 0.8814286   8.433734 0.9914712  &lt;NA&gt;</span></span>
+<span><span class="co">## 4    12_Vehicle 2.414063 0.8399960   6.249843 0.9930451  &lt;NA&gt;</span></span>
+<span><span class="co">## 5   13_Low_dose 2.018988 0.8131654   5.352328 0.9952918  &lt;NA&gt;</span></span>
+<span><span class="co">## 6   14_Low_dose 1.519950 0.6814210   3.138939 0.9972041  &lt;NA&gt;</span></span>
+<span><span class="co">## 7   15_Low_dose 1.832241 0.7746745   4.438025 0.9961403  &lt;NA&gt;</span></span>
+<span><span class="co">## 8   16_Low_dose 2.778868 0.9048407  10.508698 0.9907836  &lt;NA&gt;</span></span>
+<span><span class="co">## 9  17_High_dose 1.534553 0.6789918   3.115185 0.9971341  &lt;NA&gt;</span></span>
+<span><span class="co">## 10   18_Vehicle 3.153789 0.9327042  14.859766 0.9864058  &lt;NA&gt;</span></span>
+<span><span class="co">## 11  2_High_dose 2.256249 0.8510421   6.713305 0.9943143  &lt;NA&gt;</span></span>
+<span><span class="co">## 12  3_High_dose 1.798299 0.6916723   3.243303 0.9959564  &lt;NA&gt;</span></span>
+<span><span class="co">## 13    4_Vehicle 3.122474 0.9318075  14.664379 0.9868916  &lt;NA&gt;</span></span>
+<span><span class="co">## 14   5_Low_dose 1.705062 0.6350995   2.740473 0.9959301  &lt;NA&gt;</span></span>
+<span><span class="co">## 15  6_High_dose 1.855066 0.7799154   4.543707 0.9958108  &lt;NA&gt;</span></span>
+<span><span class="co">## 16    7_Vehicle 2.605180 0.8891069   9.017692 0.9922683  &lt;NA&gt;</span></span>
+<span><span class="co">## 17    8_Vehicle 2.599855 0.8583819   7.061244 0.9915058  &lt;NA&gt;</span></span>
+<span><span class="co">## 18   9_Low_dose 2.747625 0.8980389   9.807663 0.9909330  &lt;NA&gt;</span></span>
+<span><span class="co">## 19           T0 5.496669 0.9850733  66.994135 0.7979588  &lt;NA&gt;</span></span></code></pre>
 <p>These diversity calculations can then be fed to
-<code>plotDivIndexes</code> for visualisation</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotDivIndexes.html">plotDivIndexes</a></span><span class="op">(</span>div <span class="op">=</span> <span class="va">diversity</span>, </span>
-<span>               metric <span class="op">=</span> <span class="st">"shannon"</span>, </span>
-<span>               group <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span>, </span>
-<span>               type <span class="op">=</span> <span class="st">"point"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-35-1.png" width="700"></p>
+<code>plotDivIndexes</code> for visualisation as either a bar or
+dotplot</p>
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># bar plot</span></span>
+<span><span class="fu"><a href="../reference/plotDivIndexes.html">plotDivIndexes</a></span><span class="op">(</span></span>
+<span>  <span class="va">dge.filtered.collapsed</span>,</span>
+<span>  div <span class="op">=</span> <span class="va">diversity</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"shannon"</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-37-1.png" width="700"></p>
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># dot plot</span></span>
+<span><span class="fu"><a href="../reference/plotDivIndexes.html">plotDivIndexes</a></span><span class="op">(</span></span>
+<span>  <span class="va">dge.filtered.collapsed</span>,</span>
+<span>  div <span class="op">=</span> <span class="va">diversity</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"shannon"</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"point"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-37-2.png" width="700"></p>
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># summarized by condition as box plot</span></span>
+<span><span class="fu"><a href="../reference/plotDivIndexes.html">plotDivIndexes</a></span><span class="op">(</span></span>
+<span>  <span class="va">dge.filtered.collapsed</span>,</span>
+<span>  div <span class="op">=</span> <span class="va">diversity</span>,</span>
+<span>  metric <span class="op">=</span> <span class="st">"shannon"</span>,</span>
+<span>  group <span class="op">=</span> <span class="st">"Treatment"</span>,</span>
+<span>  type <span class="op">=</span> <span class="st">"box"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-37-3.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="comparing-abundance">Comparing abundance<a class="anchor" aria-label="anchor" href="#comparing-abundance"></a>
@@ -745,34 +884,24 @@ diversity indices per sample</p>
 underrepresented in a group of samples relative to another using the
 internal edgeR framework. <code>bartools</code> contains a convenience
 wrapper for this functionality</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/compareAbundance.html">compareAbundance</a></span><span class="op">(</span>dge.obj <span class="op">=</span> <span class="va">dge.filtered.collapsed</span>,</span>
-<span>                 meta <span class="op">=</span> <span class="st">"Treatment"</span>, </span>
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/compareAbundance.html">compareAbundance</a></span><span class="op">(</span><span class="va">dge.filtered.collapsed</span>,</span>
+<span>                 group <span class="op">=</span> <span class="st">"Treatment"</span>, </span>
 <span>                 condition1 <span class="op">=</span> <span class="st">"Low_dose"</span>,</span>
 <span>                 condition2 <span class="op">=</span> <span class="st">"High_dose"</span>,</span>
-<span>                 pval.cutoff <span class="op">=</span> <span class="fl">0.001</span>,</span>
-<span>                 logFC.cutoff <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-36-1.png" width="700"></p>
-<p>Finally, we can visualise some of these differentially abundant
-barcodes using lineplots between conditions.</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/plotAbundanceLines.html">plotAbundanceLines</a></span><span class="op">(</span></span>
-<span>  <span class="va">dge.filtered.collapsed</span>,</span>
-<span>  condition <span class="op">=</span> <span class="va">dge.filtered.collapsed</span><span class="op">$</span><span class="va">samples</span><span class="op">$</span><span class="va">Treatment</span>,</span>
-<span>  condition_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Vehicle"</span>, <span class="st">"High_dose"</span><span class="op">)</span>,</span>
-<span>  plot_type <span class="op">=</span> <span class="st">'counts'</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-37-1.png" width="700"></p>
+<span>                 pval <span class="op">=</span> <span class="fl">1e-04</span>,</span>
+<span>                 logFC <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<p><img src="bartools_quickstart_files/figure-html/unnamed-chunk-38-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="session-info">5. Session Info<a class="anchor" aria-label="anchor" href="#session-info"></a>
 </h3>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.2.2 (2022-10-31)</span></span>
 <span><span class="co">## Platform: aarch64-apple-darwin20 (64-bit)</span></span>
-<span><span class="co">## Running under: macOS Ventura 13.1</span></span>
+<span><span class="co">## Running under: macOS 14.1.1</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
 <span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRblas.0.dylib</span></span>
@@ -785,42 +914,42 @@ barcodes using lineplots between conditions.</p>
 <span><span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] bartools_0.2.5 ggplot2_3.4.4  edgeR_3.40.2   limma_3.54.2  </span></span>
+<span><span class="co">## [1] bartools_1.0.0 ggplot2_3.4.4  edgeR_3.40.2   limma_3.54.2  </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##  [1] nlme_3.1-163          matrixStats_1.0.0     fs_1.6.3             </span></span>
-<span><span class="co">##  [4] RColorBrewer_1.1-3    doParallel_1.0.17     rprojroot_2.0.3      </span></span>
+<span><span class="co">##  [4] doParallel_1.0.17     RColorBrewer_1.1-3    rprojroot_2.0.4      </span></span>
 <span><span class="co">##  [7] ggsci_3.0.0           tools_4.2.2           backports_1.4.1      </span></span>
-<span><span class="co">## [10] bslib_0.5.1           utf8_1.2.4            R6_2.5.1             </span></span>
+<span><span class="co">## [10] bslib_0.6.0           utf8_1.2.4            R6_2.5.1             </span></span>
 <span><span class="co">## [13] vegan_2.6-4           BiocGenerics_0.44.0   mgcv_1.9-0           </span></span>
 <span><span class="co">## [16] colorspace_2.1-0      permute_0.9-7         GetoptLong_1.0.5     </span></span>
 <span><span class="co">## [19] withr_2.5.2           tidyselect_1.2.0      compiler_4.2.2       </span></span>
 <span><span class="co">## [22] textshaping_0.3.6     cli_3.6.1             Cairo_1.6-1          </span></span>
 <span><span class="co">## [25] desc_1.4.2            labeling_0.4.3        sass_0.4.7           </span></span>
 <span><span class="co">## [28] scales_1.2.1          pkgdown_2.0.7         systemfonts_1.0.5    </span></span>
-<span><span class="co">## [31] stringr_1.5.0         digest_0.6.33         rmarkdown_2.25       </span></span>
-<span><span class="co">## [34] pkgconfig_2.0.3       htmltools_0.5.6.1     fastmap_1.1.1        </span></span>
-<span><span class="co">## [37] rlang_1.1.1           GlobalOptions_0.1.2   rstudioapi_0.15.0    </span></span>
-<span><span class="co">## [40] shape_1.4.6           jquerylib_0.1.4       farver_2.1.1         </span></span>
-<span><span class="co">## [43] generics_0.1.3        jsonlite_1.8.7        dplyr_1.1.3          </span></span>
-<span><span class="co">## [46] car_3.1-2             magrittr_2.0.3        Matrix_1.6-1.1       </span></span>
-<span><span class="co">## [49] S4Vectors_0.36.2      Rcpp_1.0.11           munsell_0.5.0        </span></span>
-<span><span class="co">## [52] fansi_1.0.5           abind_1.4-5           lifecycle_1.0.3      </span></span>
-<span><span class="co">## [55] stringi_1.7.12        yaml_2.3.7            carData_3.0-5        </span></span>
-<span><span class="co">## [58] MASS_7.3-60           plyr_1.8.9            grid_4.2.2           </span></span>
-<span><span class="co">## [61] parallel_4.2.2        forcats_1.0.0         crayon_1.5.2         </span></span>
-<span><span class="co">## [64] lattice_0.21-9        splines_4.2.2         circlize_0.4.15      </span></span>
-<span><span class="co">## [67] magick_2.8.0          locfit_1.5-9.8        knitr_1.44           </span></span>
-<span><span class="co">## [70] ComplexHeatmap_2.14.0 pillar_1.9.0          ggpubr_0.6.0         </span></span>
-<span><span class="co">## [73] rjson_0.2.21          ggsignif_0.6.4        stats4_4.2.2         </span></span>
-<span><span class="co">## [76] reshape2_1.4.4        codetools_0.2-19      glue_1.6.2           </span></span>
-<span><span class="co">## [79] evaluate_0.23         vctrs_0.6.4           png_0.1-8            </span></span>
-<span><span class="co">## [82] foreach_1.5.2         gtable_0.3.4          purrr_1.0.2          </span></span>
-<span><span class="co">## [85] tidyr_1.3.0           clue_0.3-65           cachem_1.0.8         </span></span>
-<span><span class="co">## [88] xfun_0.40             broom_1.0.5           rstatix_0.7.2        </span></span>
-<span><span class="co">## [91] ragg_1.2.5            viridisLite_0.4.2     tibble_3.2.1         </span></span>
-<span><span class="co">## [94] iterators_1.0.14      ineq_0.2-13           memoise_2.0.1        </span></span>
-<span><span class="co">## [97] IRanges_2.32.0        cluster_2.1.4</span></span></code></pre>
+<span><span class="co">## [31] stringr_1.5.1         digest_0.6.33         rmarkdown_2.25       </span></span>
+<span><span class="co">## [34] pkgconfig_2.0.3       htmltools_0.5.7       fastmap_1.1.1        </span></span>
+<span><span class="co">## [37] highr_0.10            rlang_1.1.2           GlobalOptions_0.1.2  </span></span>
+<span><span class="co">## [40] rstudioapi_0.15.0     shape_1.4.6           jquerylib_0.1.4      </span></span>
+<span><span class="co">## [43] farver_2.1.1          generics_0.1.3        jsonlite_1.8.7       </span></span>
+<span><span class="co">## [46] dplyr_1.1.4           car_3.1-2             magrittr_2.0.3       </span></span>
+<span><span class="co">## [49] Matrix_1.6-1.1        S4Vectors_0.36.2      Rcpp_1.0.11          </span></span>
+<span><span class="co">## [52] munsell_0.5.0         fansi_1.0.5           abind_1.4-5          </span></span>
+<span><span class="co">## [55] lifecycle_1.0.4       stringi_1.8.1         yaml_2.3.7           </span></span>
+<span><span class="co">## [58] carData_3.0-5         MASS_7.3-60           plyr_1.8.9           </span></span>
+<span><span class="co">## [61] grid_4.2.2            parallel_4.2.2        forcats_1.0.0        </span></span>
+<span><span class="co">## [64] crayon_1.5.2          lattice_0.21-9        splines_4.2.2        </span></span>
+<span><span class="co">## [67] circlize_0.4.15       magick_2.8.0          locfit_1.5-9.8       </span></span>
+<span><span class="co">## [70] knitr_1.45            ComplexHeatmap_2.14.0 pillar_1.9.0         </span></span>
+<span><span class="co">## [73] ggpubr_0.6.0          rjson_0.2.21          ggsignif_0.6.4       </span></span>
+<span><span class="co">## [76] stats4_4.2.2          reshape2_1.4.4        codetools_0.2-19     </span></span>
+<span><span class="co">## [79] glue_1.6.2            evaluate_0.23         vctrs_0.6.4          </span></span>
+<span><span class="co">## [82] png_0.1-8             foreach_1.5.2         gtable_0.3.4         </span></span>
+<span><span class="co">## [85] purrr_1.0.2           tidyr_1.3.0           clue_0.3-65          </span></span>
+<span><span class="co">## [88] cachem_1.0.8          xfun_0.41             broom_1.0.5          </span></span>
+<span><span class="co">## [91] rstatix_0.7.2         ragg_1.2.5            viridisLite_0.4.2    </span></span>
+<span><span class="co">## [94] tibble_3.2.1          iterators_1.0.14      IRanges_2.32.0       </span></span>
+<span><span class="co">## [97] ineq_0.2-13           memoise_2.0.1         cluster_2.1.4</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -831,7 +960,7 @@ barcodes using lineplots between conditions.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Dane Vassiliadis.</p>
+<p>Developed by Dane Vassiliadis, Henrietta Holze.</p>
 </div>
 
 <div class="pkgdown-footer-right">

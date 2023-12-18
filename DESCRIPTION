@@ -1,11 +1,13 @@
 Package: bartools
 Type: Package
-Title: A toolkit for the analysis and visualisation of synthetic DNA barcodes in high thorughput sequencing datasets
-Version: 0.2.5
-Authors@R: person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
-                  role = c("aut", "cre"))
+Title: Analysis and visualisation of synthetic DNA barcodes in high throughput sequencing datasets
+Version: 1.0.0
+Authors@R: c(person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
+                  role = c("aut", "cre")),
+             person("Henrietta", "Holze", email = "henrietta.holze@petermac.org",
+                  role = "aut"))
 Maintainer: Dane Vassiliadis <dane.vassiliadis@petermac.org>
-Description: Analysis and visualisation of synthetic DNA barcodes in high thorughput sequencing datasets.
+Description: Analysis and visualisation of synthetic DNA barcodes in high throughput sequencing datasets.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -24,10 +26,17 @@ Imports:
     scales,
     ggpubr,
     dplyr,
+    tidyr,
+    tibble,
+    tidyselect,
+    magrittr,
     forcats,
     reshape2,
     limma,
-    methods
+    methods,
+    viridis,
+    rlang,
+    RColorBrewer
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends:

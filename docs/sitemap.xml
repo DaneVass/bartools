@@ -10,6 +10,12 @@
     <loc>https://danevass.github.io/bartools/articles/bartools_quickstart.html</loc>
   </url>
   <url>
+    <loc>https://danevass.github.io/bartools/articles/bartools_single_cell_analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://danevass.github.io/bartools/articles/import_qc_single_cell.html</loc>
+  </url>
+  <url>
     <loc>https://danevass.github.io/bartools/articles/index.html</loc>
   </url>
   <url>
@@ -22,7 +28,7 @@
     <loc>https://danevass.github.io/bartools/news/index.html</loc>
   </url>
   <url>
-    <loc>https://danevass.github.io/bartools/reference/annotateBarcodeReads.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/aggregateBarcodes.html</loc>
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/calcDivIndexes.html</loc>
@@ -43,19 +49,10 @@
     <loc>https://danevass.github.io/bartools/reference/compareAbundance.html</loc>
   </url>
   <url>
-    <loc>https://danevass.github.io/bartools/reference/countBarcodeReads.html</loc>
-  </url>
-  <url>
     <loc>https://danevass.github.io/bartools/reference/createBarcodeObj.html</loc>
   </url>
   <url>
-    <loc>https://danevass.github.io/bartools/reference/extractBAM.html</loc>
-  </url>
-  <url>
-    <loc>https://danevass.github.io/bartools/reference/extractBarcodeReads.html</loc>
-  </url>
-  <url>
-    <loc>https://danevass.github.io/bartools/reference/extractFASTQ.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/filterBarcodes.html</loc>
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/getDominantBarcodes.html</loc>
@@ -65,9 +62,6 @@
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://danevass.github.io/bartools/reference/mapBarcodeReads.html</loc>
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/normaliseCounts.html</loc>
@@ -115,6 +109,9 @@
     <loc>https://danevass.github.io/bartools/reference/plotBarcodeTimeseries.html</loc>
   </url>
   <url>
+    <loc>https://danevass.github.io/bartools/reference/plotBarcodesPerCell.html</loc>
+  </url>
+  <url>
     <loc>https://danevass.github.io/bartools/reference/plotCellsInClusters.html</loc>
   </url>
   <url>
@@ -145,13 +142,22 @@
     <loc>https://danevass.github.io/bartools/reference/plotReadCounts.html</loc>
   </url>
   <url>
+    <loc>https://danevass.github.io/bartools/reference/plotSampleCumSum.html</loc>
+  </url>
+  <url>
+    <loc>https://danevass.github.io/bartools/reference/plotUmiFilterThresholds.html</loc>
+  </url>
+  <url>
+    <loc>https://danevass.github.io/bartools/reference/plotUmiPerBarcode.html</loc>
+  </url>
+  <url>
     <loc>https://danevass.github.io/bartools/reference/processBarcodeLibrary.html</loc>
   </url>
   <url>
-    <loc>https://danevass.github.io/bartools/reference/proportionalBubbleplot.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/readBartabCounts.html</loc>
   </url>
   <url>
-    <loc>https://danevass.github.io/bartools/reference/test.counts.html</loc>
+    <loc>https://danevass.github.io/bartools/reference/test.bartab.sc.html</loc>
   </url>
   <url>
     <loc>https://danevass.github.io/bartools/reference/test.dge.html</loc>
