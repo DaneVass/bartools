@@ -220,13 +220,13 @@ the <code>group</code> parameter.</p>
 </h4>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotMetrics.html">plotMetrics</a></span><span class="op">(</span><span class="va">test.sce</span>, group <span class="op">=</span> <span class="st">"seurat_clusters"</span>, factor <span class="op">=</span> <span class="st">"nCount_RNA"</span>, threshold <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-3-1.png" width="700">
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-2-1.png" width="700">
 Using the <code>trans</code> parameter, the x axis in
 <code>plotMetrics</code> can be transformed using standard methods
 available within <code>R</code></p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotMetrics.html">plotMetrics</a></span><span class="op">(</span><span class="va">test.sce</span>, group <span class="op">=</span> <span class="st">"seurat_clusters"</span>, factor <span class="op">=</span> <span class="st">"nCount_RNA"</span>, threshold <span class="op">=</span> <span class="fl">10</span>, trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="plotmetrics---barcodes">plotMetrics - barcodes<a class="anchor" aria-label="anchor" href="#plotmetrics---barcodes"></a>
@@ -237,7 +237,7 @@ clones using lineage barcode information.</p>
 <p>NB: In this test dataset the number of cells per clone is small.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotMetrics.html">plotMetrics</a></span><span class="op">(</span><span class="va">test.sce</span>, group <span class="op">=</span> <span class="st">"barcode"</span>, factor <span class="op">=</span> <span class="st">"nCount_RNA"</span>, threshold <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -259,14 +259,14 @@ labelled.</p>
 </h4>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotCellsPerGroup.html">plotCellsPerGroup</a></span><span class="op">(</span><span class="va">test.sce</span>, group <span class="op">=</span> <span class="st">"seurat_clusters"</span>, threshold <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
 </div>
 <div class="section level4">
 <h4 id="plot-cells-per-lineage-barcode">plot cells per lineage barcode<a class="anchor" aria-label="anchor" href="#plot-cells-per-lineage-barcode"></a>
 </h4>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotCellsPerGroup.html">plotCellsPerGroup</a></span><span class="op">(</span><span class="va">test.sce</span>, group <span class="op">=</span> <span class="st">"barcode"</span>, threshold <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -302,7 +302,7 @@ present as a column of metadata in the single cell object.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">7</span> 7                   1</span></span></code></pre>
 <pre><code><span><span class="co">## Warning in ggplot2::geom_histogram(stat = "identity"): Ignoring unknown</span></span>
 <span><span class="co">## parameters: `binwidth`, `bins`, and `pad`</span></span></code></pre>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
 <p>The <code>plotCellsInClusters</code> framework can extend to any
 discrete variables present in the dataset. Here we examine the
 representation of lineage barcode BC_12904 across clusters</p>
@@ -316,7 +316,7 @@ representation of lineage barcode BC_12904 across clusters</p>
 <span><span class="co">## <span style="color: #BCBCBC;">3</span> 7                   1</span></span></code></pre>
 <pre><code><span><span class="co">## Warning in ggplot2::geom_histogram(stat = "identity"): Ignoring unknown</span></span>
 <span><span class="co">## parameters: `binwidth`, `bins`, and `pad`</span></span></code></pre>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
 </div>
 <div class="section level3">
@@ -401,7 +401,7 @@ for the hypergeometric test.</p>
 <pre><code><span><span class="co">## cluster total cells: 1</span></span></code></pre>
 <pre><code><span><span class="co">## cluster G2M cells: 0</span></span></code></pre>
 <pre><code><span><span class="co">## [1] "Hypergeometric test p-value: 0.0200000000000001"</span></span></code></pre>
-<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-10-1.png" width="700">
+<p><img src="bartools_single_cell_analysis_files/figure-html/unnamed-chunk-9-1.png" width="700">
 ## 5. Session Info</p>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>

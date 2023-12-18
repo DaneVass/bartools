@@ -49,20 +49,25 @@ devtools::install_github("DaneVass/bartools", dependencies = TRUE, type = "sourc
 
 ### Getting started
 
-See the vignettes for more details and usage examples:
-
--   The [quickstart vignette](https://danevass.github.io/bartools/articles/quickstart.html) - bulk barcoding dataset QC and analysis
-
--   The single-cell vignette - single-cell related capabilities of `bartools`
+See `vignette(bartools)` for more details and usage examples.
 
 ### Documentation
 
-See the [Docs](https://danevass.github.io/bartools/) for full package documentation.
+See the [Docs](https://danevass.github.io/bartools/) for full package
+documentation.  
+  
+For bulk level analysis see the [quickstart vignette](https://danevass.github.io/bartools/articles/bartools_quickstart.html)  
+For single cell data preprocessing and import see the [import_qc_single_cell vignette](https://danevass.github.io/bartools/articles/import_qc_single_cell.html)  
+For single cell data analysis see the [single_cell_analysis vignette](https://danevass.github.io/bartools/articles/bartools_single_cell_analysis.html)  
 
 ### Looking for a dataset preprocessing pipeline?
 
-We have also developed [BARtab](https://github.com/DaneVass/BARtab), a pre-processing pipeline to automate the extraction and enumeration of barcode reads from raw sequence files. See the github for more information.
+We have also developed [BARtab](https://github.com/DaneVass/BARtab), a
+pre-processing pipeline to automate the extraction and enumeration of
+barcode reads from raw sequence files. See the github for
 
 ### Contact
 
-The bartools package was developed by [Dane Vassiliadis](https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis). Please post any issues at <https://github.com/DaneVass/bartools/issues>
+The bartools package was developed by [Dane
+Vassiliadis](https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis) and [Henrietta Holze](https://github.com/HenriettaHolze).
+Please post any issues at <https://github.com/DaneVass/bartools/issues>

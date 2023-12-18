@@ -29,7 +29,7 @@ Dimensionality reduction and clustering were previously performed using `Seurat`
 
 ### Load the `bartools` package
 
-```{r}
+```{r, setup}
 library(bartools)
 knitr::opts_chunk$set(dev="png")
 ```

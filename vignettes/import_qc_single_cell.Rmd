@@ -56,7 +56,7 @@ To follow along with this vignette the raw counts tables and sample metadata are
 First, we load the results of BARtab. Below is an example of how we can load this data using the `readBartabCounts` function. 
 
 ```{r, eval = FALSE}
-counts_path <- "/researchers/henrietta.holze/splintr_tools/BARtab/test/test_out/sc_bam/counts/JK05_T0_unmapped_unmapped_reads_sample1.counts.tsv"
+counts_path <- "full/path/to/BARtab/umi.counts.tsv"
 counts <- readBartabCounts(counts_path)
 ```
 

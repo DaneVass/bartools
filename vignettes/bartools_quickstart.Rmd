@@ -293,7 +293,6 @@ Finally sample replicates can be correlated globally using `plotBarcodeCorrelati
 ```{r}
 # Pearson correlation, full
 plotBarcodeCorrelation(dge.filtered, clustered = T, upper = F, method = "pearson")
-plot
 
 # Pearson correlation, upper
 plotBarcodeCorrelation(dge.filtered, clustered = T, upper = T, method = "pearson")
