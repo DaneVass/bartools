@@ -5,20 +5,38 @@
 \title{plotBarcodeBubble}
 \usage{
 plotBarcodeBubble(
-  counts.obj,
-  labels = T,
-  proportion.cutoff = 10,
-  name = "Proportional Bubble Plot"
+  dgeObject,
+  title = "Proportional Bubble Plot",
+  group = NULL,
+  displaySamples = NULL,
+  displayBarcodes = NULL,
+  proportionCutoff = 10,
+  colorDominant = FALSE,
+  labelBarcodes = TRUE,
+  orderBarcodes = TRUE,
+  legend = TRUE
 )
 }
 \arguments{
-\item{counts.obj}{dataframe containing raw counts of barcodes}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{labels}{Boolean. print barcode labels?}
+\item{title}{Plot title (string). Default = `Proportional Bubble Plot`.}
 
-\item{proportion.cutoff}{barcodes represented at a percentage within any sample above this threshold will be labelled}
+\item{group}{Optional, column name in sample metadata to group samples by (string).}
 
-\item{name}{desired plot title}
+\item{displaySamples}{Optional, vector of sample names to display, preserves the order of vector (vector of strings).}
+
+\item{displayBarcodes}{Optional, vector of barcodes to display (vector of strings).}
+
+\item{proportionCutoff}{Barcodes represented at a percentage within any sample above this threshold will be labelled (decimal). Default = `10`.}
+
+\item{colorDominant}{Only color clones with frequency above `proportionCutoff` and others colored grey (boolean). Default = `FALSE`.}
+
+\item{labelBarcodes}{Label barcodes with a proportion larger than `proportionCutoff` in any sample (boolean). Default = `TRUE`.}
+
+\item{orderBarcodes}{Order barcodes alphanumerical (boolean). For SPLINTR that represents abundance in  original barcode library. Default `TRUE`.}
+
+\item{legend}{Show a legend of bubble sizes (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -27,6 +45,6 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate proportional bubbleplots from raw count object with barcodes labelled above a specified threshold
 }
 \examples{
-plotBarcodeBubble(test.dge$counts, labels = TRUE, proportion.cutoff = 10)
-plotBarcodeBubble(test.dge$counts, labels = FALSE, proportion.cutoff = 10)
+data(test.dge)
+plotBarcodeBubble(test.dge, proportionCutoff = 10)
 }

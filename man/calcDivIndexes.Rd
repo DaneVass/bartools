@@ -4,18 +4,18 @@
 \alias{calcDivIndexes}
 \title{Calculate diversity indices for barcode samples}
 \usage{
-calcDivIndexes(counts, group = NULL)
+calcDivIndexes(dgeObject, group = NULL)
 }
 \arguments{
-\item{counts}{dataframe of raw or normalised counts with samples as columns and observations/barcodes as rows}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{group}{vector of sample group metadata, assumes the same sample order as counts}
+\item{group}{Optional, column name in sample metadata to group samples by (string).}
 }
 \value{
 Returns a data-frame containing the calculated diversity indices per sample
 }
 \description{
-Takes a dataframe of barcode counts and computes shannon,
+Takes a DGEList object of barcode counts and computes shannon,
 simpson, inverse simpson and gini coefficients for each
 sample
 }
@@ -25,5 +25,6 @@ calcDivIndexes
 Calculates common diversity indices per sample in a dataframe of counts
 }
 \examples{
-indexes <- calcDivIndexes(counts = test.dge$counts)
+data(test.dge)
+indexes <- calcDivIndexes(test.dge)
 }

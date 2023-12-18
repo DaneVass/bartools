@@ -3,7 +3,7 @@
 
 # bartools
 
-#### Tools for the analysis of cellular barcoding datasets
+### Tools for the analysis of cellular barcoding datasets
 
 <img src="man/figures/bartools_logo.png" align="right" width="260"/>
 
@@ -31,14 +31,20 @@ cellular barcoding methodology that utiilses random DNA barcodes.
 
 ### Installation
 
-You can install the development version of bartools from
-[GitHub](https://github.com/):
+You can install bartools from
+[GitHub](https://github.com/DaneVass/bartools):
 
 ``` r
+# first install Bioconductor dependencies
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c("edgeR", "limma", "ComplexHeatmap"))
+
+# then install bartools via GitHub
 if (!requireNamespace("devtools", quietly = TRUE)) {
   install.packages("devtools")
 }
-devtools::install_github("DaneVass/bartools", dependencies = TRUE)
+devtools::install_github("DaneVass/bartools", dependencies = TRUE, force = TRUE)
 ```
 
 ### Getting started
@@ -59,5 +65,5 @@ barcode reads from raw sequence files. See the github for
 ### Contact
 
 The bartools package was developed by [Dane
-Vassiliadis](https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis).
+Vassiliadis](https://findanexpert.unimelb.edu.au/profile/366000-dane-vassiliadis) and [Henrietta Holze](https://github.com/HenriettaHolze).
 Please post any issues at <https://github.com/DaneVass/bartools/issues>

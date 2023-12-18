@@ -2,35 +2,35 @@
 % Please edit documentation in R/plotCellsinClusters.R
 \name{plotCellsInClusters}
 \alias{plotCellsInClusters}
-\title{Plot cells per ident class}
+\title{Plot distribution of group across clusters}
 \usage{
 plotCellsInClusters(
   sc.obj,
-  group = NULL,
+  group = "barcode",
   factor = NULL,
-  idents = NULL,
+  clusters = "seurat_clusters",
   plot.pct = T,
   plot = T
 )
 }
 \arguments{
-\item{sc.obj}{single cell object in Seurat or SingleCellExperiment format containing idents and group metadata}
+\item{sc.obj}{Single cell Seurat or SingleCellExperiment object containing clusters and group metadata.}
 
-\item{group}{a column of metadata}
+\item{group}{a column of metadata (string). Default = `barcode`.}
 
-\item{factor}{a level of group to plot per level of idents}
+\item{factor}{a level of group to test for enrichment per cluster, e.g. a specific barcode (string).}
 
-\item{idents}{a column of metadata defining the cluster identities of each cell. default = "seurat_clusters"}
+\item{clusters}{a column of metadata defining the cluster identities of each cell (string). Default = `seurat_clusters`}
 
-\item{plot.pct}{Logical. Plot percentages (TRUE) or raw numbers (FALSE). default = TRUE}
+\item{plot.pct}{Plot percentages (`TRUE`) or raw numbers (`FALSE`) (boolean). Default = `TRUE`}
 
-\item{plot}{Logical. Plot or return raw data. default = TRUE}
+\item{plot}{Create plot (`TRUE`) or return data (`FALSE`) (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a histogram or underlying plot data
 }
 \description{
-Takes a single cell object, a grouping variable, a factor within the group to test, 
+Takes a single cell object, a grouping variable, a factor within the group to test,
 and an ident class (i.e. clusters). Plots percentage or raw number of cells within factor
 present per level of ident (i.e. per cluster)
 }

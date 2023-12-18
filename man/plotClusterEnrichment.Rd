@@ -2,44 +2,44 @@
 % Please edit documentation in R/plotClusterEnrichment.R
 \name{plotClusterEnrichment}
 \alias{plotClusterEnrichment}
-\title{Hypergeometric test for cluster enrichment}
+\title{Hypergeometric test for cluster enrichment, e.g. to test whether a barcode is enriched in any cluster.}
 \usage{
 plotClusterEnrichment(
   sc.obj = NULL,
-  group = NULL,
+  group = "barcode",
   factor = NULL,
-  idents = "seurat_clusters",
+  clusters = "seurat_clusters",
   threshold = 0.01,
   order = TRUE,
   plot = TRUE
 )
 }
 \arguments{
-\item{sc.obj}{single cell object in Seurat or SingleCellExperiment format containing idents and group metadata}
+\item{sc.obj}{Single cell Seurat or SingleCellExperiment object containing clusters and group metadata.}
 
-\item{group}{a column of metadata}
+\item{group}{a column of metadata (string). Default = `barcode`.}
 
-\item{factor}{a level of group to test for enrichment per level of ident}
+\item{factor}{a level of group to test for enrichment per cluster, e.g. a specific barcode (string).}
 
-\item{idents}{a column of metadata defining the cluster identities of each cell. default = "seurat_clusters"}
+\item{clusters}{a column of metadata defining the cluster identities of each cell (string). Default = `seurat_clusters`}
 
-\item{threshold}{P-value threshold for phyper test. default = 0.01}
+\item{threshold}{P-value threshold for hypergeometric test (decimal). Default = `0.01`.}
 
-\item{order}{Logical. Order levels of idents in plot by -log10 P-value}
+\item{order}{Order clusters in plot by -log10 P-value (boolean). Default = `TRUE`.}
 
-\item{plot}{Logical. Plot hypergeometric test results or return plot data.}
+\item{plot}{Plot hypergeometric test results or return plot data (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a histogram of hypergeometric test results or underlying plot data
 }
 \description{
-Takes a single cell object, a grouping variable, a factor within the group to test, 
+Takes a single cell object, a grouping variable, a factor within the group to test,
 and an ident class (i.e. clusters). Per level of ident performs hypergeometric testing
 for enrichment of group factor
 }
 \details{
 plotClusterEnrichment
 
-Hypergeometric test for enrichment of specific classes of cells in 
+Hypergeometric test for enrichment of specific classes of cells in
 single cell RNA-seq clusters
 }

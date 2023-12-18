@@ -4,10 +4,10 @@
 \alias{plotBarcodeTimeseries}
 \title{plotBarcodeTimeseries}
 \usage{
-plotBarcodeTimeseries(counts.obj, name = "", seed = 5, top = 50)
+plotBarcodeTimeseries(counts, name = "", seed = 5, top = 50)
 }
 \arguments{
-\item{counts.obj}{dataframe containing raw counts of barcodes}
+\item{counts}{dataframe containing raw counts of barcodes}
 
 \item{name}{desired plot title}
 
@@ -22,6 +22,6 @@ Returns a bubbleplot of barcodes represented by proportion of total pool
 Generate proportional timeseries plot from raw / normalised barcode count object.
 }
 \examples{
-data(test.counts)
-plotBarcodeTimeseries(test.dge$counts[,1:4], name = "Proportional Timeseries Plot", seed = 5)
+data(test.dge)
+plotBarcodeTimeseries(test.dge[,1:4], name = "Proportional Timeseries Plot", seed = 5)
 }

@@ -4,27 +4,22 @@
 \alias{getDominantBarcodes}
 \title{Get dominant barcodes per sample}
 \usage{
-getDominantBarcodes(counts.obj, pct.thresh = 5)
+getDominantBarcodes(dgeObject, threshold = 0.05)
 }
 \arguments{
-\item{counts.obj}{DGEList object or dataframe containing raw / normalised counts of barcodes}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{pct.thresh}{percentage abundance threshold to call dominant barcodes}
+\item{threshold}{Proportion threshold to call dominant barcodes (decimal). Default = `0.05` (i.e. 5 percent).}
 }
 \value{
 Returns a named list containing vectors of dominant barcodes per sample
 }
 \description{
 Takes a DGEList or dataframe of barcode counts,
-computes the percentage abundance of each barcode within each sample
-then returns a list of barcodes meeting a threshold abundance per sample
-}
-\details{
-getDominantBarcodes
-
-get names of barcodes over a given percentage frequency per sample
+computes the proportion abundance of each barcode within each sample and
+then returns a list of barcodes meeting a threshold abundance per sample.
 }
 \examples{
 data(test.dge)
-getDominantBarcodes(test.dge, pct.thresh = 5)
+getDominantBarcodes(test.dge, threshold = 0.05)
 }

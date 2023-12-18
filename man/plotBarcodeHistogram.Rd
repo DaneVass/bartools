@@ -5,27 +5,34 @@
 \title{plotBarcodeHistogram}
 \usage{
 plotBarcodeHistogram(
-  counts.obj,
-  sample = NULL,
-  top = 10,
-  name = "Barcode Histogram"
+  dgeObject,
+  topN = 10,
+  seedColors = 1,
+  samples = NULL,
+  orderSamples = NULL,
+  alphaLowFreq = 1
 )
 }
 \arguments{
-\item{counts.obj}{dataframe containing raw counts of barcodes}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{sample}{desired name of sample to order all barcodes against}
+\item{topN}{Number of most frequent barcodes to show in legend (integer). Default = `10`.}
 
-\item{top}{top n barcodes in sample to color, all other barcodes are shown in grey}
+\item{seedColors}{Seed for sampling colors (integer). Default = `1`.}
 
-\item{name}{desired plot title}
+\item{samples}{Samples to plot (vector of strings). Default all.}
+
+\item{orderSamples}{One or multiple samples to order barcodes by (string or vector of strings). Default all.}
+
+\item{alphaLowFreq}{Alpha of barcodes not in top n barcodes (decimal). Default = `1`.}
 }
 \value{
-Returns a barcode histogram plot of barcodes represented by proportion of total pool
+Returns a stacked bar plot of barcode frequencies within samples
 }
 \description{
-Generate stacked barcode plots showing proportion from raw count object.
+Generate proportional stacked bar plot of barcodes from raw count object with n most frequent barcodes labelled.
 }
 \examples{
-plotBarcodeHistogram(test.dge$counts, sample = "T0-1", top = 10, name = "Barcode Histogram")
+data(test.dge)
+plotBarcodeHistogram(test.dge)
 }

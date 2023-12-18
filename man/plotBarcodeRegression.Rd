@@ -5,29 +5,29 @@
 \title{plotBarcodeRegression}
 \usage{
 plotBarcodeRegression(
-  dge,
-  samp1 = NULL,
-  samp2 = NULL,
+  dgeObject,
+  sample1 = NULL,
+  sample2 = NULL,
   title = NULL,
-  trendline = T,
+  trendline = TRUE,
   trans = NULL,
-  rug = F
+  rug = FALSE
 )
 }
 \arguments{
-\item{dge}{DGEList object containing grouping variable to fit linear model}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{samp1}{name of sample 1. must be one of colnames(dge)}
+\item{sample1}{Name of sample 1 (string).}
 
-\item{samp2}{name of sample 2. must be one of colnames(dge)}
+\item{sample2}{Name of sample 2 (string).}
 
-\item{title}{desired name of output plot}
+\item{title}{Optional, title of plot (string).}
 
-\item{trendline}{Logical. Include linear trendline using stat_smooth()}
+\item{trendline}{Include linear trendline using `stat_smooth()` (boolean). Default = `TRUE`.}
 
-\item{trans}{From ggplot2. For continuous scales, the name of a transformation object or the object itself.}
+\item{trans}{Optional, the name of a transformation object or the object itself.}
 
-\item{rug}{Logical. Include geom_rug density information on the axes?}
+\item{rug}{Include geom_rug density information on the axes (boolean). Defaule = `FALSE`.}
 }
 \value{
 Returns a scatterplot of the two samples
@@ -37,5 +37,5 @@ Generate a linear regression scatterplot for two sets of sample counts.
 }
 \examples{
 data(test.dge)
-plotBarcodeRegression(dge = test.dge, samp1 = "T0-1", samp2 = "T0-2")
+plotBarcodeRegression(test.dge, sample1 = "T0-1", sample2 = "T0-2")
 }

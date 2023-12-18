@@ -7,9 +7,9 @@
 plotBARtabFilterQC(
   dir = NULL,
   recursive = T,
-  pattern.log = "*filter.log",
-  pattern.value = "reads",
-  full.names = T,
+  patternLog = "*filter.log",
+  patternValue = "reads",
+  fullNames = T,
   normalised = F,
   plot = T,
   title = "BARtab Filter QC"
@@ -20,11 +20,11 @@ plotBARtabFilterQC(
 
 \item{recursive}{Logical. TRUE will recurse regex search into subdirectories#'}
 
-\item{pattern.log}{regex string to specify filter stage log files}
+\item{patternLog}{regex string to specify filter stage log files}
 
-\item{pattern.value}{grep on this string in log files}
+\item{patternValue}{grep on this string in log files}
 
-\item{full.names}{Logical. Return full names of files detected by regex search}
+\item{fullNames}{Logical. Return full names of files detected by regex search}
 
 \item{normalised}{Logical. log10 normalise counts}
 
