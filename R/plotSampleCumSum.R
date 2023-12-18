@@ -9,6 +9,7 @@
 #' @return Returns a cumulative sum plot
 #' 
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 
 plotSampleCumSum <- function(dgeObject,
@@ -23,21 +24,21 @@ plotSampleCumSum <- function(dgeObject,
   counts <- counts %>%
     as.data.frame() %>%
     tibble::rownames_to_column("Barcode") %>%
-    tidyr::pivot_longer(-Barcode, names_to = "sample", values_to = "count")
+    tidyr::pivot_longer(-.data$Barcode, names_to = "sample", values_to = "count")
 
   counts <- counts %>%
-    arrange(dplyr::desc(count)) %>%
-    dplyr::group_by(sample) %>%
-    dplyr::mutate(freq = count / sum(count)) %>%
+    dplyr::arrange(dplyr::desc(.data$count)) %>%
+    dplyr::group_by(.data$sample) %>%
+    dplyr::mutate(freq = .data$count / sum(.data$count)) %>%
     # remove all samples not detected within sample
-    dplyr::filter(freq > 0) %>%
-    dplyr::mutate(rank = dplyr::row_number(), cumsum = cumsum(freq))
+    dplyr::filter(.data$freq > 0) %>%
+    dplyr::mutate(rank = dplyr::row_number(), cumsum = cumsum(.data$freq))
 
   # shuffle points so samples are not hidden
   counts[sample(1:nrow(counts)),]  %>%
-    ggplot(aes(x = rank, y = cumsum, color = sample)) +
-    geom_point(alpha = 0.5) +
-    ylab("Cumulative Sum (Proportion)") +
-    xlab("Barcode rank within sample") +
-    theme_bw()
+    ggplot2::ggplot(ggplot2::aes(x = .data$rank, y = .data$cumsum, color = .data$sample)) +
+    ggplot2::geom_point(alpha = 0.5) +
+    ggplot2::ylab("Cumulative Sum (Proportion)") +
+    ggplot2::xlab("Barcode rank within sample") +
+    ggplot2::theme_bw()
 }

@@ -18,6 +18,7 @@
 #' @param plot.pct Plot percentages (`TRUE`) or raw numbers (`FALSE`) (boolean). Default = `TRUE`
 #' @param plot Create plot (`TRUE`) or return data (`FALSE`) (boolean). Default = `TRUE`.
 #'
+#' @importFrom rlang .data
 #' @return Returns a histogram or underlying plot data
 #' @export
 
@@ -89,31 +90,31 @@ plotCellsInClusters <- function(sc.obj,
   dat[is.na(dat)] = 0
 
   # convert to proportion
-  dat <- dplyr::mutate(dat, Percentage = 100 * (n / sum(dat$n)))
+  dat <- dplyr::mutate(dat, Percentage = 100 * (.data$n / sum(.data$n)))
 
   # plot data
   if (plot) {
     if (isTRUE(plot.pct)) {
       p <-
-        ggplot(dat, aes(
+        ggplot2::ggplot(dat, ggplot2::aes(
           x = !!idents,
-          y = Percentage,
+          y = .data$Percentage,
           fill = !!idents
         )) +
-        geom_histogram(stat = "identity") +
-        scale_fill_manual(values = scales::hue_pal()(nrow(clusters))) +
-        theme_bw() +
-        ggtitle(paste("Percentage of cells in clusters:", group, factor))
+        ggplot2::geom_histogram(stat = "identity") +
+        ggplot2::scale_fill_manual(values = scales::hue_pal()(nrow(clusters))) +
+        ggplot2::theme_bw() +
+        ggplot2::ggtitle(paste("Percentage of cells in clusters:", group, factor))
     } else {
-      p <- ggplot(dat, aes(
+      p <- ggplot2::ggplot(dat, ggplot2::aes(
         x = !!idents,
-        y = n,
+        y = .data$n,
         fill = !!idents
       )) +
-        geom_histogram(stat = "identity") +
-        scale_fill_manual(values = scales::hue_pal()(nrow(clusters))) +
-        theme_bw() +
-        ggtitle(paste("Number of cells in clusters:", group, factor))
+        ggplot2::geom_histogram(stat = "identity") +
+        ggplot2::scale_fill_manual(values = scales::hue_pal()(nrow(clusters))) +
+        ggplot2::theme_bw() +
+        ggplot2::ggtitle(paste("Number of cells in clusters:", group, factor))
     }
     return(p)
   } else {

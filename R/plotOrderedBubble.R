@@ -17,6 +17,7 @@
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' data(test.dge)
@@ -81,7 +82,7 @@ plotOrderedBubble <- function(dgeObject,
   }
   # identify all barcodes to label
   Highbarcodes <- barcodes.proportional %>%
-    dplyr::select(-c(Barcode, Position)) %>%
+    dplyr::select(-c(.data$Barcode, .data$Position)) %>%
     dplyr::filter(dplyr::if_any(tidyselect::where(is.numeric), ~ .x > proportionCutoff))
 
   if (colorDominant) {
@@ -178,10 +179,10 @@ plotOrderedBubble <- function(dgeObject,
   bubble.plot <- ggplot2::ggplot(
     barcodes.proportional.melted,
     ggplot2::aes(
-      x = Position,
-      y = Sample,
-      size = Proportion,
-      color = Color
+      x = .data$Position,
+      y = .data$Sample,
+      size = .data$Proportion,
+      color = .data$Color
     )
   ) +
     ggplot2::geom_point(stat = "identity",

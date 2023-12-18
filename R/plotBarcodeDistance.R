@@ -10,6 +10,7 @@
 #'
 #' @return Returns a heatmap of sample distances using desired clustering
 #'
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -46,7 +47,7 @@ plotBarcodeDistance <- function(dgeObject,
   # Create a ggheatmap
   title <- paste(title, "-", method)
   ggheatmap <-
-    ggplot2::ggplot(melted_dist, ggplot2::aes(`Var2`, `Var1`, fill = `value`)) +
+    ggplot2::ggplot(melted_dist, ggplot2::aes(.data$Var2, .data$Var1, fill = .data$value)) +
     ggplot2::geom_tile(color = "white") +
     ggplot2::scale_fill_viridis_c(option = "magma") +
     ggplot2::theme_bw() +

@@ -15,6 +15,7 @@
 #'
 #' @return Returns a plot / dataset containing BARtab Filtering stage QC data
 #'
+#' @importFrom rlang .data
 #' @export
 
 plotBARtabFilterQC <- function(dir = NULL,
@@ -82,21 +83,21 @@ plotBARtabFilterQC <- function(dir = NULL,
 
     # normalise if requested
     if (normalised) {
-      p <- ggplot(plot.dat, aes(fill = variable, y = value, x = sample)) +
-        geom_bar(position = "fill", stat = "identity") +
+      p <- ggplot2::ggplot(plot.dat, ggplot2::aes(fill = .data$variable, y = .data$value, x = .data$sample)) +
+        ggplot2::geom_bar(position = "fill", stat = "identity") +
         ggplot2::coord_flip() +
         ggplot2::theme_bw() +
         ggplot2::scale_fill_manual(values = c("dodgerblue2", "lightblue")) +
         ggplot2::ggtitle("Percentage of barcode reads kept post filtering")
-      print(p)
+      return(p)
     } else {
-      p <- ggplot(plot.dat, aes(fill = variable, y = value, x = sample)) +
-        geom_bar(position = "stack", stat = "identity") +
+      p <- ggplot2::ggplot(plot.dat, ggplot2::aes(fill = .data$variable, y = .data$value, x = .data$sample)) +
+        ggplot2::geom_bar(position = "stack", stat = "identity") +
         ggplot2::coord_flip() +
         ggplot2::theme_bw() +
         ggplot2::scale_fill_manual(values = c("dodgerblue2", "lightblue")) +
         ggplot2::ggtitle("Total barcode reads kept post filtering")
-      print(p)
+      return(p)
     }
   } else {
     return(final.df)
@@ -116,6 +117,7 @@ plotBARtabFilterQC <- function(dir = NULL,
 #'
 #' @return Returns a plot / dataset containing BARtab Filtering stage QC data
 #'
+#' @importFrom rlang .data
 #' @export
 
 plotBARtabMapQC <- function(dir = NULL,
@@ -137,7 +139,7 @@ plotBARtabMapQC <- function(dir = NULL,
 
   for (log in logs) {
     # get samplename from log
-    samp <- tail(stringr::str_split(log, pattern = "/")[[1]], 1)
+    samp <- utils::tail(stringr::str_split(log, pattern = "/")[[1]], 1)
     samp <- stringr::str_split(samp, pattern = "_", n = 2)[[1]][1]
 
     # filter alignment info from logfile
@@ -164,7 +166,7 @@ plotBARtabMapQC <- function(dir = NULL,
   # plot data
   if (plot) {
     p <-
-      ggplot2::ggplot(final.df, ggplot2::aes(sample, percent, fill = percent)) +
+      ggplot2::ggplot(final.df, ggplot2::aes(.data$sample, .data$percent, fill = .data$percent)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::coord_flip() +
       ggplot2::theme_bw() +

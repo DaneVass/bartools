@@ -21,6 +21,7 @@
 #' @param nBarcodes Number of barcodes to plot when using 'log2FC' plot type (integer). Default = `10`.
 #' @param title Optional, plot title (string).
 #'
+#' @importFrom rlang .data
 #' @return Returns a lineplot
 #'
 #' @export
@@ -113,9 +114,10 @@ plotAbundanceLines <-
 
     # plot data
     melted_df <- reshape2::melt(filtered_df, id.vars = NULL)
-    melted_df$rowid <- rownames(filtered_df)
-    ggplot2::ggplot(melted_df, ggplot2::aes(variable, value, group = factor(rowid))) +
-      ggplot2::geom_line(ggplot2::aes(color = factor(rowid))) +
+    melted_df$rowid <- factor(rownames(filtered_df))
+
+    ggplot2::ggplot(melted_df, ggplot2::aes(.data$variable, .data$value, group = .data$rowid)) +
+      ggplot2::geom_line(ggplot2::aes(color = .data$rowid)) +
       ggplot2::xlab("") +
       ggplot2::ylab("Counts") +
       ggplot2::scale_colour_discrete(legend_title) +

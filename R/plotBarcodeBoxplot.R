@@ -16,6 +16,7 @@
 #'
 #'
 #' @return Returns a boxplot
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' data(test.dge)
@@ -89,14 +90,14 @@ plotBarcodeBoxplot <- function(dgeObject,
   # no metadata group specified
   if (is.null(group)) {
     p <- ggplot2::ggplot(dat) +
-      ggplot2::geom_boxplot(aes(x = barcodes, y = value, fill = barcodes))
+      ggplot2::geom_boxplot(aes(x = .data$barcodes, y = .data$value, fill = .data$barcodes))
 
     if (violin) {
       p <- ggplot2::ggplot(dat) +
-        ggplot2::geom_violin(aes(x = barcodes,
-                                 y = value,
-                                 fill = barcodes), scale = "width") +
-        ggplot2::geom_boxplot(aes(x = barcodes, y = value), width = 0.2)
+        ggplot2::geom_violin(aes(x = .data$barcodes,
+                                 y = .data$value,
+                                 fill = .data$barcodes), scale = "width") +
+        ggplot2::geom_boxplot(aes(x = .data$barcodes, y = .data$value), width = 0.2)
     }
 
     p <- p +
@@ -105,7 +106,7 @@ plotBarcodeBoxplot <- function(dgeObject,
 
     if (point) {
       p <-
-        p + ggplot2::geom_point(aes(x = barcodes, y = value))
+        p + ggplot2::geom_point(aes(x = .data$barcodes, y = .data$value))
     }
 
   } else {
@@ -132,7 +133,7 @@ plotBarcodeBoxplot <- function(dgeObject,
 
     if (length(barcodes) > 1) {
       p <- p + ggplot2::labs(fill = as.character(group)) +
-        facet_wrap(~ barcodes)
+        ggplot2::facet_wrap(~ .data$barcodes)
     }
 
   }

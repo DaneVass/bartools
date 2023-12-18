@@ -17,6 +17,7 @@
 #' @param plot Logical. Plot results or return data. 
 #'
 #' @return Returns a plot of cell number by barcode test results or underlying plot data
+#' @importFrom rlang .data
 #' @export
 #' 
 
@@ -50,7 +51,7 @@ plotMetrics <- function(sc.obj = NULL,
   bc.tally <- as.data.frame(table(meta.bc[,`group`]))
   select <- (bc.tally[which(bc.tally$Freq > threshold),])$Var1
   meta.select <- meta.bc[which(meta.bc[,`group`] %in% select),]
-  meta.select.group <- dplyr::group_by(meta.select, barcode)
+  meta.select.group <- dplyr::group_by(meta.select, .data$barcode)
   
   # convert grouping var to factor if not already
   meta.select[,`group`] <- factor(meta.select[,`group`])

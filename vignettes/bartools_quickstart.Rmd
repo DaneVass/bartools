@@ -39,7 +39,6 @@ devtools::install_github("DaneVass/bartools", dependencies = TRUE, force = TRUE)
 
 ```{r setup}
 library(bartools)
-library(magrittr)
 knitr::opts_chunk$set(dev="png")
 ```
 

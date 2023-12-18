@@ -30,6 +30,7 @@ readBartabCounts <- function(countsPath) {
 #'
 #' @return Returns a data frame with one row per cell ID
 #'
+#' @importFrom rlang .data
 #' @export
 #
 aggregateBarcodes <- function(counts, sep = ";") {
@@ -54,6 +55,7 @@ aggregateBarcodes <- function(counts, sep = ";") {
 #'
 #' @return Returns a data frame with one row per cell ID
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #
 
@@ -62,13 +64,13 @@ filterBarcodes <-
            umiCountFilter = 1,
            umiFractionFilter = 0.3) {
     counts_filtered <- counts %>%
-      dplyr::filter(bc.umi.count >= umiCountFilter)
+      dplyr::filter(.data$bc.umi.count >= umiCountFilter)
 
     counts_filtered <- counts_filtered %>%
-      dplyr::group_by(cellid) %>%
-      dplyr::mutate(max_count = max(bc.umi.count)) %>%
-      dplyr::arrange(cellid) %>%
-      dplyr::filter(bc.umi.count / umiFractionFilter >= max_count)
+      dplyr::group_by(.data$cellid) %>%
+      dplyr::mutate(max_count = max(.data$bc.umi.count)) %>%
+      dplyr::arrange(.data$cellid) %>%
+      dplyr::filter(.data$bc.umi.count / umiFractionFilter >= .data$max_count)
 
     return(counts_filtered)
   }
@@ -95,6 +97,7 @@ integer_breaks <- function(n = 5, ...) {
 #'
 #' @return Returns a plot
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #'
 #' @export
 
@@ -113,29 +116,29 @@ plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, not
     # in case barcodes were previously already aggregated per cell
     lineagePerCell.dist.df <- counts %>%
       tibble::rownames_to_column("cellid") %>%
-      dplyr::select(cellid, barcode) %>%
-      dplyr::mutate(barcode = ifelse(barcode == notDetected, NA, barcode)) %>%
-      dplyr::mutate(number_of_lineage_barcodes = stringr::str_count(barcode, pattern = sep) + 1) %>%
-      dplyr::mutate(number_of_lineage_barcodes = ifelse(is.na(number_of_lineage_barcodes), 0, number_of_lineage_barcodes)) %>%
-      dplyr::select(-barcode)
+      dplyr::select(.data$cellid, .data$barcode) %>%
+      dplyr::mutate(barcode = ifelse(.data$barcode == notDetected, NA, .data$barcode)) %>%
+      dplyr::mutate(number_of_lineage_barcodes = stringr::str_count(.data$barcode, pattern = sep) + 1) %>%
+      dplyr::mutate(number_of_lineage_barcodes = ifelse(is.na(.data$number_of_lineage_barcodes), 0, .data$number_of_lineage_barcodes)) %>%
+      dplyr::select(-.data$barcode)
   } else {
     # Detected lineage barcodes per cell
     lineagePerCell.dist.df <- counts %>%
-      dplyr::select(cellid, barcode) %>%
-      dplyr::group_by(cellid) %>%
+      dplyr::select(.data$cellid, .data$barcode) %>%
+      dplyr::group_by(.data$cellid) %>%
       dplyr::tally(., name = "number_of_lineage_barcodes")
   }
 
   lineagePerCell.dist.df <- lineagePerCell.dist.df %>%
-    dplyr::count(number_of_lineage_barcodes) %>%
-    dplyr::mutate(frac = n / nrow(lineagePerCell.dist.df))
+    dplyr::count(.data$number_of_lineage_barcodes) %>%
+    dplyr::mutate(frac = .data$n / nrow(lineagePerCell.dist.df))
 
   if (fraction) {
     p <- lineagePerCell.dist.df %>%
-      ggplot2::ggplot(aes(x = number_of_lineage_barcodes, y = frac))
+      ggplot2::ggplot(aes(x = .data$number_of_lineage_barcodes, y = .data$frac))
   } else {
     p <- lineagePerCell.dist.df %>%
-      ggplot2::ggplot(aes(x = number_of_lineage_barcodes, y = n))
+      ggplot2::ggplot(aes(x = .data$number_of_lineage_barcodes, y =.data$n))
   }
   p <- p +
     ggplot2::theme(
@@ -171,25 +174,26 @@ plotBarcodesPerCell <- function(counts, fraction = TRUE, aggregated = FALSE, not
 #'
 #' @return Returns a plot
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #'
 #' @export
 
 plotUmiPerBarcode <- function(counts, fraction = TRUE) {
   # Number of UMIs supporting the most frequent barcode
   max.umi.per.cell <- counts %>%
-    dplyr::group_by(cellid) %>%
-    dplyr::summarise(max = max(bc.umi.count))
+    dplyr::group_by(.data$cellid) %>%
+    dplyr::summarise(max = max(.data$bc.umi.count))
 
   max.umi.per.cell <- max.umi.per.cell %>%
-    dplyr::count(max) %>%
-    dplyr::mutate(frac = n / nrow(max.umi.per.cell))
+    dplyr::count(.data$max) %>%
+    dplyr::mutate(frac = .data$n / nrow(max.umi.per.cell))
 
   if (fraction) {
     p <- max.umi.per.cell %>%
-      ggplot2::ggplot(aes(x = max, y = frac))
+      ggplot2::ggplot(aes(x = .data$max, y = .data$frac))
   } else {
     p <- max.umi.per.cell %>%
-      ggplot2::ggplot(aes(x = max, y = n))
+      ggplot2::ggplot(aes(x = .data$max, y = .data$n))
   }
   p <- p +
     ggplot2::theme(
@@ -222,21 +226,22 @@ plotUmiPerBarcode <- function(counts, fraction = TRUE) {
 #'
 #' @return Returns a plot
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #'
 plotUmiFilterThresholds <- function(counts) {
   max.umi.per.cell <- counts %>%
     # get UMI count of dominant barcode per cell
-    dplyr::group_by(cellid) %>%
-    dplyr::summarise(max = max(bc.umi.count)) %>%
+    dplyr::group_by(.data$cellid) %>%
+    dplyr::summarise(max = max(.data$bc.umi.count)) %>%
     # cummulative count of cells
-    dplyr::group_by(max) %>%
+    dplyr::group_by(.data$max) %>%
     dplyr::summarise(count_max = dplyr::n()) %>%
-    dplyr::arrange(dplyr::desc(max)) %>%
-    dplyr::mutate(cumsum_count_max = cumsum(count_max))
+    dplyr::arrange(dplyr::desc(.data$max)) %>%
+    dplyr::mutate(cumsum_count_max = cumsum(.data$count_max))
 
   p <-
-    ggplot2::ggplot(max.umi.per.cell, aes(x = max, y = cumsum_count_max)) +
+    ggplot2::ggplot(max.umi.per.cell, aes(x = .data$max, y = .data$cumsum_count_max)) +
     ggplot2::geom_bar(stat = "identity", width = .75) +
     ggplot2::ylab("# cells") +
     ggplot2::xlab("UMI threshold") +

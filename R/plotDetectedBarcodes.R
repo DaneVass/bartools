@@ -11,6 +11,7 @@
 #'
 #' @return Returns a histogram plot of the number of detected barcodes per sample.
 #'
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -87,7 +88,7 @@ plotDetectedBarcodes <- function(counts, percentile = 0.95, plot = T, sample.ord
       percentile.df <- suppressMessages(dplyr::left_join(percentile.df, groups))
       percentile.df$Sample <- as.factor(percentile.df$Sample)
       percentile.df$Group <- as.factor(percentile.df$Group)
-      percentile.df <- dplyr::mutate(percentile.df, Sample = forcats::fct_reorder(Sample, dplyr::desc(Group)))
+      percentile.df <- dplyr::mutate(percentile.df, Sample = forcats::fct_reorder(.data$Sample, dplyr::desc(.data$Group)))
     }
   }
 
@@ -99,24 +100,24 @@ plotDetectedBarcodes <- function(counts, percentile = 0.95, plot = T, sample.ord
   # make plots, color by group if given, needs ggpubr
   if (plot) {
     if (!is.null(group)){
-      p <- ggplot2::ggplot(data = percentile.df, ggplot2::aes(x = `Sample`, y = `Barcodes`, fill = Group)) +
+      p <- ggplot2::ggplot(data = percentile.df, ggplot2::aes(x = .data$Sample, y = .data$Barcodes, fill = .data$Group)) +
         ggplot2::geom_bar(stat = "identity") +
         #ggplot2::guides(fill = "none") +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0, hjust = 1, size = 5)) + ggplot2::ggtitle(title) +
         ggplot2::ylim(0, max(percentile.df$Barcodes + 25)) +
-        ggplot2::geom_text(ggplot2::aes(label = `Barcodes`, y = `Barcodes` + 0.05), position = ggplot2::position_dodge(0.9), vjust = -0.1, size = 5) +
+        ggplot2::geom_text(ggplot2::aes(label = .data$Barcodes, y = .data$Barcodes + 0.05), position = ggplot2::position_dodge(0.9), vjust = -0.1, size = 5) +
         ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(unique(percentile.df$Group)))))
       return(p)
     } else {
-      p <- ggplot2::ggplot(data = percentile.df, ggplot2::aes(x = percentile.df$Sample,
-                                                              y = percentile.df$Barcodes)) +
+      p <- ggplot2::ggplot(data = percentile.df, ggplot2::aes(x = .data$Sample,
+                                                              y = .data$Barcodes)) +
         ggplot2::geom_bar(stat = "identity") +
         #ggplot2::guides(fill = "none") +
         ggplot2::theme_bw() +
         ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0, hjust = 1, size = 5)) + ggplot2::ggtitle(title) +
         ggplot2::ylim(0, max(percentile.df$Barcodes + 25)) +
-        ggplot2::geom_text(ggplot2::aes(label = percentile.df$Barcodes, y = percentile.df$Barcodes + 0.05), position = ggplot2::position_dodge(0.9), vjust = -0.1, size = 5) +
+        ggplot2::geom_text(ggplot2::aes(label =.data$Barcodes, y = .data$Barcodes + 0.05), position = ggplot2::position_dodge(0.9), vjust = -0.1, size = 5) +
         ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(unique(percentile.df$Group)))))
       return(p)
     }

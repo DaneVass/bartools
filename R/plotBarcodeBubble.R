@@ -15,6 +15,7 @@
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' data(test.dge)
@@ -69,7 +70,7 @@ plotBarcodeBubble <- function(dgeObject,
 
   # identify all barcodes to label
   Highbarcodes <- barcodes.proportional %>%
-    dplyr::select(-c(Barcode, Position)) %>%
+    dplyr::select(-c(.data$Barcode, .data$Position)) %>%
     dplyr::filter(dplyr::if_any(tidyselect::where(is.numeric), ~ .x > proportionCutoff))
 
   if (colorDominant) {
@@ -147,10 +148,10 @@ plotBarcodeBubble <- function(dgeObject,
   bubble.plot <- ggplot2::ggplot(
     barcodes.proportional.melted,
     ggplot2::aes(
-      x = Position,
-      y = Sample,
-      size = Proportion,
-      color = Color
+      x = .data$Position,
+      y = .data$Sample,
+      size = .data$Proportion,
+      color = .data$Color
     )
   ) +
     ggplot2::geom_point(stat = "identity",
@@ -199,7 +200,7 @@ plotBarcodeBubble <- function(dgeObject,
   # facet plot if grouping is provided
   if (!is.null(group)) {
     bubble.plot <- bubble.plot +
-      facet_grid(barcodes.proportional.melted[[group]] ~ .,
+      ggplot2::facet_grid(barcodes.proportional.melted[[group]] ~ .,
                  scales = "free",
                  space = "free")
   }
@@ -207,7 +208,7 @@ plotBarcodeBubble <- function(dgeObject,
   # remove legend
   if (legend == FALSE) {
     bubble.plot <- bubble.plot +
-      theme(legend.position = "None")
+      ggplot2::theme(legend.position = "None")
   }
   return(bubble.plot)
 }

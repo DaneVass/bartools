@@ -11,6 +11,7 @@
 #'
 #' @return Returns a stacked bar plot of barcode frequencies within samples
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -51,23 +52,23 @@ plotBarcodeHistogram <-
       counts %>%
       as.data.frame() %>%
       tibble::rownames_to_column(var = "barcode") %>%
-      tidyr::pivot_longer(-barcode) %>%
-      dplyr::rename("count" = value, "sample" = name) %>%
-      dplyr::group_by(sample) %>%
-      dplyr::mutate(freq = count / sum(count)) %>%
+      tidyr::pivot_longer(-.data$barcode) %>%
+      dplyr::rename("count" = .data$value, "sample" = .data$name) %>%
+      dplyr::group_by(.data$sample) %>%
+      dplyr::mutate(freq = .data$count / sum(.data$count)) %>%
       dplyr::ungroup()
 
     # order barcodes based on maximum frequency across samples
     barcode_order <- barcode_freqs %>%
-      dplyr::filter(sample %in% orderSamples) %>%
-      dplyr::select(barcode, freq) %>%
-      dplyr::group_by(barcode) %>%
+      dplyr::filter(.data$sample %in% orderSamples) %>%
+      dplyr::select(.data$barcode, .data$freq) %>%
+      dplyr::group_by(.data$barcode) %>%
       dplyr::slice_max(
-        order_by = freq,
+        order_by = .data$freq,
         n = 1,
         with_ties = F
       ) %>%
-      dplyr::arrange(freq)
+      dplyr::arrange(.data$freq)
 
     # set order of barcodes for plotting as factor levels
     barcode_freqs$barcode <- factor(barcode_freqs$barcode,
@@ -89,8 +90,8 @@ plotBarcodeHistogram <-
 
     # set which barcodes to label
     bc_labels <- barcode_freqs %>%
-      dplyr::arrange(dplyr::desc(freq)) %>%
-      dplyr::pull(barcode) %>%
+      dplyr::arrange(dplyr::desc(.data$freq)) %>%
+      dplyr::pull(.data$barcode) %>%
       unique() %>%
       utils::head(topN) %>%
       as.character()
@@ -99,19 +100,19 @@ plotBarcodeHistogram <-
       stats::setNames(as.list(cols_vector), unique(barcode_freqs$barcode))
 
     p <- barcode_freqs %>%
-      ggplot(aes(
-        fill = barcode,
-        x = sample,
-        y = freq,
-        alpha = ifelse(barcode %in% bc_labels, 1, 0.5)
+      ggplot2::ggplot(aes(
+        fill = .data$barcode,
+        x = .data$sample,
+        y = .data$freq,
+        alpha = ifelse(.data$barcode %in% bc_labels, 1, 0.5)
       )) +
-      geom_bar(position = "stack", stat = "identity") +
-      scale_alpha_continuous(guide = FALSE, range = c(alphaLowFreq, 1)) +
-      scale_fill_manual(values = label_values, breaks = bc_labels) +
-      theme_bw() +
-      labs(fill = paste0("Top ", topN, " barcodes")) +
-      ylab("Proportion") +
-      theme(legend.text = element_text(size = 8),
+      ggplot2::geom_bar(position = "stack", stat = "identity") +
+      ggplot2::scale_alpha_continuous(guide = FALSE, range = c(alphaLowFreq, 1)) +
+      ggplot2::scale_fill_manual(values = label_values, breaks = bc_labels) +
+      ggplot2::theme_bw() +
+      ggplot2::labs(fill = paste0("Top ", topN, " barcodes")) +
+      ggplot2::ylab("Proportion") +
+      ggplot2::theme(legend.text = element_text(size = 8),
             axis.text.x = element_text(angle = 45, hjust = 1))
 
     return(p)

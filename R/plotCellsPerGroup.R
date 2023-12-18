@@ -21,6 +21,7 @@
 #' @param sep Separating character used for aggregation (string). Default = `;`.
 #'
 #' @return Returns a plot of cell number by barcode test results or underlying plot data
+#' @importFrom rlang .data
 #' @export
 #'
 #'
@@ -83,7 +84,7 @@ plotCellsPerGroup <- function(sc.obj = NULL,
   # plot p value histogram or return raw data
   if (plot) {
     p <- ggplot2::ggplot(bc.tally) +
-      ggplot2::geom_point(ggplot2::aes(x = Var1, y = Freq, color = num.barcodes)) +
+      ggplot2::geom_point(ggplot2::aes(x = .data$Var1, y = .data$Freq, color = .data$num.barcodes)) +
       ggplot2::xlab("barcode") +
       ggplot2::theme_classic() +
       ggplot2::ylab("number of cells") +
@@ -102,10 +103,10 @@ plotCellsPerGroup <- function(sc.obj = NULL,
         p <- p + ggrepel::geom_text_repel(
           data = bc.tally,
           ggplot2::aes(
-            x = Var1,
-            y = Freq,
-            color = num.barcodes,
-            label = label
+            x = .data$Var1,
+            y = .data$Freq,
+            color = .data$num.barcodes,
+            label = .data$label
           ),
           max.overlaps = 20
         )
@@ -114,10 +115,10 @@ plotCellsPerGroup <- function(sc.obj = NULL,
         p <- p + ggplot2::geom_text(
           data = bc.tally,
           ggplot2::aes(
-            x = Var1,
-            y = Freq,
-            color = num.barcodes,
-            label = label
+            x = .data$Var1,
+            y = .data$Freq,
+            color = .data$num.barcodes,
+            label = .data$label
           ),
           nudge_x = -20
         )

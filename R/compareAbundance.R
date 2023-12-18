@@ -23,6 +23,7 @@
 #'
 #' @return Returns a volcano plot and a csv file with differentially abundant
 #' barcode results
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' data(test.dge)
@@ -50,7 +51,7 @@ compareAbundance <-
 
     dge <- DGEList(counts = dgeObject$counts)
     dge <- calcNormFactors(dge, method = 'TMM')
-    design <- model.matrix(~ cdt)
+    design <- stats::model.matrix(~ cdt)
     colnames(design) <- levels(cdt)
 
     dge <- estimateDisp(dge, design)
@@ -65,7 +66,7 @@ compareAbundance <-
     condition2_variable <- if (grepl("^[[:digit:]]", condition2)) paste0("char_", condition2) else condition2
 
     pair_vector <- sprintf("%s-%s", condition1_variable, condition2_variable) # Samples to be compared
-    pair_contrast <- makeContrasts(contrasts = pair_vector, levels = design)
+    pair_contrast <- limma::makeContrasts(contrasts = pair_vector, levels = design)
     # performs the likelihood ratio test based on the fitted model fit with the specified contrast
     lrt <- glmLRT(fit, contrast = pair_contrast) # Likelihood ratio test
 
@@ -74,9 +75,9 @@ compareAbundance <-
     # save results in a csv file ordered by FDR
     result <-
       as.data.frame(topTags(lrt, n = nrow(dgeObject$counts)))
-    result <- dplyr::arrange(result, FDR)
+    result <- dplyr::arrange(result, .data$FDR)
     if (!is.null(filename)) {
-      write.table(result,
+      utils::write.table(result,
                   file = filename,
                   sep = "\t",
                   row.names = T)
@@ -102,22 +103,22 @@ compareAbundance <-
 
     # Create a volcano plot
     plot <-
-      ggplot(result, aes(
-        x = logFC,
-        y = -log10(PValue),
-        color = category
+      ggplot2::ggplot(result, aes(
+        x = .data$logFC,
+        y = -log10(.data$PValue),
+        color = .data$category
       )) +
-      geom_point(alpha = 0.6) +
-      geom_text(
-        aes(x = logFC, y = -log10(PValue)),
+      ggplot2::geom_point(alpha = 0.6) +
+      ggplot2::geom_text(
+        ggplot2::aes(x = .data$logFC, y = -log10(.data$PValue)),
         label = result$label,
         vjust = 1,
         parse = TRUE,
         show.legend = FALSE
       ) +
-      scale_color_manual(values = c("Up" = "red", "Down" = "blue", "Others" = "gray"),
+      ggplot2::scale_color_manual(values = c("Up" = "red", "Down" = "blue", "Others" = "gray"),
                          guide = guide_legend(title = NULL)) +
-      labs(
+      ggplot2::labs(
         x = "logFC",
         y = "-log10(PValue)",
         title = paste(
@@ -128,13 +129,13 @@ compareAbundance <-
           sep = " "
         )
       ) +
-      theme_minimal() +
-      theme(
+      ggplot2::theme_minimal() +
+      ggplot2::theme(
         axis.text = element_text(size = 12),
         axis.title = element_text(size = 14, face = "bold"),
         plot.title = element_text(size = 16, face = "bold")
       ) +
-      scale_x_continuous(expand = c(0.1, 0.1))  # expand axes to see all BC labels
+      ggplot2::scale_x_continuous(expand = c(0.1, 0.1))  # expand axes to see all BC labels
 
     # Return volcano plot of diffentially abundant barcodes
     return(plot)

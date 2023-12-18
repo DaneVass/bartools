@@ -129,7 +129,7 @@ plotClusterEnrichment <- function(sc.obj = NULL,
   # plot p value histogram or return raw data
   if (plot) {
     p <- ggplot2::ggplot(plot.dat,
-                         ggplot2::aes(y = cluster, x = neglog10pval, fill = enriched)) +
+                         ggplot2::aes(y = .data$cluster, x = .data$neglog10pval, fill = .data$enriched)) +
       ggplot2::geom_bar(stat = "identity") +
       ggplot2::geom_vline(xintercept = -log10(threshold)) +
       ggplot2::scale_x_continuous(trans = "log1p") +

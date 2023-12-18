@@ -17,6 +17,7 @@
 #' @return Returns a plot of calculated diversity index per sample
 #' @importFrom vegan diversity
 #' @importFrom ineq Gini
+#' @importFrom rlang .data
 #' @export
 #' @examples
 #' data(test.dge)

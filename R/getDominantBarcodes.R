@@ -11,6 +11,7 @@
 #'
 #' @return Returns a named list containing vectors of dominant barcodes per sample
 #' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #'
 #' @examples
@@ -31,16 +32,16 @@ getDominantBarcodes <- function(dgeObject, threshold = 0.05) {
   # select all barcodes above threshold per sample
   barcodes.proportional.dominant <- barcodes.proportional %>%
     tibble::rownames_to_column("barcode") %>%
-    tidyr::pivot_longer(-barcode, names_to = "sample", values_to = "proportion") %>%
-    dplyr::filter(proportion > threshold) %>%
-    dplyr::arrange(dplyr::desc(proportion))
+    tidyr::pivot_longer(-.data$barcode, names_to = "sample", values_to = "proportion") %>%
+    dplyr::filter(.data$proportion > threshold) %>%
+    dplyr::arrange(dplyr::desc(.data$proportion))
 
   samps <- colnames(barcodes.proportional)
 
   dominant.barcodes <- lapply(samps, function(x) {
     barcodes.proportional.dominant %>%
-      dplyr::filter(sample == x) %>%
-      dplyr::pull(barcode)
+      dplyr::filter(.data$sample == x) %>%
+      dplyr::pull(.data$barcode)
   })
   names(dominant.barcodes) <- samps
 
