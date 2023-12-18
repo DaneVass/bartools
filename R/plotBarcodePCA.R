@@ -6,85 +6,89 @@
 #' Barcode PCA plot
 #'
 #' @description
-#' Takes an edgeR DGEList object contining barcode data or a dataframe of the barcode cpm counts and performs PCA.
+#' Takes a DGEList object contining barcode cpm counts and performs PCA.
 #' Then, plots the first two dimensions.
 #' Modified from DESeq2 package plotPCA function
 #'
-#' @param object DGEList or dataframe containing normalised barcode counts
-#' @param intgroup vector of grouping variables of interest
-#' @param col color group for plot, must be one of intgroup
-#' @param ntop number of top most variable genes to be used in PCA calculation
-#' @param returnData Logical. return a data.frame of PCA calculation?
-#' @param batch metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA
+#' @param dgeObject DGEList object with barcode counts.
+#' @param groups Optional, one or multiple column names in sample metadata to color samples by (string or vector of strings).
+#' @param ntop number of top most variable barcodes to be used in PCA calculation (integer). Default = `500`.
+#' @param returnData Return a data.frame of PCA calculation instead of plot (boolean). Default = `FALSE`.
+#' @param pcs Principle components to plot (vector of integers of length 2). Default = `c(1, 2)`.
+#' @param batch Optional, metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA.
 #'
 #' @return Returns a plot of the first two principal components in the dataset
 #' @export
 #'
 #' @examples
-#' plotBarcodePCA(test.dge, intgroup = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
+#' data(test.dge)
+#' plotBarcodePCA(test.dge, groups = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
 
-plotBarcodePCA <- function(object, intgroup = "condition", col = "group", ntop = 500, returnData = FALSE, batch = NULL){
+plotBarcodePCA <-
+  function(dgeObject,
+           groups = NULL,
+           ntop = 500,
+           returnData = FALSE,
+           pcs = c(1, 2),
+           batch = NULL) {
+    inputChecks(dgeObject, groups = groups)
+    # modified from the DEseq2 plotPCA function - LGPL license
+    # https://github.com/Bioconductor-mirror/DESeq2/blob/0d7983c345bfc576725ef89addcb49c6e14ef83d/R/plots.R
 
-  # modified from the DEseq2 plotPCA function - LGPL license
-  # https://github.com/Bioconductor-mirror/DESeq2/blob/0d7983c345bfc576725ef89addcb49c6e14ef83d/R/plots.R
+    # get data from DGEList
+    dge <- edgeR::calcNormFactors(dgeObject, method = "TMM")
 
-  # get data from DGEList or dataframe
-  if (methods::is(object)[1] == "DGEList"){
-    dge <- edgeR::calcNormFactors(object, method = "TMM")
-    data <- dge$counts * edgeR::getOffset(dge)
-  } else {
-    data <- as.data.frame(edgeR::cpm(object))
-  }
+    # get batch corrected dataset using limma removeBatchEffect
+    if (!is.null(batch)) {
+      data <- limma::removeBatchEffect(dge, batch = batch)
+    } else {
+      data <- dge$counts * edgeR::getOffset(dge)
+    }
 
-  # get batch corrected dataset using limma removeBatchEffect
-  if (!is.null(batch)){
-    data <- limma::removeBatchEffect(dge, batch = batch)
-  }
+    # calculate the variance for each gene based on corrected dataset
+    rv <- apply(data, 1, stats::var)
 
-  # calculate the variance for each gene based on corrected dataset
-  rv <- apply(data, 1, stats::var)
+    # select the ntop barcodes by variance
+    selected_barcodes <-
+      order(rv, decreasing = TRUE)[seq_len(min(ntop, length(rv)))]
 
-  # select the ntop genes by variance
-  select <- order(rv, decreasing=TRUE)[seq_len(min(ntop, length(rv)))]
+    # Correct for batch effects and perform a PCA on the data in assay(x) for the selected barcodes
+    pca <- stats::prcomp(t(data[selected_barcodes,]))
 
-  # Correct for batch effects and perform a PCA on the data in assay(x) for the selected genes
-  pca <- stats::prcomp(t(data[select,]))
+    # the contribution to the total variance for each component
+    percentVar <- pca$sdev ^ 2 / sum(pca$sdev ^ 2)
 
-  # the contribution to the total variance for each component
-  percentVar <- pca$sdev^2 / sum( pca$sdev^2 )
+    intgroup.df <-
+      as.data.frame(dgeObject$samples[, groups, drop = FALSE])
 
-  if (!all(intgroup %in% names(object$samples))) {
-    stop("the argument 'intgroup' should specify columns of colData(dds)")
-  }
+    # add the intgroup factors together to create a new grouping factor
+    group <- factor(apply(intgroup.df, 1, paste, collapse = " : "))
 
-  intgroup.df <- as.data.frame(object$samples[, intgroup, drop=FALSE])
+    # assembly the data for the plot
+    PCAdata <-data.frame(pca$x, group = group,
+               intgroup.df,
+               name = colnames(dgeObject))
 
-  # add the intgroup factors together to create a new grouping factor
-  group <- if (length(intgroup) > 1) {
-    factor(apply( intgroup.df, 1, paste, collapse=" : "))
-  } else {
-    object$samples[[intgroup]]
-  }
+    attr(PCAdata, "percentVar") <- percentVar
 
-  # assembly the data for the plot
-  PCAdata <- data.frame(PC1=pca$x[,1], PC2=pca$x[,2], group=group, intgroup.df, name=colnames(object))
-  attr(PCAdata, "percentVar") <- percentVar[1:2]
+    # return the data frame if required otherwise create the plot
+    if (returnData) {
+      return(PCAdata)
+    }
 
-  # return the data frame if required otherwise return the plot
-  if (returnData) {
-    return(PCAdata)
-  } else {
     percentVar <- round(100 * attr(PCAdata, "percentVar"))
-    p <- ggplot2::ggplot(PCAdata, ggplot2::aes(x = PCAdata$PC1, y = PCAdata$PC2, color=PCAdata[,col], alpha=I(0.8))) +
-      ggplot2::geom_point(size=3) +
-      ggplot2::xlab(paste0("PC1: ",percentVar[1],"% variance")) +
-      ggplot2::ylab(paste0("PC2: ",percentVar[2],"% variance")) +
-      ggplot2::theme_bw()
+    p <-
+      ggplot2::ggplot(PCAdata,
+                      ggplot2::aes_string(
+                        x = paste0("PC", pcs[1]),
+                        y = paste0("PC", pcs[2]),
+                        color = "group"
+                      )) +
+      ggplot2::geom_point(size = 3, alpha=0.7) +
+      ggplot2::xlab(paste0("PC", pcs[1], ": ", percentVar[pcs[1]], "% variance")) +
+      ggplot2::ylab(paste0("PC", pcs[2], ": ", percentVar[pcs[2]], "% variance")) +
+      ggplot2::theme_bw() +
+      ggplot2::guides(color = guide_legend(title = paste(groups, collapse = " : ")))
 
+    return(p)
   }
-  return(p)
-}
-
-
-
-

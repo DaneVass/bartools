@@ -1,10 +1,18 @@
-#' dose escalation dataset DGEList object
+#' Test BARtab single cell barcode annotation
 #'
-#' A dataset containing raw count information for the dose dataset
+#' A table of cell id, barcode, UMI counts
+#'
+#' @format A data frame with 3000 rows and 3 variables:
+"test.bartab.sc"
+
+#' Test barcode SCE object
+#'
+#' A SingleCellExperiment object containing single cell RNA-seq data for 100 cells
+#' and 100 features
 #'
 #'
-#' @format A DGElist object data frame with 13338 rows and 90 variables:
-"dose"
+#' @format A SCE object with 100 rows and 100 variables:
+"test.sce"
 
 #' Test barcode DGEList object
 #'

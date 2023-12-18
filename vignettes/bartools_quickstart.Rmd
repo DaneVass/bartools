@@ -1,6 +1,6 @@
 ---
 title: "bartools: quickstart guide"
-author: "Dane Vassiliadis"
+author: "Dane Vassiliadis, Henrietta Holze"
 output: 
   rmarkdown::html_document:
     toc: true
@@ -19,7 +19,23 @@ editor_options:
 
 # Bartools Quickstart Guide
 
-## 0. Load the `bartools` package
+## 0. Install and load the `bartools` package
+
+You can install bartools from
+[GitHub](https://github.com/DaneVass/bartools):
+
+```{r eval=FALSE}
+# first install Bioconductor dependencies
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c("edgeR", "limma", "ComplexHeatmap"))
+
+# then install bartools via GitHub
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+devtools::install_github("DaneVass/bartools", dependencies = TRUE, force = TRUE)
+```
 
 ```{r setup}
 library(bartools)
@@ -53,31 +69,43 @@ This is the easiest way to generate a `DGEList` object containing the count info
 An example of this process is shown below.
 
 ```{r eval = FALSE}
-samplesheet <-
-  read.csv(
-    system.file(
-      "extdata",
-      "test_sampletable.csv",
-      package = "bartools",
-      mustWork = T
-    ),
-    header = T,
-    stringsAsFactors = F
-  )
+samplesheet <- read.csv(
+  system.file(
+    "extdata",
+    "test_sampletable.csv",
+    package = "bartools",
+    mustWork = T
+  ),
+  header = T,
+  stringsAsFactors = F
+)
 samplesheet
 ```
+
+To read in a sample sheet in excel format:
+
+```{r eval = FALSE}
+samplesheet <-
+  readxl::read_excel(
+    "samplesheet.xlsx"
+  )
+samplesheet <- as.data.frame(samplesheet)
+rownames(samplesheet) <- samplesheet$sample
+samplesheet
+```
+
+Whatever format your sample sheet is in, make sure that the rownames are your unique sample names. 
 
 Load in the counts as specified in the samplesheet into a DGEList object.
 The function expects file locations to be specified either as character vector of filenames, or as a column named files in the samplesheet.
 
 ```{r eval = FALSE}
-dge <-
-  edgeR::readDGE(
-    files = samplesheet,
-    group = samplesheet$treatment,
-    labels = samplesheet$sample,
-    header = T
-  )
+dge <- edgeR::readDGE(
+  files = samplesheet,
+  group = samplesheet$treatment,
+  labels = samplesheet$sample,
+  header = F
+)
 ```
 
 This results in the creation of a DGEList object containing counts and metadata information for each sample.
@@ -98,32 +126,78 @@ Using the `thresholdCounts()` function we can determine an appropriate threshold
 We can test different thresholding parameters, such as absolute thresholds on total read counts as below.
 
 ```{r}
-# Remove rows with no data
-thresholdCounts(test.dge, type = "absolute", threshold = 1, min.samps = 1, 
-                plot = T, group = "Treatment")
-thresholdCounts(test.dge, type = "absolute", threshold = 10, min.samps = 1, 
-                plot = T, group = "Treatment")
-thresholdCounts(test.dge, type = "absolute", threshold = 10, min.samps = 3, 
-                plot = T, group = "Treatment")
+# Remove barcodes (rows) with no data
+test.dge <- test.dge[rowSums(test.dge$counts) != 0, ]
+```
+
+
+```{r}
+thresholdCounts(
+  test.dge,
+  type = "absolute",
+  threshold = 1,
+  minSamples = 1,
+  plot = T,
+  group = "Treatment"
+)
+thresholdCounts(
+  test.dge,
+  type = "absolute",
+  threshold = 10,
+  minSamples = 1,
+  plot = T,
+  group = "Treatment"
+)
+thresholdCounts(
+  test.dge,
+  type = "absolute",
+  threshold = 10,
+  minSamples = 3,
+  plot = T,
+  group = "Treatment"
+)
 ```
 
 Or relative thresholds based on proportion within a sample.
 
 ```{r}
-# Remove rows with no data
-thresholdCounts(test.dge, type = "relative", threshold = 1e-10, min.samps = 1, 
-                plot = T, group = "Treatment")
-thresholdCounts(test.dge, type = "relative", threshold = 1e-5, min.samps = 1, 
-                plot = T, group = "Treatment")
-thresholdCounts(test.dge, type = "relative", threshold = 1e-5, min.samps = 3, 
-                plot = T, group = "Treatment")
+thresholdCounts(
+  test.dge,
+  type = "relative",
+  threshold = 1e-10,
+  minSamples = 1,
+  plot = T,
+  group = "Treatment"
+)
+thresholdCounts(
+  test.dge,
+  type = "relative",
+  threshold = 1e-5,
+  minSamples = 1,
+  plot = T,
+  group = "Treatment"
+)
+thresholdCounts(
+  test.dge,
+  type = "relative",
+  threshold = 1e-5,
+  minSamples = 3,
+  plot = T,
+  group = "Treatment"
+)
 ```
 
-Here we will continue with an absolute threshold of 2.
+Here we will continue with an absolute threshold of 10.
 
 ```{r}
-dge.filtered <- thresholdCounts(test.dge, type = "absolute", threshold = 10, 
-                                min.samps = 2, plot = F)
+dge.filtered <-
+  thresholdCounts(
+    test.dge,
+    type = "absolute",
+    threshold = 10,
+    minSamples = 2,
+    plot = F
+  )
 ```
 
 We then normalise samples to sequencing depth to counts per million using `normaliseCounts()`.
@@ -132,22 +206,24 @@ We then normalise samples to sequencing depth to counts per million using `norma
 dge.cpmnorm <- normaliseCounts(dge.filtered, method = "CPM")
 ```
 
+
 We can plot the raw and normalised sequencing depth to get an idea of depth discrepancies between PCR replicates.
 
 ```{r}
 # raw counts per sample
-plotReadCounts(dge.filtered$counts, group = dge.filtered$samples$Treatment)
+plotReadCounts(dge.filtered, group = "Treatment")
 ```
 
 ```{r}
 # normalised counts per sample
-plotReadCounts(dge.cpmnorm, group = dge.filtered$samples$Treatment)
+plotReadCounts(dge.cpmnorm, group = "Treatment")
 ```
 
-For lentiviral based barcoding experiments, such as this one, it is common for the library to exhibit a degree of skewness based on the cloning method.
+For lentiviral based cellular barcoding experiments, such as this one, it is common for the library to exhibit a degree of skewness based on the cloning method.
 This means that some barcodes are represented in the library more than others and so have a greater chance to be transduced into multiple cells.\
 
-Most experiments assume that each individual barcode is transduced into only one cell, and that each cell is only transduced with one barcode. This is ensured using a low multiplicity of infection (MOI) transduction in which the likelihood that a cell is transduced with one or more barcode containing virions follows a Poisson distribution.
+Most experiments assume that each individual barcode is transduced into only one cell, and that each cell is only transduced with one barcode.
+This is ensured using a low multiplicity of infection (MOI) transduction in which the likelihood that a cell is transduced with one or more barcode containing virions follows a Poisson distribution.
 
 With this in mind, it also can be useful to check the total counts per barcode to identify bias in counts in sample vs. frequency of barcode in reference library.\
 The barcodes are labelled based on their ranked frequency in the reference library.
@@ -155,15 +231,14 @@ The barcodes are labelled based on their ranked frequency in the reference libra
 ```{r}
 # plot detected barcodes ordered by frequency in reference library
 plotBarcodeCounts(dge.cpmnorm, log10 = F)
-```
 
-```{r}
 # plot log10 barcode counts
 plotBarcodeCounts(dge.cpmnorm, log10 = T)
-```
 
-```{r}
 # order barcodes by count across samples
+plotBarcodeCounts(dge.cpmnorm, log10 = F, order = T)
+
+# order barcodes by count across samples with log norm
 plotBarcodeCounts(dge.cpmnorm, log10 = T, order = T)
 ```
 
@@ -178,18 +253,22 @@ It is also important to ensure that individual samples are sequenced to an appro
 Sequencing technical duplicates of a sample generated at the library PCR stage is a good way to ensure this.
 
 In our experiment we have 9 samples total, each with two PCR technical replicates.
-Here, we correlate the barcode distributions for each pair of technical replicates.
+Here, we correlate the barcode distributions for each pair of technical replicates.  
+NB: This only works for paired replicates, i.e. not more than 2. 
 
 ```{r message=FALSE}
-samps <- unique(dge.filtered$samples$group)
+# get all unique samples
+# column "group" contains information on replicates here
+unique_samples <- unique(dge.filtered$samples$group)
 
-# only plot subset of samples
-lapply(samps[4:6], function(x) {
-  df <- dge.filtered[, dge.filtered$samples$group %in% as.character(x)]
+# only plot subset of samples. 
+lapply(unique_samples[1], function(x) {
+  # subset dge object to get replicates of sample
+  replicate_names <- colnames(dge.filtered)[dge.filtered$samples$group %in% as.character(x)]
   plotBarcodeRegression(
-    df,
-    samp1 = colnames(df)[[1]],
-    samp2 = colnames(df)[[2]],
+    dge.filtered,
+    sample1 = replicate_names[1],
+    sample2 = replicate_names[2],
     rug = T,
     trans = "log1p"
   )
@@ -201,40 +280,48 @@ Note that we expect a very high correlation because these are PCR replicates of 
 
 We can also easily get the correlation values between replicates using `calcReplicateCorr`.
 
-Samples can be filtered for high or low correlation using the `corr.thresh` and `return` variables.
+Samples can be filtered for high or low correlation using the `threshold` and `return` variables.
 
 ```{r}
 corrs <- calcReplicateCorr(dge.filtered, group = "Group")
-which(corrs < 0.9)
+corrs[which(corrs < 0.999)]
+corrs
 ```
 
-Finally sample replicates can be correlated globally using `plotBarcodeCorrelation`
+Finally sample replicates can be correlated globally using `plotBarcodeCorrelation`.
+
 ```{r}
-# Pearson correlation
-plotBarcodeCorrelation(dge.filtered$counts, clustered = T, upper = T, method = "pearson")
+# Pearson correlation, full
+plotBarcodeCorrelation(dge.filtered, clustered = T, upper = F, method = "pearson")
+plot
+
+# Pearson correlation, upper
+plotBarcodeCorrelation(dge.filtered, clustered = T, upper = T, method = "pearson")
 ```
 
 ```{r}
 # Spearman correlation
-plotBarcodeCorrelation(dge.filtered$counts, clustered = T, upper = T, method = "spearman")
+plotBarcodeCorrelation(dge.filtered, clustered = T, upper = T, method = "spearman")
 ```
 
 ### Collapse PCR replicates in object
 
-Now that we know our samples are of good quality we have no further use of the PCR replicate information. From this point onward its a good idea to collapse our PCR replicates.
+Now that we know our samples are of good quality we have no further use of the PCR replicate information.
+From this point onward its a good idea to collapse our PCR replicates.
 
 ```{r}
 dim(dge.filtered)
 ```
 
-`collapseReplicates` can take the average (default behavior) or the sum of PCR technical replicates within each sample. Here we take the average. Users may want to sum PCR replicates if there is evidence of sampling bias across technical repeats (i.e. poor correlation score or other evidence).  
+`collapseReplicates` can take the average (default behavior) or the sum of PCR technical replicates within each sample.
+Here we take the average.
+Users may want to sum PCR replicates if there is evidence of sampling bias across technical repeats (i.e. poor correlation score or other evidence).
 
 ```{r}
 dge.filtered.collapsed <- collapseReplicates(
   dge.filtered,
-  groupby = dge.filtered$samples$group,
-  by = "mean",
-  show_reps = F
+  group = "group",
+  method = "mean"
 )
 ```
 
@@ -242,6 +329,13 @@ The result is a clean barcode sequencing dataset ready for further investigation
 
 ```{r}
 head(dge.filtered.collapsed)
+```
+
+If we repeat the above correlation plots we can see general similarities across samples
+
+```{r}
+# Pearson correlation, full
+plotBarcodeCorrelation(dge.filtered.collapsed, clustered = T, upper = F, method = "pearson")
 ```
 
 ## 3. Visualisation
@@ -255,45 +349,44 @@ Here, barcodes/tags are represented by bubbles aligned on a single plane.
 The size of the bubbles reflects the percentage abundance of each barcode within a sample.
 
 ```{r}
-plotBarcodeBubble(counts = dge.filtered.collapsed$counts, 
+plotBarcodeBubble(dge.filtered.collapsed, 
                   proportionCutoff = 10, 
                   labelBarcodes = T)
 ```
 
-Using the `orderSample` parameter, bubbleplots can also be arranged according to frequency in a particular sample which can help with visual comparison of large vs small clones across samples and conditions. 
+Using the `orderSample` parameter, bubbleplots can also be arranged according to frequency in a particular sample which can help with visual comparison of large vs small clones across samples and conditions.
 
 ```{r}
-plotOrderedBubble(counts = dge.filtered.collapsed$counts, 
+plotOrderedBubble(dge.filtered.collapsed, 
                   proportionCutoff = 10, 
                   labelBarcodes = T, 
                   orderSample = "T0", 
                   colorDominant = F, 
-                  samples = dge.filtered.collapsed$samples, 
+                  filterCutoff = 0.001,
                   group = "Treatment")
 ```
 
 Barcodes that fail to meet a defined abundance threshold in any sample can be greyed out.
 
 ```{r}
-plotOrderedBubble(counts = dge.filtered.collapsed$counts, 
+plotOrderedBubble(dge.filtered.collapsed, 
                   proportionCutoff = 10, 
                   labelBarcodes = T, 
                   orderSample = "T0", 
                   colorDominant = T, 
-                  samples = dge.filtered.collapsed$samples, 
+                  filterCutoff = 0.001, 
                   group = "Treatment")
 ```
 
-Or filtered from the plot entirely using the `filterCutoff` parameter
+Or filtered from the plot entirely using `filterCutoff` parameters
 
 ```{r}
-plotOrderedBubble(counts = dge.filtered.collapsed$counts, 
+plotOrderedBubble(dge.filtered.collapsed, 
                   proportionCutoff = 10, 
                   labelBarcodes = T, 
                   orderSample = "T0", 
                   colorDominant = T, 
-                  filterCutoff = 0.01,
-                  samples = dge.filtered.collapsed$samples, 
+                  filterCutoff = 0.1,
                   group = "Treatment")
 ```
 
@@ -302,9 +395,7 @@ plotOrderedBubble(counts = dge.filtered.collapsed$counts,
 Alternatively, we can focus in on the most abundant barcodes within a set of samples to more easily observe how these change in frequency over the course of an experiment.
 
 ```{r}
-plotBarcodeHistogram(counts.obj = dge.filtered.collapsed$counts,
-                     sample = dge.filtered.collapsed$samples$group[[10]],
-                     top = 50)
+plotBarcodeHistogram(dge.filtered.collapsed, topN = 10, alphaLowFreq = 0)
 ```
 
 ### Timeseries Plots
@@ -313,7 +404,9 @@ For timecourse experiments it is useful to visualise how the kinetics of barcode
 In this instance we can use `plotBarcodeTimeseries` to get an idea of the relative abundance of the top *n* barcodes in a sample relative to others.
 
 ```{r}
-plotBarcodeTimeseries(counts.obj = dge.filtered.collapsed, top = 5)
+plotBarcodeTimeseries(dge.filtered.collapsed, 
+                      top = 50, 
+                      seed = 10101)
 ```
 
 ### Principal Components Analysis
@@ -321,8 +414,10 @@ plotBarcodeTimeseries(counts.obj = dge.filtered.collapsed, top = 5)
 A global level PCA analysis is a good way to get a high level understanding of the similarities and differences between samples.
 
 ```{r}
-subset <- dge.filtered.collapsed[, dge.filtered.collapsed$samples$Treatment %in% c("T0", "Vehicle", "High_dose")]
-plotBarcodePCA(object = subset, intgroup = "Treatment")
+plotBarcodePCA(dge.filtered.collapsed, 
+               groups = "Treatment", 
+               ntop = 1000,
+               pcs=c(1, 2))
 ```
 
 ### Heatmaps
@@ -333,10 +428,9 @@ This heatmap shows high dose samples are generally distinct from the low dose an
 
 ```{r}
 plotBarcodeHeatmap(
-  counts = cpm(dge.filtered.collapsed$counts),
-  N = 5,
-  show_bc = T,
-  samples = dge.filtered.collapsed$samples,
+  normaliseCounts(dge.filtered.collapsed, method = "CPM"), 
+  topN = 5,
+  showBarcodes = F,
   group = "Treatment"
 )
 ```
@@ -352,8 +446,14 @@ it can be helpful to examine the fraction of barcodes that comprise a sample.
 These plots calculate the cumulative sum of a sample in relation to other samples defined by the user.
 
 ```{r}
-plotBarcodeCumSum(dge.filtered.collapsed$counts, sample1 = "T0", 
-                  samples = colnames(dge.filtered.collapsed$counts)[1:5])
+samples <-
+  which(dge.filtered.collapsed$samples$Treatment == "Vehicle")
+
+plotBarcodeCumSum(
+  dge.filtered.collapsed,
+  referenceSample = "T0",
+  samples = colnames(dge.filtered.collapsed$counts)[samples]
+)
 ```
 
 ### Identifying abundant barcodes within samples
@@ -362,18 +462,21 @@ It is important to be able to determine which barcodes are most abundant within 
 `bartools` allows this to be easily calculated according to an abundance threshold.
 
 ```{r}
-top.bc <- getDominantBarcodes(dge.filtered.collapsed, pct.thresh = 5)
+top.bc <- getDominantBarcodes(dge.filtered.collapsed, threshold = 0.05)
 top.bc[1:5]
 ```
 
 We can then use specific plots to visualise the dominance of specific barcodes within and across samples.
 
 ```{r}
-plotBarcodeBoxplot(dge.filtered.collapsed, 
-                   group = "Treatment",
-                   barcodes = top.bc$`10_High_dose`, 
-                   conditions = c("Low_dose", "High_dose", "Vehicle"), 
-                   point = T)
+# plot top barcodes across samples for mouse 10 (High Dose group)
+plotBarcodeBoxplot(
+  dge.filtered.collapsed,
+  barcodes = top.bc$`10_High_dose`,
+  group = "Treatment",
+  conditions = c("Low_dose", "High_dose", "Vehicle"),
+  point = T
+)
 ```
 
 ### Calculating and plotting percentile abundance.
@@ -385,7 +488,6 @@ This can eliminate small barcodes that comprise the tail of the dataset and give
 
 ```{r}
 top_barcodes <- calcPercentileBarcodes(dge.filtered.collapsed, percentile = 0.95)
-
 top_barcodes$NumBarcodes
 top_barcodes$TopBarcodeCounts$`6_High_dose`
 top_barcodes$TopBarcodes$`6_High_dose`
@@ -406,6 +508,13 @@ plotDetectedBarcodes(
   plot = T,
   group = "Treatment"
 )
+
+plotDetectedBarcodes(
+  dge.filtered.collapsed,
+  percentile = 0.80,
+  plot = T,
+  group = "Treatment"
+)
 ```
 
 These plots show that there are few clones that comprise the majority of the dataset per mouse.
@@ -413,24 +522,43 @@ Also, there are generally fewer clones present in the high dose group compared t
 
 ### Diversity analysis
 
-We can examine diversity in a few different ways.
+We can examine within-sample diversity in a few different ways.
 The most common are Shannon, Simpson, Inverse Simpson and Gini.
 Each will be applicable in different circumstances, however the Shannon diversity index is more widely used to compare global diversity amongst populations of barcoded cells.
 
 `calcDivIndexes` can be used to determine various diversity indices per sample
 
 ```{r}
-diversity <- calcDivIndexes(dge.filtered.collapsed$counts, group = dge.filtered.collapsed$samples$Treatment)
+diversity <- calcDivIndexes(dge.filtered.collapsed, group = "Treatment")
 diversity
 ```
 
-These diversity calculations can then be fed to `plotDivIndexes` for visualisation
+These diversity calculations can then be fed to `plotDivIndexes` for visualisation as either a bar or dotplot
 
 ```{r}
-plotDivIndexes(div = diversity, 
-               metric = "shannon", 
-               group = dge.filtered.collapsed$samples$Treatment, 
-               type = "point")
+# bar plot
+plotDivIndexes(
+  dge.filtered.collapsed,
+  div = diversity,
+  metric = "shannon",
+  group = "Treatment"
+)
+# dot plot
+plotDivIndexes(
+  dge.filtered.collapsed,
+  div = diversity,
+  metric = "shannon",
+  group = "Treatment",
+  type = "point"
+)
+# summarized by condition as box plot
+plotDivIndexes(
+  dge.filtered.collapsed,
+  div = diversity,
+  metric = "shannon",
+  group = "Treatment",
+  type = "box"
+)
 ```
 
 ### Comparing abundance
@@ -439,24 +567,12 @@ We can also statistically test for barcodes / tags that are over / underrepresen
 `bartools` contains a convenience wrapper for this functionality
 
 ```{r}
-compareAbundance(dge.obj = dge.filtered.collapsed,
-                 meta = "Treatment", 
+compareAbundance(dge.filtered.collapsed,
+                 group = "Treatment", 
                  condition1 = "Low_dose",
                  condition2 = "High_dose",
-                 pval.cutoff = 0.001,
-                 logFC.cutoff = 5)
-
-```
-
-Finally, we can visualise some of these differentially abundant barcodes using lineplots between conditions. 
-
-```{r}
-plotAbundanceLines(
-  dge.filtered.collapsed,
-  condition = dge.filtered.collapsed$samples$Treatment,
-  condition_names = c("Vehicle", "High_dose"),
-  plot_type = 'counts'
-)
+                 pval = 1e-04,
+                 logFC = 10)
 ```
 
 ## 5. Session Info

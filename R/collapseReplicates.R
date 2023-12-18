@@ -1,79 +1,87 @@
+#' @title
 #' Collapse technical replicates
 #'
+#' @description
 #' Collapse technical replicates in a DGEList object by mean or sum.
 #' Modified from collapseReplicates function from DESeq2 package to accept DGEList objects and to allow collapsing replicated by mean or sum.
 #'
-#' @param object DGEList object containing raw or normalised barcode counts with replicate grouping info in object metadata
-#' @param groupby a character vector of containing grouping information. Must be as long as the columns of object. Can pass a metadata column from object.
-#' @param run optional, the names of each unique column in object. if provided, a new column runsCollapsed will be added to the colData which pastes together the names of run
-#' @param renameCols boolean. whether to rename the columns of the returned object using the levels of the grouping factor
-#' @param show_reps boolean. print replicate column names to console?
-#' @param by collapse replicates by mean or sum
+#' @param dgeObject DGEList object with barcode counts.
+#' @param group Column name in sample metadata to group samples by (string).
+#' @param sampleNames Optional, column name in sample metadata that contains unique sample names (string). If provided, a new column collapsed_samples will be added to the sample metadata with the collapsed samples
+#' @param renameCols Whether to rename the columns of the returned object using the levels of the grouping factor (boolean). Default = `TRUE`.
+#' @param showReps Whether to print replicate column names to console (boolean). Default = `FALSE`.
+#' @param method Method to collapse replicates by, one of `mean` or `sum` (string). Default = `mean`.
 #'
-#' @return Returns a dataframe of normalised counts for a sample
+#' @return Returns a DGE object with normalised counts for a sample.
 #' @export
 #'
 #' @examples
 #' data(test.dge)
-#' collapseReplicates(test.dge, groupby = test.dge$samples$group, by = "mean")
+#' collapseReplicates(test.dge, group = "group", method = "mean")
 #'
 
-collapseReplicates <- function (object, groupby, run, renameCols = TRUE, show_reps = TRUE, by = "mean") {
+collapseReplicates <-
+  function (dgeObject,
+            group,
+            sampleNames = NULL,
+            renameCols = TRUE,
+            showReps = FALSE,
+            method = "mean") {
+    inputChecks(dgeObject, groups = c(group, sampleNames))
 
-  # check inputs
-  stopifnot(by != "mean" | by != "sum")
+    counts <- dgeObject$counts
 
-  if (!is.factor(groupby))
-    groupby <- factor(groupby)
-  groupby <- droplevels(groupby)
-  stopifnot(length(groupby) == ncol(object))
+    # check inputs
+    if (!method %in% c("mean", "sum")) {
+      stop("Choose either mean or sum as method to collapse replicates.")
+    }
 
-  sp <- split(seq(along = groupby), groupby)
-  if(isTRUE(show_reps)){
-    print(sp)
+    group <- dgeObject$samples[[group]]
+    if (!is.null(sampleNames)) {
+      sampleNames <- dgeObject$samples[[sampleNames]]
+    }
+
+    if (!is.factor(group)) {
+      group <- factor(group)
+    }
+    group <- droplevels(group)
+
+    sp <- split(seq(along = group), group)
+    if (isTRUE(showReps)) {
+      print(sp)
+    }
+
+    # combine by mean or sum
+    if (method == "mean") {
+      counts <-
+        sapply(sp, function(i)
+          rowMeans(counts[, i, drop = FALSE]))
+    }
+    if (method == "sum") {
+      counts <-
+        sapply(sp, function(i)
+          rowSums(counts[, i, drop = FALSE]))
+    }
+
+    # select columns to keep
+    # this selects always the first column in each group.
+    # this assumes that all values are the same across samples in a group.
+    colsToKeep <- sapply(sp, `[`, 1)
+    collapsed <- dgeObject[, colsToKeep]
+    dimnames(counts) <- dimnames(collapsed)
+    collapsed$counts <- counts
+
+    if (!is.null(sampleNames)) {
+      collapsed$samples$collapsed_samples <-
+        sapply(sp, function(i)
+          paste(sampleNames[i],
+                collapse = ","))
+    }
+
+    # rename cols true by default
+    if (renameCols) {
+      colnames(collapsed) <- levels(group)
+    }
+
+    return(collapsed)
   }
-
-  # get obj class
-  if(class(object)[1] == "DGEList"){
-    countdata <- object$counts
-  } else {
-    stop("please supply a valid DGEList object as input")
-  }
-
-  # combine by mean or sum
-  if(by == "mean"){
-    countdata <- sapply(sp, function(i) rowMeans(countdata[,i, drop = FALSE]))
-    mode(countdata) <- "integer"
-  }
-  if(by == "sum"){
-    countdata <- sapply(sp, function(i) rowSums(countdata[,i, drop = FALSE]))
-    mode(countdata) <- "integer"
-  }
-
-  # select columns to keep
-  colsToKeep <- sapply(sp, `[`, 1)
-  collapsed <- object[, colsToKeep]
-  dimnames(countdata) <- dimnames(collapsed)
-  collapsed$counts <- countdata
-
-  if (!missing(run)) {
-    stopifnot(length(groupby) == length(run))
-    collapsed$samples$runsCollapsed <- sapply(sp, function(i) paste(run[i],
-                                                                     collapse = ","))
-  }
-
-  # rename cols true by default
-  if (renameCols) {
-    colnames(collapsed) <- levels(groupby)
-  }
-
-  # output checks
-  if(class(object)[1] == "DGEList"){
-    stopifnot(sum(as.numeric(countdata)) == sum(as.numeric(collapsed$counts)))
-  } else {
-    stop("output is not a valid DGEList object")
-  }
-  collapsed
-}
-
-
