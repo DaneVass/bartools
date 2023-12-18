@@ -54,7 +54,11 @@ See `vignette(bartools)` for more details and usage examples.
 ### Documentation
 
 See the [Docs](https://danevass.github.io/bartools/) for full package
-documentation.
+documentation.  
+  
+For bulk level analysis see the [quickstart vignette](https://danevass.github.io/bartools/articles/bartools_quickstart.html)  
+For single cell data preprocessing and import see the [import_qc_single_cell vignette](https://danevass.github.io/bartools/articles/import_qc_single_cell.html)  
+For single cell data analysis see the [single_cell_analysis vignette](https://danevass.github.io/bartools/articles/bartools_single_cell_analysis.html)  
 
 ### Looking for a dataset preprocessing pipeline?
 
