@@ -19,7 +19,23 @@ editor_options:
 
 # Bartools Quickstart Guide
 
-## 0. Load the `bartools` package
+## 0. Install and load the `bartools` package
+
+You can install bartools from
+[GitHub](https://github.com/DaneVass/bartools):
+
+```{r eval=FALSE}
+# first install Bioconductor dependencies
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(c("edgeR", "limma", "ComplexHeatmap"))
+
+# then install bartools via GitHub
+if (!requireNamespace("devtools", quietly = TRUE)) {
+  install.packages("devtools")
+}
+devtools::install_github("DaneVass/bartools", dependencies = TRUE, force = TRUE)
+```
 
 ```{r setup}
 library(bartools)
@@ -557,15 +573,6 @@ compareAbundance(dge.filtered.collapsed,
                  condition2 = "High_dose",
                  pval = 1e-04,
                  logFC = 10)
-```
-
-Finally, we can visualise some of these differentially abundant barcodes using lineplots between conditions.
-
-```{r}
-plotAbundanceLines(dge = dge.filtered.collapsed,
-  condition = dge.filtered.collapsed$samples$Treatment,
-  conditionNames = c("Vehicle", "High_dose"),
-  plotType = 'counts')
 ```
 
 ## 5. Session Info

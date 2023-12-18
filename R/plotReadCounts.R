@@ -12,6 +12,7 @@
 #' @export
 #'
 #' @examples
+#' data(test.dge)
 #' plotReadCounts(test.dge, group = "Treatment")
 #'
 

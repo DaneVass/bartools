@@ -5,29 +5,29 @@
 \title{Collapse technical replicates}
 \usage{
 collapseReplicates(
-  object,
-  groupby,
-  run,
+  dgeObject,
+  group,
+  sampleNames = NULL,
   renameCols = TRUE,
-  show_reps = FALSE,
-  by = "mean"
+  showReps = FALSE,
+  method = "mean"
 )
 }
 \arguments{
-\item{object}{DGEList object containing raw or normalised barcode counts with replicate grouping info in object metadata}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{groupby}{a character vector of containing grouping information. Must be as long as the columns of object. Can pass a metadata column from object.}
+\item{group}{Column name in sample metadata to group samples by (string).}
 
-\item{run}{optional, the names of each unique column in object. if provided, a new column runsCollapsed will be added to the colData which pastes together the names of run}
+\item{sampleNames}{Optional, column name in sample metadata that contains unique sample names (string). If provided, a new column collapsed_samples will be added to the sample metadata with the collapsed samples}
 
-\item{renameCols}{boolean. whether to rename the columns of the returned object using the levels of the grouping factor}
+\item{renameCols}{Whether to rename the columns of the returned object using the levels of the grouping factor (boolean). Default = `TRUE`.}
 
-\item{show_reps}{boolean. print replicate column names to console?}
+\item{showReps}{Whether to print replicate column names to console (boolean). Default = `FALSE`.}
 
-\item{by}{collapse replicates by mean or sum}
+\item{method}{Method to collapse replicates by, one of `mean` or `sum` (string). Default = `mean`.}
 }
 \value{
-Returns a dataframe of normalised counts for a sample
+Returns a DGE object with normalised counts for a sample.
 }
 \description{
 Collapse technical replicates in a DGEList object by mean or sum.
@@ -35,6 +35,6 @@ Modified from collapseReplicates function from DESeq2 package to accept DGEList 
 }
 \examples{
 data(test.dge)
-collapseReplicates(test.dge, groupby = test.dge$samples$group, by = "mean")
+collapseReplicates(test.dge, group = "group", method = "mean")
 
 }

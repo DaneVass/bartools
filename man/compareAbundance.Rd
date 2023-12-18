@@ -5,40 +5,40 @@
 \title{Barcode abundance comparison}
 \usage{
 compareAbundance(
-  dge.obj,
-  meta,
+  dgeObject,
+  group,
   condition1,
   condition2,
-  pval.cutoff = 0.05,
-  logFC.cutoff = 2,
+  pval = 0.05,
+  logFC = 2,
   filename = NULL
 )
 }
 \arguments{
-\item{dge.obj}{DGElist list object with counts and samples dataframe}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{meta}{Name of metadata field of interest for the comparison}
+\item{group}{Column name in sample metadata to group samples by (string).}
 
-\item{condition1}{Name of reference condition in meta}
+\item{condition1}{Name of reference condition in group column (string).}
 
-\item{condition2}{Name of second condition in meta}
+\item{condition2}{Name of second condition in group column (string).}
 
-\item{pval.cutoff}{Pvalue threshold for the volcano plot}
+\item{pval}{Pvalue threshold for the volcano plot (decimal). Default = `0.05`.}
 
-\item{logFC.cutoff}{logFC threshold for the volcano plot}
+\item{logFC}{logFC threshold for the volcano plot (decimal). Default = `2`.}
 
-\item{filename}{Filename for the results of the likelihood ratio test}
+\item{filename}{Optional, filename for the results of the likelihood ratio test (string).}
 }
 \value{
-Returns a volcano plot and a csv file with differentially abundant 
+Returns a volcano plot and a csv file with differentially abundant
 barcode results
 }
 \description{
 Takes a DGElist list object with counts and samples dataframe.
 Finds differentially abundant barcodes between two experimental conditions,
-using the likelihood ratio test (LRT) based on the fitted generalized linear 
-model (GLM) to compare two nested models, typically a reduced model and a 
-full model, to determine if the additional terms in the full model 
+using the likelihood ratio test (LRT) based on the fitted generalized linear
+model (GLM) to compare two nested models, typically a reduced model and a
+full model, to determine if the additional terms in the full model
 significantly improve the model fit.  Additionally, it computes the p-values
 associated with the test statistic for each barcode.
 It save the results in a csv file and returns a volcano plot.
@@ -48,5 +48,5 @@ compareAbundance
 }
 \examples{
 data(test.dge)
-compareAbundance(test.dge,"Treatment", "Vehicle","Low_dose",0.01,2)       
+compareAbundance(test.dge, group = "Treatment", condition1 = "Vehicle", condition2 = "Low_dose")
 }

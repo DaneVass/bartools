@@ -14,6 +14,7 @@
 #'
 #' @export
 #' @examples
+#' data(test.dge)
 #' thresholdCounts(test.dge, type = "absolute", threshold = 10)
 #' thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = TRUE)
 
@@ -112,7 +113,7 @@ thresholdCounts <- function(dgeObject,
 
     if (is.null(group)) {
       g <- ggplot2::ggplot(above.threshold.counts,
-                           ggplot2::aes(x = `Sample`, y = `BC.count`)) +
+                           ggplot2::aes(x = .data$Sample, y = .data$BC.count)) +
         ggplot2::geom_bar(stat = "identity")
     } else {
       above.threshold.counts$group <-
@@ -129,7 +130,7 @@ thresholdCounts <- function(dgeObject,
       }
 
       g <- ggplot2::ggplot(above.threshold.counts,
-                           ggplot2::aes(x = `Sample`, y = `BC.count`, fill = group)) +
+                           ggplot2::aes(x = .data$Sample, y = .data$BC.count, fill = group)) +
         ggplot2::geom_bar(stat = "identity") +
         ggplot2::scale_fill_manual(values = rev(ggpubr::get_palette("npg", length(
           unique(above.threshold.counts$group)

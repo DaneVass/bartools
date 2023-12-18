@@ -5,32 +5,32 @@
 \title{Barcode PCA plot}
 \usage{
 plotBarcodePCA(
-  object,
-  intgroup = "condition",
-  col = "group",
+  dgeObject,
+  groups = NULL,
   ntop = 500,
   returnData = FALSE,
+  pcs = c(1, 2),
   batch = NULL
 )
 }
 \arguments{
-\item{object}{DGEList or dataframe containing normalised barcode counts}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{intgroup}{vector of grouping variables of interest}
+\item{groups}{Optional, one or multiple column names in sample metadata to color samples by (string or vector of strings).}
 
-\item{col}{color group for plot, must be one of intgroup}
+\item{ntop}{number of top most variable barcodes to be used in PCA calculation (integer). Default = `500`.}
 
-\item{ntop}{number of top most variable genes to be used in PCA calculation}
+\item{returnData}{Return a data.frame of PCA calculation instead of plot (boolean). Default = `FALSE`.}
 
-\item{returnData}{Logical. return a data.frame of PCA calculation?}
+\item{pcs}{Principle components to plot (vector of integers of length 2). Default = `c(1, 2)`.}
 
-\item{batch}{metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA}
+\item{batch}{Optional, metadata category indicating source of batch effects. Will be used in limma removeBatchEffect function prior to PCA.}
 }
 \value{
 Returns a plot of the first two principal components in the dataset
 }
 \description{
-Takes an edgeR DGEList object contining barcode data or a dataframe of the barcode cpm counts and performs PCA.
+Takes a DGEList object contining barcode cpm counts and performs PCA.
 Then, plots the first two dimensions.
 Modified from DESeq2 package plotPCA function
 }
@@ -40,5 +40,6 @@ plotBarcodePCA
 Plot the first two principal components of the barcode dataset
 }
 \examples{
-plotBarcodePCA(test.dge, intgroup = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
+data(test.dge)
+plotBarcodePCA(test.dge, groups = "Treatment", ntop = 500, returnData = FALSE, batch = NULL)
 }

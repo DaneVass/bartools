@@ -43,7 +43,7 @@ plotBarcodeCorrelation <- function(dgeObject,
   # Create a ggheatmap
   title <- paste(title, "-", method)
   ggheatmap <-
-    ggplot2::ggplot(melted_cormat, ggplot2::aes(x = Var2, y = Var1, fill = value)) +
+    ggplot2::ggplot(melted_cormat, ggplot2::aes(x = .data$Var2, y = .data$Var1, fill = .data$value)) +
     ggplot2::geom_tile(color = "white") +
     ggplot2::scale_fill_viridis_c() +
     ggplot2::theme_bw() +
@@ -60,5 +60,5 @@ plotBarcodeCorrelation <- function(dgeObject,
     ggplot2::labs(x = "", y = "", title = title)
 
   # Print the heatmap
-  print(ggheatmap)
+  return(ggheatmap)
 }

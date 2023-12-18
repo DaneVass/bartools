@@ -18,8 +18,10 @@
 #' @param plot Logical. Plot results or return data.
 #' @param label Logical. Label group levels above cell number threshold. if ggrepel is installed will use geom_text_repel
 #' instead of geom_text
+#' @param sep Separating character used for aggregation (string). Default = `;`.
 #'
 #' @return Returns a plot of cell number by barcode test results or underlying plot data
+#' @importFrom rlang .data
 #' @export
 #'
 #'
@@ -30,7 +32,8 @@ plotCellsPerGroup <- function(sc.obj = NULL,
                               trans = NULL,
                               threshold = 100,
                               plot = TRUE,
-                              label = TRUE) {
+                              label = TRUE,
+                              sep = ";") {
   # check inputs
   if (is.null(sc.obj)) {
     stop("Please supply a Seurat or SingleCellExperiment object")
@@ -68,7 +71,7 @@ plotCellsPerGroup <- function(sc.obj = NULL,
     factor(unlist(lapply(
       strsplit(
         as.character(bc.tally$Var1),
-        split = ";",
+        split = sep,
         perl = T
       ), length
     )))
@@ -81,7 +84,7 @@ plotCellsPerGroup <- function(sc.obj = NULL,
   # plot p value histogram or return raw data
   if (plot) {
     p <- ggplot2::ggplot(bc.tally) +
-      ggplot2::geom_point(ggplot2::aes(x = Var1, y = Freq, color = num.barcodes)) +
+      ggplot2::geom_point(ggplot2::aes(x = .data$Var1, y = .data$Freq, color = .data$num.barcodes)) +
       ggplot2::xlab("barcode") +
       ggplot2::theme_classic() +
       ggplot2::ylab("number of cells") +
@@ -100,10 +103,10 @@ plotCellsPerGroup <- function(sc.obj = NULL,
         p <- p + ggrepel::geom_text_repel(
           data = bc.tally,
           ggplot2::aes(
-            x = Var1,
-            y = Freq,
-            color = num.barcodes,
-            label = label
+            x = .data$Var1,
+            y = .data$Freq,
+            color = .data$num.barcodes,
+            label = .data$label
           ),
           max.overlaps = 20
         )
@@ -112,10 +115,10 @@ plotCellsPerGroup <- function(sc.obj = NULL,
         p <- p + ggplot2::geom_text(
           data = bc.tally,
           ggplot2::aes(
-            x = Var1,
-            y = Freq,
-            color = num.barcodes,
-            label = label
+            x = .data$Var1,
+            y = .data$Freq,
+            color = .data$num.barcodes,
+            label = .data$label
           ),
           nudge_x = -20
         )

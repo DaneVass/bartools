@@ -3,7 +3,7 @@
 #' Calculate barcodes comprising the Nth percentile for each sample & generate cumulative sum plots
 #'
 #' @param dgeObject DGEList object with barcode counts.
-#' @param percentile Desired percentile value (decimal). Default = `0.95` (i.e. 95%).
+#' @param percentile Desired percentile value (decimal). Default = `0.95` (i.e. 95 percent).
 #'
 #' @return Returns a list object containing Nth percentile tables of barcode counts per sample
 #'

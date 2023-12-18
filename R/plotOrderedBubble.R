@@ -12,11 +12,15 @@
 #' @param displayBarcodes Optional, vector of barcodes to display.
 #' @param colorDominant Only color clones with frequency above `proportionCutoff` and others grey (boolean). Default = `FALSE`.
 #' @param filterCutoff Barcodes below this threshold in `orderSample` will be filtered in all samples (boolean). Default = `TRUE`.
+#' @param pseudoCount Whether to add a pseudo count of 1 to all counts to display barcodes absent in T0 (boolean). Requires counts to be normalized. Default = `FALSE`.
 #' @param legend Show a legend of bubble sizes (boolean). Default = `TRUE`.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
+#' @importFrom magrittr "%>%"
+#' @importFrom rlang .data
 #' @export
 #' @examples
+#' data(test.dge)
 #' plotOrderedBubble(test.dge, orderSample = "T0-1", filterCutoff = 0.001, group = "Treatment")
 
 plotOrderedBubble <- function(dgeObject,
@@ -29,7 +33,8 @@ plotOrderedBubble <- function(dgeObject,
                               colorDominant = FALSE,
                               filterCutoff = NULL,
                               labelBarcodes = TRUE,
-                              legend = TRUE) {
+                              legend = TRUE,
+                              pseudoCount = FALSE) {
   ###### check inputs ##########
   inputChecks(dgeObject, groups = group, samples = c(orderSample, displaySamples), barcodes = displayBarcodes)
 
@@ -49,6 +54,10 @@ plotOrderedBubble <- function(dgeObject,
   # this will avoid plotting any barcode labels
   if (labelBarcodes == FALSE) {
     proportionCutoff = 100
+  }
+
+  if (pseudoCount == TRUE) {
+    counts <- counts + 1
   }
 
   # transform CPM into percentage within sample
@@ -71,11 +80,10 @@ plotOrderedBubble <- function(dgeObject,
     barcodes.proportional <-
       barcodes.proportional[barcodes.proportional$Position > filterCutoff,]
   }
-  # high prop barcodes
-  # TODO
-  Highbarcodes <-
-    dplyr::filter_all(barcodes.proportional[, 1:(ncol(barcodes.proportional) - 3)],
-                      dplyr::any_vars(. > proportionCutoff))
+  # identify all barcodes to label
+  Highbarcodes <- barcodes.proportional %>%
+    dplyr::select(-c(.data$Barcode, .data$Position)) %>%
+    dplyr::filter(dplyr::if_any(tidyselect::where(is.numeric), ~ .x > proportionCutoff))
 
   if (colorDominant) {
     # make all barcodes grey and only color those that are above threshold cutoff
@@ -171,10 +179,10 @@ plotOrderedBubble <- function(dgeObject,
   bubble.plot <- ggplot2::ggplot(
     barcodes.proportional.melted,
     ggplot2::aes(
-      x = Position,
-      y = Sample,
-      size = Proportion,
-      color = Color
+      x = .data$Position,
+      y = .data$Sample,
+      size = .data$Proportion,
+      color = .data$Color
     )
   ) +
     ggplot2::geom_point(stat = "identity",

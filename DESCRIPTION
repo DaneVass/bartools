@@ -1,9 +1,11 @@
 Package: bartools
 Type: Package
 Title: Analysis and visualisation of synthetic DNA barcodes in high throughput sequencing datasets
-Version: 0.2.6
-Authors@R: person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
-                  role = c("aut", "cre"))
+Version: 1.0.0
+Authors@R: c(person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
+                  role = c("aut", "cre")),
+             person("Henrietta", "Holze", email = "henrietta.holze@petermac.org",
+                  role = "aut"))
 Maintainer: Dane Vassiliadis <dane.vassiliadis@petermac.org>
 Description: Analysis and visualisation of synthetic DNA barcodes in high throughput sequencing datasets.
 License: MIT + file LICENSE
@@ -24,6 +26,10 @@ Imports:
     scales,
     ggpubr,
     dplyr,
+    tidyr,
+    tibble,
+    tidyselect,
+    magrittr,
     forcats,
     reshape2,
     limma,

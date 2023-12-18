@@ -7,6 +7,7 @@
 #' @param corrThreshold Threshold distinguishing good vs bad correlation between technical replicates (decimal). Default = `0.8`.
 #' @param return Which values to return, one of `good`, `bad`, `all` (string). Default = `all`.
 #' @param method Method for correlation, one of `spearman`, `pearson` (string). Default = `pearson`.
+#' @param ignoreZero Remove barcodes where both replicates have 0 counts before calculating correlation (boolean). Including zeros can increase the spearman correlation, especially for samples with few barcodes detected. Default = `FALSE`.
 #'
 #' @return Returns a plot of the read counts per barcode (row) in a data frame
 #' @export
@@ -21,7 +22,8 @@ calcReplicateCorr <-
            group = NULL,
            corrThreshold = 0.8,
            return = "all",
-           method = "pearson") {
+           method = "pearson",
+           ignoreZero = FALSE) {
     inputChecks(dgeObject, groups = group)
 
     if (!return %in% c("all", "good", "bad")) {
@@ -62,13 +64,16 @@ calcReplicateCorr <-
       data <-
         as.data.frame(dgeObject$counts[, dgeObject$samples[, group] == as.character(x)])
 
+      if (ignoreZero == TRUE) {
+        data <- data[rowSums(data) != 0,]
+      }
       # # Previous implementation, more in line with plotBarcodeRegression
       # # But not clear why adjusted r is needed. Also returns strong negative correlation as positive value.
       # fit <- stats::lm(data[, 1] ~ data[, 2])
       # adj.r2 <- summary(fit)$adj.r.squared
       # corr <- sqrt(adj.r2)
 
-      return(cor(data[, 1], data[, 2], method = method))
+      return(stats::cor(data[, 1], data[, 2], method = method))
     })
 
     names(corrs) <- unique(names(paired))

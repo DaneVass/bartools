@@ -11,7 +11,8 @@ plotCellsPerGroup(
   trans = NULL,
   threshold = 100,
   plot = TRUE,
-  label = TRUE
+  label = TRUE,
+  sep = ";"
 )
 }
 \arguments{
@@ -29,12 +30,14 @@ plotCellsPerGroup(
 
 \item{label}{Logical. Label group levels above cell number threshold. if ggrepel is installed will use geom_text_repel
 instead of geom_text}
+
+\item{sep}{Separating character used for aggregation (string). Default = `;`.}
 }
 \value{
 Returns a plot of cell number by barcode test results or underlying plot data
 }
 \description{
-Takes a single cell object, a grouping variable, a factor within the group to test, 
+Takes a single cell object, a grouping variable, a factor within the group to test,
 and an ident class (i.e. clusters). Per level of ident performs hypergeometric testing
 for enrichment of group factor
 }

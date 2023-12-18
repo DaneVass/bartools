@@ -9,11 +9,12 @@
 
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
 
+#' @importFrom rlang .data
 #' @export
 
 #' @examples
-#' data(test.counts)
-#' plotBarcodeTimeseries(test.dge$counts[,1:4], name = "Proportional Timeseries Plot", seed = 5)
+#' data(test.dge)
+#' plotBarcodeTimeseries(test.dge[,1:4], name = "Proportional Timeseries Plot", seed = 5)
 
 plotBarcodeTimeseries <-
   function(counts,
@@ -33,7 +34,7 @@ plotBarcodeTimeseries <-
       lapply(colnames(barcodes.proportional)[-length(colnames(barcodes.proportional))],
              function(x) {
                dat <-
-                 dplyr::select(barcodes.proportional, `barcode`, as.character(x))
+                 dplyr::select(barcodes.proportional, .data$barcode, as.character(x))
                dat <-
                  dat[order(dat[, 2], decreasing = T), ][1:top, ]
                return(dat$barcode)

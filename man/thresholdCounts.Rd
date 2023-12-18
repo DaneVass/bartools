@@ -5,29 +5,29 @@
 \title{Threshold counts}
 \usage{
 thresholdCounts(
-  dge,
+  dgeObject,
   threshold = 10,
   type = "absolute",
-  min.samps = 1,
+  minSamples = 1,
   plot = FALSE,
   group = NULL,
   order = TRUE
 )
 }
 \arguments{
-\item{dge}{DGEList object to be thresholded.}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{threshold}{The threshold to use. If type = "relative", must a float between 0 & 1. Default = 10}
+\item{threshold}{The threshold to use. If type = "relative", must a float between 0 & 1. Default = `10`}
 
-\item{type}{Threshold type to use. Must be one of "absolute" or "relative". Default = "absolute".}
+\item{type}{Threshold type to use (string). Must be one of "absolute" or "relative". Default = `absolute`.}
 
-\item{min.samps}{Minimum number of samples a barcode must meet threshold to remain in dataset. Default = 1.}
+\item{minSamples}{Minimum number of samples a barcode must meet threshold to remain in dataset (integer). Default = `1`.}
 
-\item{plot}{Logical. Draw plots of dataset? Default = F}
+\item{plot}{Return plot instead of filtered data (boolean). Default = `FALSE`.}
 
-\item{group}{DGEList metadata field to color samples by}
+\item{group}{Optional, column name in sample metadata to color samples by (string).}
 
-\item{order}{Boolean. Order samples by group?}
+\item{order}{Order samples by group (boolean). Default = `TRUE`.}
 }
 \value{
 Returns a filtered DGEList object.
@@ -37,5 +37,7 @@ Filter barcodes meeting a given absolute (total read count) or relative (proport
 Optionally plot number of barcodes detected using this threshold in each sample.
 }
 \examples{
-thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = FALSE)
+data(test.dge)
+thresholdCounts(test.dge, type = "absolute", threshold = 10)
+thresholdCounts(test.dge, type = "absolute", threshold = 10, plot = TRUE)
 }
