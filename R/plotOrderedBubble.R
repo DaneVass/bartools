@@ -92,6 +92,15 @@ plotOrderedBubble <- function(dgeObject,
     # give each barcode a specific color
     colors <- scales::hue_pal()(30)
   }
+
+  # filter barcodes to display before sampling colors
+  if (!is.null(displayBarcodes)) {
+    barcodes.proportional <-
+      barcodes.proportional[rownames(barcodes.proportional) %in% displayBarcodes, ]
+    Highbarcodes <-
+      Highbarcodes[rownames(Highbarcodes) %in% displayBarcodes,]
+  }
+
   colors <-
     sample(colors, length(rownames(barcodes.proportional)), replace = TRUE)
   names(colors) <- rownames(barcodes.proportional)
@@ -110,13 +119,6 @@ plotOrderedBubble <- function(dgeObject,
     barcodes.proportional[rownames(Highbarcodes),]
   HighbarcodesLabel <-
     HighbarcodesLabel[HighbarcodesLabel$Position > 0,]
-
-  if (!is.null(displayBarcodes)) {
-    barcodes.proportional <-
-      barcodes.proportional[rownames(barcodes.proportional) %in% displayBarcodes, ]
-    HighbarcodesLabel <-
-      HighbarcodesLabel[HighbarcodesLabel$Barcode %in% displayBarcodes,]
-  }
 
   # melt data frame and rename columns correctly
   barcodes.proportional.melted <-
