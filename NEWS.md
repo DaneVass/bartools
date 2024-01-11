@@ -1,3 +1,7 @@
+# bartools 1.0.1
+
+- improve coloring of barcodes in bubble plots
+
 # bartools 1.0.0
 
 - Updated function parameter inputs across whole package
