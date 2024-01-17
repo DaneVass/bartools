@@ -1,6 +1,7 @@
 # bartools 1.0.1
 
 - improve coloring of barcodes in bubble plots
+- update plotDetectedBarcodes
 
 # bartools 1.0.0
 
