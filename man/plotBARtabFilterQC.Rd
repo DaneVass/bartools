@@ -8,7 +8,6 @@ plotBARtabFilterQC(
   dir = NULL,
   recursive = T,
   patternLog = "*filter.log",
-  patternValue = "reads",
   fullNames = T,
   normalised = F,
   plot = T,
@@ -18,11 +17,9 @@ plotBARtabFilterQC(
 \arguments{
 \item{dir}{directory where BARtab was successfuly run on barcode count datasets}
 
-\item{recursive}{Logical. TRUE will recurse regex search into subdirectories#'}
+\item{recursive}{Logical. TRUE will recurse regex search into subdirectories}
 
 \item{patternLog}{regex string to specify filter stage log files}
-
-\item{patternValue}{grep on this string in log files}
 
 \item{fullNames}{Logical. Return full names of files detected by regex search}
 

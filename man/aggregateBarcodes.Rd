@@ -15,5 +15,5 @@ aggregateBarcodes(counts, sep = ";")
 Returns a data frame with one row per cell ID
 }
 \description{
-Aggregate barcodes and barcode UMIs per cell
+Aggregate barcodes and barcode UMIs per cell, in alphabetical order.
 }
