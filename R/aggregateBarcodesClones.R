@@ -1,5 +1,5 @@
 #' @title
-#' aggregateBarcodesClones
+#' aggregate barcodes and clones per cell
 #'
 #' @description
 #' Aggregate barcodes and barcode UMI counts into clones and subsequently aggregate clones per cell, all in alphabetical order.
@@ -18,7 +18,6 @@ aggregateBarcodesClones <-
   function(counts,
            clones,
            sep = ";") {
-
     counts <- m6_clone_counts_mch
     clones <- m6_clones
     counts <- counts %>%
