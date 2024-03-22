@@ -12,7 +12,7 @@
 #' @param displayBarcodes Optional, vector of barcodes to display.
 #' @param colorDominant Only color clones with frequency above `proportionCutoff` and others grey (boolean). Default = `FALSE`.
 #' @param filterCutoff Barcodes below this threshold in `orderSample` will be filtered in all samples (boolean). Default = `TRUE`.
-#' @param pseudoCount Whether to add a pseudo count of 1 to all counts to display barcodes absent in T0 (boolean). Requires counts to be normalized. Default = `FALSE`.
+#' @param pseudoCount Whether to add a pseudo count of 1 to the sample that is used for ordering to display barcodes absent in that sample (boolean). Default = `FALSE`.
 #' @param legend Show a legend of bubble sizes (boolean). Default = `TRUE`.
 #'
 #' @return Returns a bubbleplot of barcodes represented by proportion of total pool
@@ -51,13 +51,16 @@ plotOrderedBubble <- function(dgeObject,
     stop("Group must be column in samples")
   }
 
+  x_axis_title <- paste("Barcode Proportion in", orderSample, "(%)")
+
   # this will avoid plotting any barcode labels
   if (labelBarcodes == FALSE) {
     proportionCutoff = 100
   }
 
   if (pseudoCount == TRUE) {
-    counts <- counts + 1
+    counts[,orderSample] <- counts[,orderSample] + 1
+    x_axis_title <- paste(x_axis_title, " (pseudo count added)")
   }
 
   # transform CPM into percentage within sample
@@ -72,13 +75,14 @@ plotOrderedBubble <- function(dgeObject,
       barcodes.proportional[, displaySamples]
   }
 
-  # Order by selected sample.
+  # Order by selected sample
   barcodes.proportional$Position <-
     barcodes.proportional[, orderSample]
+
   barcodes.proportional$Barcode <- rownames(barcodes.proportional)
   if (!is.null(filterCutoff)) {
     barcodes.proportional <-
-      barcodes.proportional[barcodes.proportional$Position > filterCutoff,]
+      barcodes.proportional[barcodes.proportional$Position >= filterCutoff,]
   }
   # identify all barcodes to label
   Highbarcodes <- barcodes.proportional %>%
@@ -196,7 +200,9 @@ plotOrderedBubble <- function(dgeObject,
                   title = title) +
     ggplot2::scale_size_continuous(
       name = "Barcode\nProportion (%)",
-      range = c(0.1, 10),
+      # without the limits, bubbles will be plotted for barcodes that are 0
+      limits = c(10^-100, max(barcodes.proportional.melted$Proportion)),
+      range = c(0, 10),
       breaks = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
       labels = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
     ) +
@@ -208,7 +214,7 @@ plotOrderedBubble <- function(dgeObject,
         ~ . * 1,
         labels = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50),
         breaks = c(0.0001, 0.001, 0.01, 0.1, 1, 2, 5, 10, 20, 30, 40, 50),
-        name = paste("Barcode Proportion in", orderSample, "(%)")
+        name = x_axis_title
       )
     ) +
     ggplot2::theme_bw() +
