@@ -36,7 +36,10 @@ Imports:
     methods,
     viridis,
     rlang,
-    RColorBrewer
+    RColorBrewer,
+    proxyC,
+    igraph,
+    pheatmap
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends:
