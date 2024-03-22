@@ -4,7 +4,7 @@
 #' @description
 #' Calculate barcode similarities in single-cell data in order to group barcodes into clones.
 #'
-#' @param counts Count table with columns cellid, barcode and bc.umi.count (output of readBartabCounts).
+#' @param counts Count table with columns cellid, barcode and bc.umi.count (output of `readBartabCounts()`).
 #' @param umiCutoff Minimum UMI count to consider a barcode detected in a cell (integer). Default = `1`.
 #' @param metric Similarity metric to use, one of `jaccard` and `pearson` (string). Default = `jaccard`.
 #' @param plotHistogram Whether to plot a histogram of the similarity scores (bool). Default = `TRUE`.

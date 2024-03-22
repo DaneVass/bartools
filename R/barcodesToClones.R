@@ -4,7 +4,7 @@
 #' @description
 #' Group barcodes to clones by connected components given a similarity matrix and threshold.
 #'
-#' @param bcSimilarity Similarity matrix with barcodes as rows and columns (output of calculateBarcodeSimilarities).
+#' @param bcSimilarity Similarity matrix with barcodes as rows and columns (output of `calculateBarcodeSimilarities()`).
 #' @param threshold Similarity metric threshold above which barcodes will be grouped together (decimal). Default = `0.7`.
 #'
 #' @return A named list with barcodes as names and clone identity as values.

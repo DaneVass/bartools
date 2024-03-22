@@ -4,7 +4,7 @@
 #' @description
 #' Plot clustered barcode similarity heatmap based on detection across cells.
 #'
-#' @param bcSimilarity Similarity matrix with barcodes as rows and columns (output of calculateBarcodeSimilarities).
+#' @param bcSimilarity Similarity matrix with barcodes as rows and columns (output of `calculateBarcodeSimilarities()`).
 #' @param topN Number of barcodes to display in heatmap, ranked by highest similarity metric (integer). Default = `50`.
 #'
 #' @return Returns a heatmap of barcode similarities.
