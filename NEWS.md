@@ -1,5 +1,6 @@
 # bartools 1.0.1
 
+- Fix plotDetectedBarcodes to be inclusive, i.e. at least 1 barcode makes up top x percentile of a sample
 - improve coloring of barcodes in bubble plots
 - update plotDetectedBarcodes
 

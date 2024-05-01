@@ -52,14 +52,29 @@ plotDetectedBarcodes <-
         message("skipping color column")
       }
       else {
-        order <- order(counts.obj[, i], decreasing = T)
-        sorted <- counts.obj[order, as.character(i), drop = F]
+        # order barcodes by decreasing counts
+        bc_order <- order(counts.obj[, i], decreasing = T)
+        sorted <- counts.obj[bc_order, as.character(i), drop = F]
+        # remove barcodes with 0 counts
         sorted <- sorted[sorted > 0, , drop = F]
+        # sum of all barcodes
         colsum <- sum(sorted)
+        # calcualte count that is cutoff
         percentile.cutoff <- sum(sorted) * percentile
+        # calculate cummulative sum of barcode counts
         cumsum <- cumsum(sorted)
+        # check that the maximum cummulative sum is the sum of all barocodes
         stopifnot(max(cumsum) == colsum)
+        # check how many barcodes have a cummulative sum smaller or equal to cutoff
         len <- length(which(cumsum <= percentile.cutoff))
+        # the number of barcodes should be inclusive,
+        # i.e. at least 1 barcode makes up the top x percentile
+        # unless the barcode is exactly at the cutoff, add 1
+        if (len == 0){
+          len <- len + 1
+        } else if (cumsum[len,] != percentile.cutoff & len <= nrow(sorted)) {
+          len <- len + 1
+        }
         d <- data.frame(Sample = factor(i), Barcodes = len)
         percentile.df <- rbind(percentile.df, d)
         rows <- rownames(sorted)[which(cumsum <= percentile.cutoff)]
