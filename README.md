@@ -5,6 +5,7 @@
 
 ### Tools for the analysis of cellular barcoding datasets
 
+[![DOI](https://zenodo.org/badge/470841171.svg)](https://zenodo.org/doi/10.5281/zenodo.10896648)
 <img src="man/figures/bartools_logo.png" align="right" width="260"/>
 
 ### Introduction
