@@ -20,7 +20,7 @@ plotBarcodeSimilarity <-
     high_simil_bc <-
       names(head(rowmax[order(unlist(rowmax), decreasing = T)], n = topN))
 
-    colors <- grDevices::colorRampPalette(brewer.pal(9, "Blues"))(255)
+    colors <- grDevices::colorRampPalette(RColorBrewer::brewer.pal(9, "Blues"))(255)
 
     if (dendrogram) {
       # plot clustered heatmap
@@ -38,7 +38,7 @@ plotBarcodeSimilarity <-
       )
     } else {
       heatmap <-
-        pheatmap(
+        pheatmap::pheatmap(
           bcSimilarity[high_simil_bc, high_simil_bc],
           cluster_rows = T,
           cluster_cols = T,

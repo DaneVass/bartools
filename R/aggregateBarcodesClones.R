@@ -18,8 +18,6 @@ aggregateBarcodesClones <-
   function(counts,
            clones,
            sep = ";") {
-    counts <- m6_clone_counts_mch
-    clones <- m6_clones
     counts <- counts %>%
       dplyr::mutate(clone_id = paste0("clone_", clones[barcode]))
 
