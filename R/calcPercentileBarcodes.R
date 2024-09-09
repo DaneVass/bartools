@@ -41,6 +41,7 @@ calcPercentileBarcodes <- function(dgeObject, percentile = 0.95) {
 
     # find number of barcodes that make up Nth percentile
     len <- length(which(cumsum <= percentile.cutoff))
+    len <- max(1,len)
 
     # fill Nth percentile data frame for plotting below
     d <- data.frame(Sample = factor(samples[i]), NumBarcodes = len)
