@@ -1,15 +1,16 @@
 #' plotDetectedBarcodes
 #'
-#' Plot the total number of barcodes detected in a sample above a percentile threshold.
+#' Plot the number of barcodes comprising the top Nth percentile for each sample as a bar plot.
 #'
 #' @param dgeObject DGEList object with barcode counts.
-#' @param percentile Percentile threshold to count barcodes (decimal). Default = `0.95`.
-#' @param plot Plot data instead of returning counts table (boolean). Default = `TRUE`.
+#' @param percentile Percentile threshold to count barcodes (decimal). Default = `0.95` (i.e. 95th percentile).
+#' @param plot Plot data instead of returning counts table (boolean).
+#' Table of number of barcodes and lists of barcodes in the top Nth percentile can be obtained with `calcPercentileBarcodes()`. Default = `TRUE`.
 #' @param sampleOrder Optional, Ordering of samples (vector of strings).
 #' @param group Optional, column name in sample metadata to group samples by (string).
 #' @param title Optional, Plot title (string).
 #'
-#' @return Returns a histogram plot of the number of detected barcodes per sample.
+#' @return Returns a histogram plot of the number of detected barcodes per sample in the top Nth percentile.
 #'
 #' @importFrom rlang .data
 #' @export
@@ -17,7 +18,6 @@
 #' @examples
 #' data(test.dge)
 #' plotDetectedBarcodes(test.dge, percentile = .95)
-#' plotDetectedBarcodes(test.dge, plot = FALSE)
 
 plotDetectedBarcodes <-
   function(dgeObject,
@@ -29,7 +29,12 @@ plotDetectedBarcodes <-
     ###### check inputs ##########
     inputChecks(dgeObject, groups = group, samples = sampleOrder)
 
-    counts.obj <- as.data.frame(dgeObject$counts)
+    # reorder or subset DGEList object if sample order is given
+    if (is.null(sampleOrder)) {
+      sampleOrder <- colnames(dgeObject)
+    } else {
+      dgeObject <- dgeObject[, sampleOrder]
+    }
 
     if (!is.null(group)) {
       cols <- as.factor(group)
@@ -38,53 +43,9 @@ plotDetectedBarcodes <-
       cols <- rep("Group 1", length(colnames(dgeObject)))
     }
 
-    # reorder counts object if given
-    if (is.null(sampleOrder)) {
-      sampleOrder <- colnames(dgeObject)
-    }
-    counts.obj <- as.data.frame(counts.obj[, c(sampleOrder)])
-
-    samples <- colnames(counts.obj)
-    percentile.df <- data.frame()
-    barcodes <- c()
-    for (i in samples) {
-      if (i == "color") {
-        message("skipping color column")
-      }
-      else {
-        # order barcodes by decreasing counts
-        bc_order <- order(counts.obj[, i], decreasing = T)
-        sorted <- counts.obj[bc_order, as.character(i), drop = F]
-        # remove barcodes with 0 counts
-        sorted <- sorted[sorted > 0, , drop = F]
-        # sum of all barcodes
-        colsum <- sum(sorted)
-        # calcualte count that is cutoff
-        percentile.cutoff <- sum(sorted) * percentile
-        # calculate cummulative sum of barcode counts
-        cumsum <- cumsum(sorted)
-        # check that the maximum cummulative sum is the sum of all barocodes
-        stopifnot(max(cumsum) == colsum)
-        # check how many barcodes have a cummulative sum smaller or equal to cutoff
-        len <- length(which(cumsum <= percentile.cutoff))
-        # the number of barcodes should be inclusive,
-        # i.e. at least 1 barcode makes up the top x percentile
-        # unless the barcode is exactly at the cutoff, add 1
-        if (len == 0){
-          len <- len + 1
-        } else if (cumsum[len,] != percentile.cutoff & len <= nrow(sorted)) {
-          len <- len + 1
-        }
-        d <- data.frame(Sample = factor(i), Barcodes = len)
-        percentile.df <- rbind(percentile.df, d)
-        rows <- rownames(sorted)[which(cumsum <= percentile.cutoff)]
-        length(rows)
-        sorted.top <- counts.obj[rows, i, drop = F]
-        top.bc.sum <- sum(sorted.top[, 1])
-        sorted.top$percentage <-
-          (sorted.top[, 1] / top.bc.sum) * 100
-      }
-    }
+    # calculate number of barcodes in the top Nth percentile per sample
+    percentile.df <-
+      calcPercentileBarcodes(dgeObject, percentile = percentile)$NumBarcodes
 
     # merge group into percentile.df
     if (!is.null(group)) {
@@ -117,13 +78,14 @@ plotDetectedBarcodes <-
           ggplot2::ggplot(data = percentile.df,
                           ggplot2::aes(
                             x = .data$Sample,
-                            y = .data$Barcodes,
+                            y = .data$NumBarcodes,
                             fill = .data$Group
                           ))
       } else {
         p <-
-          ggplot2::ggplot(data = percentile.df, ggplot2::aes(x = .data$Sample,
-                                                             y = .data$Barcodes))
+          ggplot2::ggplot(data = percentile.df,
+                          ggplot2::aes(x = .data$Sample,
+                                       y = .data$NumBarcodes))
       }
       p <- p + ggplot2::geom_bar(stat = "identity") +
         ggplot2::theme_bw() +
@@ -132,9 +94,12 @@ plotDetectedBarcodes <-
           vjust = 0,
           hjust = 1
         )) + ggplot2::ggtitle(title) +
-        ggplot2::ylim(0, max(percentile.df$Barcodes + 25)) +
+        ggplot2::ylim(0, max(percentile.df$NumBarcodes + 25)) +
         ggplot2::geom_text(
-          ggplot2::aes(label = .data$Barcodes, y = .data$Barcodes + 0.05),
+          ggplot2::aes(
+            label = .data$NumBarcodes,
+            y = .data$NumBarcodes + 0.05
+          ),
           position = ggplot2::position_dodge(0.9),
           vjust = -0.1
         ) +
