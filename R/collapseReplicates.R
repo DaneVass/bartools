@@ -2,7 +2,7 @@
 #' Collapse technical replicates
 #'
 #' @description
-#' Collapse technical replicates in a DGEList object by mean or sum.
+#' Collapse technical replicates in a DGEList object by mean or sum. Updates lib.size to the read sum per collapsed sample.
 #' Modified from collapseReplicates function from DESeq2 package to accept DGEList objects and to allow collapsing replicated by mean or sum.
 #'
 #' @param dgeObject DGEList object with barcode counts.
@@ -82,6 +82,10 @@ collapseReplicates <-
     if (renameCols) {
       colnames(collapsed) <- levels(group)
     }
+
+    # update lib.size
+    # important when using normalization functions that use this column, like edgeR::cpm()
+    collapsed$samples$lib.size <- colSums(collapsed$counts)
 
     return(collapsed)
   }

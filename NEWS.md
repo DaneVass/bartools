@@ -3,6 +3,7 @@
 - Fix plotDetectedBarcodes and calcPercentileBarcodes to be inclusive, i.e. at least 1 barcode makes up top x percentile of a sample
 - improve coloring of barcodes in bubble plots
 - update plotDetectedBarcodes
+- collapseReplicates and thresholdCounts update the lib.size column to the sum of the merged replicates or filtered sample.
 
 # bartools 1.0.0
 

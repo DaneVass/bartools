@@ -1,6 +1,7 @@
 #' Threshold counts
 #'
-#' Filter barcodes meeting a given absolute (total read count) or relative (proportion based) abundance level
+#' Filter barcodes meeting a given absolute (total read count) or relative (proportion based) abundance level.
+#' Update lib.size column to new sum per sample. 
 #' Optionally plot number of barcodes detected using this threshold in each sample.
 #'
 #' @param dgeObject DGEList object with barcode counts.
@@ -95,6 +96,10 @@ thresholdCounts <- function(dgeObject,
         data.frame(Sample = factor(sample), BC.count = above.threshold)
       above.threshold.counts <- rbind(above.threshold.counts, d)
     }
+
+    # update lib.size
+    # important when using normalization functions that use this column, like edgeR::cpm()
+    dgeObject$samples$lib.size <- colSums(dgeObject$counts)
 
     # add metadata to object
     dgeObject$samples <- cbind(dgeObject$samples, above.threshold.counts)
