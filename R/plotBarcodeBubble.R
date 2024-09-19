@@ -164,7 +164,9 @@ plotBarcodeBubble <- function(dgeObject,
                   title = title) +
     ggplot2::scale_size_continuous(
       name = "Barcode\nProportion (%)",
-      range = c(0.1, 10),
+      # without the limits, bubbles will be plotted for barcodes that are 0
+      limits = c(10^-100, max(barcodes.proportional.melted$Proportion)),
+      range = c(0, 10),
       breaks = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
       labels = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
     ) +
