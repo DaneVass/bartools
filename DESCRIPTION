@@ -1,7 +1,7 @@
 Package: bartools
 Type: Package
 Title: Analysis and visualisation of synthetic DNA barcodes in high throughput sequencing datasets
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(person("Dane", "Vassiliadis", email = "dane.vassiliadis@petermac.org",
                   role = c("aut", "cre")),
              person("Henrietta", "Holze", email = "henrietta.holze@petermac.org",
@@ -36,7 +36,10 @@ Imports:
     methods,
     viridis,
     rlang,
-    RColorBrewer
+    RColorBrewer,
+    proxyC,
+    igraph,
+    pheatmap
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Depends:

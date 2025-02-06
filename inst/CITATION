@@ -1,0 +1,20 @@
+citHeader("To cite bartools in publications, please use:")
+
+bibentry(
+  bibtype = "Misc",
+  author = c(
+    as.person("Henrietta Holze"),
+    as.person("Laure Talarmain"),
+    as.person("Katie A. Fennell"),
+    as.person("Enid Y. Lam"),
+    as.person("Mark A. Dawson"),
+    as.person("Dane Vassiliadis")
+  ),
+  title = "BARtab & bartools: an integrated Nextflow pipeline and R package for the analysis of synthetic cellular barcodes in the genome and transcriptome",
+  year = "2023",
+  doi = "10.1101/2023.11.21.568179",
+  publisher = "Cold Spring Harbor Laboratory",
+  url = "https://www.biorxiv.org/content/early/2023/11/22/2023.11.21.568179",
+  journal = ("bioRxiv"),
+  textVersion = "Holze et al. BARtab & bartools: an integrated Nextflow pipeline and R package for the analysis of synthetic cellular barcodes in the genome and transcriptome. BioRxiv (2023)"
+)

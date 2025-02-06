@@ -85,6 +85,14 @@ plotBarcodeBubble <- function(dgeObject,
   names(colors) <- rownames(barcodes.proportional)
   barcodes.proportional$Color <- colors
 
+  # filter barcodes to display before sampling colors
+  if (!is.null(displayBarcodes)) {
+    barcodes.proportional <-
+      barcodes.proportional[rownames(barcodes.proportional) %in% displayBarcodes, ]
+    Highbarcodes <-
+      Highbarcodes[rownames(Highbarcodes) %in% displayBarcodes,]
+  }
+
   if (nrow(Highbarcodes) != 0) {
     # Assign diverse colours to high frequency barcodes
     SelColors <- scales::hue_pal()(nrow(Highbarcodes))
@@ -99,13 +107,6 @@ plotBarcodeBubble <- function(dgeObject,
     barcodes.proportional[rownames(Highbarcodes),]
   HighbarcodesLabel <-
     HighbarcodesLabel[as.numeric(HighbarcodesLabel$Position) > 0,]
-
-  if (!is.null(displayBarcodes)) {
-    barcodes.proportional <-
-      barcodes.proportional[rownames(barcodes.proportional) %in% displayBarcodes, ]
-    HighbarcodesLabel <-
-      HighbarcodesLabel[HighbarcodesLabel$Barcode %in% displayBarcodes,]
-  }
 
   # melt data frame and rename columns correctly
   barcodes.proportional.melted <-
@@ -163,7 +164,9 @@ plotBarcodeBubble <- function(dgeObject,
                   title = title) +
     ggplot2::scale_size_continuous(
       name = "Barcode\nProportion (%)",
-      range = c(0.1, 10),
+      # without the limits, bubbles will be plotted for barcodes that are 0
+      limits = c(10^-100, max(barcodes.proportional.melted$Proportion)),
+      range = c(0, 10),
       breaks = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
       labels = c(0.1, 1, 2, 5, 10, 20, 40, 60, 80),
     ) +

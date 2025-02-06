@@ -21,6 +21,7 @@ Normalise barcode counts within a DGEList object
 }
 \examples{
 data(test.dge)
-normaliseCounts(test.dge, method = "CPM", threshold = 0)
+test.dge.normalized <- normaliseCounts(test.dge, method = "CPM", threshold = 0)
+head(test.dge.normalized)
 
 }

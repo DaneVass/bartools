@@ -23,7 +23,7 @@ readBartabCounts <- function(countsPath) {
 
 #' aggregateBarcodes
 #'
-#' Aggregate barcodes and barcode UMIs per cell
+#' Aggregate barcodes and barcode UMIs per cell, in alphabetical order.
 #'
 #' @param counts Dataframe with barcodes and UMI counts per cell
 #' @param sep Separator between barcodes (string). Default = `;`.
@@ -34,6 +34,8 @@ readBartabCounts <- function(countsPath) {
 #' @export
 #
 aggregateBarcodes <- function(counts, sep = ";") {
+  # make sure barcodes are aggregated in alphabetical order to ensure comparability
+  counts <- dplyr::arrange(counts, .data$barcode)
   bc.counts <- as.data.frame(data.table::dcast(
     data.table::setDT(counts),
     cellid ~ .,

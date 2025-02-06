@@ -5,32 +5,32 @@
 \title{plotDetectedBarcodes}
 \usage{
 plotDetectedBarcodes(
-  counts,
+  dgeObject,
   percentile = 0.95,
   plot = T,
-  sample.order = NULL,
+  sampleOrder = NULL,
   group = NULL,
   title = NULL
 )
 }
 \arguments{
-\item{counts}{DGEList or dataframe containing raw or normalised barcode counts}
+\item{dgeObject}{DGEList object with barcode counts.}
 
-\item{percentile}{desired percentile value. 95th percentile by default}
+\item{percentile}{Percentile threshold to count barcodes (decimal). Default = `0.95`.}
 
-\item{plot}{Logical. plot data instead of returning counts table.}
+\item{plot}{Plot data instead of returning counts table (boolean). Default = `TRUE`.}
 
-\item{sample.order}{desired ordering of the samples on the plot}
+\item{sampleOrder}{Optional, Ordering of samples (vector of strings).}
 
-\item{group}{grouping field in dgelist$samples to color samples by}
+\item{group}{Optional, column name in sample metadata to group samples by (string).}
 
-\item{title}{desired plot title}
+\item{title}{Optional, Plot title (string).}
 }
 \value{
 Returns a histogram plot of the number of detected barcodes per sample.
 }
 \description{
-Plot the total number of barcodes detected in a sample
+Plot the total number of barcodes detected in a sample above a percentile threshold.
 }
 \examples{
 data(test.dge)

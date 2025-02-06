@@ -6,9 +6,8 @@
 #'
 #' @param dir directory where BARtab was successfuly run on barcode count datasets
 #' @param patternLog regex string to specify filter stage log files
-#' @param patternValue grep on this string in log files
 #' @param fullNames Logical. Return full names of files detected by regex search
-#' @param recursive Logical. TRUE will recurse regex search into subdirectories#'
+#' @param recursive Logical. TRUE will recurse regex search into subdirectories
 #' @param normalised Logical. log10 normalise counts
 #' @param plot Logical. Generate plots. False returns raw data
 #' @param title Optional. title of plots.
@@ -21,7 +20,6 @@
 plotBARtabFilterQC <- function(dir = NULL,
                                recursive = T,
                                patternLog = "*filter.log",
-                               patternValue = "reads",
                                fullNames = T,
                                normalised = F,
                                plot = T,
@@ -52,20 +50,23 @@ plotBARtabFilterQC <- function(dir = NULL,
       utils::head(stringr::str_split(samp, pattern = "\\.")[[1]][1], 1)
 
     # get values
-    filtered.reads <- grep(patternValue, readLines(log), value = T)
-    filtered.uniq <-
-      stringr::str_extract(filtered.reads, '[0-9]{3,20}')
-    input <- as.numeric(filtered.uniq[1])
-    output <- as.numeric(filtered.uniq[2])
-    discarded <- as.numeric(filtered.uniq[3])
-    pct.kept <- 100 * (output / input)
+    log_lines <- readLines(log)
+    # make it work with old fastx-toolkit log and new fastp log
+    input_reads <- grep("(Input: [0-9]* reads.|total reads: [0-9*])", log_lines, value = T)[1]
+    input_reads <- as.numeric(stringr::str_extract(input_reads, pattern = '\\d+'))
+
+    passed_reads <- grep("(Output: [0-9]* reads.|reads passed filter: [0-9*])", log_lines, value = T)[1]
+    passed_reads <- as.numeric(stringr::str_extract(passed_reads, pattern = '\\d+'))
+
+    discarded_reads <- input_reads - passed_reads
+    pct.kept <- 100 * (passed_reads / input_reads)
     # concatenate to dataframe
     df <-
       data.frame(
         sample = samp,
-        input = input,
-        output = output,
-        discarded = discarded,
+        input = input_reads,
+        output = passed_reads,
+        discarded = discarded_reads,
         pct.kept = pct.kept
       )
     final.df <- rbind(final.df, df)
